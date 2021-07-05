@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
@@ -32,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -248,9 +249,9 @@
             
   <div class="section" id="birdepy-probability">
 <h1>birdepy.probability()<a class="headerlink" href="#birdepy-probability" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="birdepy.probability">
-<code class="sig-prename descclassname">birdepy.</code><code class="sig-name descname">probability</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">model='Verhulst 1'</em>, <em class="sig-param">method='expm'</em>, <em class="sig-param">**options</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability">
+<span class="sig-prename descclassname"><span class="pre">birdepy.</span></span><span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Verhulst</span> <span class="pre">1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'expm'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -370,9 +371,9 @@ applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
 
 <div class="section" id="birdepy-probability-method-da">
 <h2>birdepy.probability(method=’da’)<a class="headerlink" href="#birdepy-probability-method-da" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_da.probability_da">
-<code class="sig-prename descclassname">birdepy.probability_da.</code><code class="sig-name descname">probability_da</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em>, <em class="sig-param">h_fun</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_da.probability_da" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_da.probability_da">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_da.</span></span><span class="sig-name descname"><span class="pre">probability_da</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_da.probability_da" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>diffusion approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -429,9 +430,9 @@ dynamics. Theoretical Population Biology, 75(2-3):123-132, 2009.</p>
 </div>
 <div class="section" id="birdepy-probability-method-erlang">
 <h2>birdepy.probability(method=’Erlang’)<a class="headerlink" href="#birdepy-probability-method-erlang" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_Erlang.probability_Erlang">
-<code class="sig-prename descclassname">birdepy.probability_Erlang.</code><code class="sig-name descname">probability_Erlang</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em>, <em class="sig-param">z_trunc</em>, <em class="sig-param">cut_meth</em>, <em class="sig-param">eps</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_Erlang.probability_Erlang" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_Erlang.probability_Erlang">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_Erlang.</span></span><span class="sig-name descname"><span class="pre">probability_Erlang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_trunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cut_meth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_Erlang.probability_Erlang" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Erlangization</em> method.</p>
 <p>To use this function call <code class="docutils literal notranslate"><span class="pre">birdepy.probability</span></code> with <cite>method</cite> set to
@@ -501,9 +502,9 @@ finite-horizon ruin probabilities. ASTIN Bulletin: The Journal of the IAA,
 </div>
 <div class="section" id="birdepy-probability-method-expm">
 <h2>birdepy.probability(method=’expm’)<a class="headerlink" href="#birdepy-probability-method-expm" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_expm.probability_expm">
-<code class="sig-prename descclassname">birdepy.probability_expm.</code><code class="sig-name descname">probability_expm</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em>, <em class="sig-param">z_trunc</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_expm.probability_expm" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_expm.probability_expm">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_expm.</span></span><span class="sig-name descname"><span class="pre">probability_expm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_trunc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_expm.probability_expm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>matrix exponential</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -551,9 +552,9 @@ applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
 </div>
 <div class="section" id="birdepy-probability-method-gwa">
 <h2>birdepy.probability(method=’gwa’)<a class="headerlink" href="#birdepy-probability-method-gwa" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_gwa.probability_gwa">
-<code class="sig-prename descclassname">birdepy.probability_gwa.</code><code class="sig-name descname">probability_gwa</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwa.probability_gwa" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_gwa.probability_gwa">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_gwa.</span></span><span class="sig-name descname"><span class="pre">probability_gwa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwa.probability_gwa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Galton-Watson approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -597,9 +598,9 @@ applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
 </div>
 <div class="section" id="birdepy-probability-method-gwasa">
 <h2>birdepy.probability(method=’gwasa’)<a class="headerlink" href="#birdepy-probability-method-gwasa" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_gwasa.probability_gwasa">
-<code class="sig-prename descclassname">birdepy.probability_gwasa.</code><code class="sig-name descname">probability_gwasa</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwasa.probability_gwasa" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_gwasa.probability_gwasa">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_gwasa.</span></span><span class="sig-name descname"><span class="pre">probability_gwasa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwasa.probability_gwasa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Galton-Watson saddlepoint approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -643,9 +644,9 @@ applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
 </div>
 <div class="section" id="birdepy-probability-method-ilt">
 <h2>birdepy.probability(method=’ilt’)<a class="headerlink" href="#birdepy-probability-method-ilt" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_ilt.probability_ilt">
-<code class="sig-prename descclassname">birdepy.probability_ilt.</code><code class="sig-name descname">probability_ilt</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em>, <em class="sig-param">lentz_eps</em>, <em class="sig-param">laplace_method</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_ilt.probability_ilt" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_ilt.probability_ilt">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_ilt.</span></span><span class="sig-name descname"><span class="pre">probability_ilt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lentz_eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">laplace_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_ilt.probability_ilt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>inverse Laplace transform</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -713,9 +714,9 @@ and evolution. Journal of Mathematical Biology, 65(3), pp.553-580.</p>
 </div>
 <div class="section" id="birdepy-probability-method-oua">
 <h2>birdepy.probability(method=’oua’)<a class="headerlink" href="#birdepy-probability-method-oua" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_oua.probability_oua">
-<code class="sig-prename descclassname">birdepy.probability_oua.</code><code class="sig-name descname">probability_oua</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em>, <em class="sig-param">h_fun</em>, <em class="sig-param">zf_bld</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_oua.probability_oua" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_oua.probability_oua">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_oua.</span></span><span class="sig-name descname"><span class="pre">probability_oua</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zf_bld</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_oua.probability_oua" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Ornstein-Uhlenbeck approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -764,9 +765,9 @@ in population models. Theoretical Population Biology, 70(4):498-510, 2006.</p>
 </div>
 <div class="section" id="birdepy-probability-method-sim">
 <h2>birdepy.probability(method=’sim’)<a class="headerlink" href="#birdepy-probability-method-sim" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_sim.probability_sim">
-<code class="sig-prename descclassname">birdepy.probability_sim.</code><code class="sig-name descname">probability_sim</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em>, <em class="sig-param">k</em>, <em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_sim.probability_sim" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_sim.probability_sim">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_sim.</span></span><span class="sig-name descname"><span class="pre">probability_sim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_sim.probability_sim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using crude Monte Carlo simulation.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -787,6 +788,17 @@ to <em>np.random.default_rng()</em>. If <em>seed</em> is an <em>int</em>, random
 generated according to <em>np.random.default_rng(seed)</em>. If seed is a
 <em>Generator</em>, then that object is used. See
 <a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</p></li>
+<li><p><strong>sim_method</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Simulation algorithm used to generate samples (see
+<a class="reference internal" href="simulation.html#simulation-algorithms"><span class="std std-ref">here</span></a>). Should be one of:</p>
+<blockquote>
+<div><ul>
+<li><p>’exact’ (default)</p></li>
+<li><p>’ea’</p></li>
+<li><p>’ma’</p></li>
+<li><p>’gwa’</p></li>
+</ul>
+</div></blockquote>
+</p></li>
 </ul>
 </dd>
 </dl>
@@ -832,9 +844,9 @@ and evolution. Journal of Mathematical Biology, 65(3), pp.553-580.</p>
 </div>
 <div class="section" id="birdepy-probability-method-uniform">
 <h2>birdepy.probability(method=’uniform’)<a class="headerlink" href="#birdepy-probability-method-uniform" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_uniform.probability_uniform">
-<code class="sig-prename descclassname">birdepy.probability_uniform.</code><code class="sig-name descname">probability_uniform</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">b_rate</em>, <em class="sig-param">d_rate</em>, <em class="sig-param">z_trunc</em>, <em class="sig-param">cut_meth</em>, <em class="sig-param">eps</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_uniform.probability_uniform" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_uniform.probability_uniform">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_uniform.</span></span><span class="sig-name descname"><span class="pre">probability_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_trunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cut_meth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_uniform.probability_uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>uniformization</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to

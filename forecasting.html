@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
@@ -32,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -248,7 +249,20 @@
             
   <div class="section" id="forecasting">
 <h1>Forecasting<a class="headerlink" href="#forecasting" title="Permalink to this headline">¶</a></h1>
-<p>Under Construction</p>
+<p>BirDePy provides a basic forecasting function <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a>.
+Recall the example from the <a class="reference internal" href="estimation.html#parameter-estimation"><span class="std std-ref">parameter estimation</span></a> page, where parameters are estimated using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="n">p_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">se_type</span><span class="o">=</span><span class="s1">&#39;asymptotic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, use the estimated parameters to generate a forecast:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="mi">86</span><span class="p">,</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1999</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which produces a plot:</p>
+<img alt="_images/forecast_fig.png" src="_images/forecast_fig.png" />
 </div>
 
 

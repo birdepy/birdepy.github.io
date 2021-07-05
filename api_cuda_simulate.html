@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
@@ -32,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -248,9 +249,9 @@
             
   <div class="section" id="birdepy-gpu-functions-discrete-gpu">
 <h1>birdepy.gpu_functions.discrete_gpu()<a class="headerlink" href="#birdepy-gpu-functions-discrete-gpu" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="birdepy.gpu_functions.discrete_gpu">
-<code class="sig-prename descclassname">birdepy.gpu_functions.</code><code class="sig-name descname">discrete_gpu</code><span class="sig-paren">(</span><em class="sig-param">param</em>, <em class="sig-param">model</em>, <em class="sig-param">z0</em>, <em class="sig-param">t</em>, <em class="sig-param">k=1</em>, <em class="sig-param">survival=False</em>, <em class="sig-param">seed=1</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.discrete_gpu" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.gpu_functions.discrete_gpu">
+<span class="sig-prename descclassname"><span class="pre">birdepy.gpu_functions.</span></span><span class="sig-name descname"><span class="pre">discrete_gpu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survival</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.discrete_gpu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulation of continuous-time birth-and-death processes at time ‘t’
 using CUDA.</p>
 <dl class="field-list simple">
@@ -307,7 +308,7 @@ time <cite>t</cite>, generated according to <cite>model</cite>.</p>
 <p>Simulating 10 ** 8 sample paths of an M/M/inf queue with
 service rates 0.4 and arrival rate 0.2, with 10 items initially in the queue,
 observed at time 1.0:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">birdepy</span> <span class="kn">import</span> <span class="n">gpu_functions</span> <span class="k">as</span> <span class="n">bdg</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">birdepy</span> <span class="k">import</span> <span class="n">gpu_functions</span> <span class="k">as</span> <span class="n">bdg</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bdg</span><span class="o">.</span><span class="n">discrete_gpu</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span> <span class="s1">&#39;M/M/inf&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">8</span><span class="p">)</span>
 <span class="go">array([8, 6, 3, ..., 8, 7, 9], dtype=int64)</span>
 </pre></div>

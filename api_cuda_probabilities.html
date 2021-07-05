@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
@@ -32,11 +34,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -248,9 +249,9 @@
             
   <div class="section" id="birdepy-gpu-functions-probability-gpu">
 <h1>birdepy.gpu_functions.probability_gpu()<a class="headerlink" href="#birdepy-gpu-functions-probability-gpu" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="birdepy.gpu_functions.probability_gpu">
-<code class="sig-prename descclassname">birdepy.gpu_functions.</code><code class="sig-name descname">probability_gpu</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">model</em>, <em class="sig-param">k=1000000</em>, <em class="sig-param">seed=1</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.probability_gpu" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.gpu_functions.probability_gpu">
+<span class="sig-prename descclassname"><span class="pre">birdepy.gpu_functions.</span></span><span class="sig-name descname"><span class="pre">probability_gpu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.probability_gpu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 generated using Monte Carlo on a GPU.</p>
 <dl class="field-list simple">
@@ -307,7 +308,7 @@ coordinate corresponds to <cite>zt</cite></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">birdepy</span> <span class="kn">import</span> <span class="n">gpu_functions</span> <span class="k">as</span> <span class="n">bdg</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">birdepy</span> <span class="k">import</span> <span class="n">gpu_functions</span> <span class="k">as</span> <span class="n">bdg</span>
 <span class="gp">... </span><span class="n">param</span> <span class="o">=</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="gp">... </span><span class="n">t</span> <span class="o">=</span> <span class="mf">0.2</span>
 <span class="gp">... </span><span class="n">z0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
