@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>birdepy.gpu_functions.probability_gpu() &mdash; BirDePy 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/Birdepy_favicon_3.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="birdepy.gpu_functions.discrete_gpu()" href="api_cuda_simulate.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/Birdepy_logo_1_resized.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Theoretical Background</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="processes.html">Birth-and-death Processes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processes.html#custom-models">Custom Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="probabilities.html">Transition Probabilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#matrix-exponential">Matrix exponential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#uniformization">Uniformization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#erlangization">Erlangization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#inverse-laplace-transform">Inverse Laplace transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#diffusion-approximation">Diffusion approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#ornstein-uhlenbeck-approximation">Ornstein–Uhlenbeck approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#saddle-point-approximation">Saddle-point approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#simulation">Simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="estimation.html">Parameter Estimation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#direct-numerical-maximization">Direct Numerical Maximization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#expectation-maximization">Expectation Maximization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#expectation-step-techniques">Expectation Step Techniques</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#acceleration">Acceleration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#least-squares-estimation">Least Squares Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#approximate-bayesian-computation">Approximate Bayesian Computation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#customized-distance">Customized Distance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#known-parameters">Known Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#parameter-constraints">Parameter Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#confidence-regions">Confidence Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#continuously-observed-data">Continuously Observed Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#optimization-options">Optimization Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact-simulation">Exact Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping">tau Leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-leaping">Galton-Watson Leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Core Functions API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_probability.html">birdepy.probability()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-da">birdepy.probability(method=’da’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-erlang">birdepy.probability(method=’Erlang’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-expm">birdepy.probability(method=’expm’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwa">birdepy.probability(method=’gwa’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwasa">birdepy.probability(method=’gwasa’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-ilt">birdepy.probability(method=’ilt’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-oua">birdepy.probability(method=’oua’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-sim">birdepy.probability(method=’sim’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-uniform">birdepy.probability(method=’uniform’)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_estimate.html">birdepy.estimate()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-abc">birdepy.estimate(framework=’abc’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-dnm">birdepy.estimate(framework=’dnm’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em">birdepy.estimate(framework=’em’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-lse">birdepy.estimate(framework=’lse’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-scheme-continuous">birdepy.estimate(scheme=’continuous’)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_discrete.html">birdepy.simulate.discrete()</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_continuous.html">birdepy.simulate.continuous()</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_forecast.html">birdepy.forecast()</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CUDA Functions API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_simulate.html">birdepy.gpu_functions.discrete_gpu()</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">birdepy.gpu_functions.probability_gpu()</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BirDePy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>birdepy.gpu_functions.probability_gpu()</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/api_cuda_probabilities.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="birdepy-gpu-functions-probability-gpu">
+<h1>birdepy.gpu_functions.probability_gpu()<a class="headerlink" href="#birdepy-gpu-functions-probability-gpu" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="birdepy.gpu_functions.probability_gpu">
+<code class="sig-prename descclassname">birdepy.gpu_functions.</code><code class="sig-name descname">probability_gpu</code><span class="sig-paren">(</span><em class="sig-param">z0</em>, <em class="sig-param">zt</em>, <em class="sig-param">t</em>, <em class="sig-param">param</em>, <em class="sig-param">model</em>, <em class="sig-param">k=1000000</em>, <em class="sig-param">seed=1</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.probability_gpu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transition probabilities for continuous-time birth-and-death processes
+generated using Monte Carlo on a GPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z0</strong> (<em>array_like</em>) – States of birth-and-death process at time 0.</p></li>
+<li><p><strong>zt</strong> (<em>array_like</em>) – States of birth-and-death process at time(s) <cite>t</cite>.</p></li>
+<li><p><strong>t</strong> (<em>array_like</em>) – Elapsed time(s) (if has size greater than 1, then must be increasing).</p></li>
+<li><p><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
+process.
+Array of real elements of size (n,), where ‘n’ is the number of
+parameters.</p></li>
+<li><p><strong>model</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
+<blockquote>
+<div><blockquote>
+<div><ul>
+<li><p>’Verhulst 1’ (default)</p></li>
+<li><p>’Verhulst 2 (SIS)’</p></li>
+<li><p>’Ricker’</p></li>
+<li><p>’Beverton-Holt’</p></li>
+<li><p>’Hassell’</p></li>
+<li><p>’M-SS’</p></li>
+<li><p>’Moran’</p></li>
+<li><p>’pure-birth’</p></li>
+<li><p>’pure-death’</p></li>
+<li><p>’Poisson’</p></li>
+<li><p>’linear’</p></li>
+<li><p>’linear-migration’</p></li>
+<li><p>’M-SS’</p></li>
+<li><p>’M/M/inf’</p></li>
+<li><p>’loss-system’</p></li>
+</ul>
+</div></blockquote>
+<p>Custom models are not available for this function. See <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>
+for custom models.</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum number of samples used to generate each probability estimate.
+(Actual number of samples will usually be higher due to the way memory
+is allocated on GPU.)
+The total number of samples used will be at least z0.size * k.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for simulations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>transition_probability</strong> – An array of transition probabilities. If t has size bigger than 1,
+then the first coordinate corresponds to <cite>t</cite>, the second coordinate
+corresponds to <cite>z0</cite> and the third coordinate corresponds to <cite>zt</cite>.
+Otherwise the first coordinate corresponds to <cite>z0</cite> and the second
+coordinate corresponds to <cite>zt</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">birdepy</span> <span class="kn">import</span> <span class="n">gpu_functions</span> <span class="k">as</span> <span class="n">bdg</span>
+<span class="gp">... </span><span class="n">param</span> <span class="o">=</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.002</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">t</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="gp">... </span><span class="n">z0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="gp">... </span><span class="n">zt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">55</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span><span class="mi">60</span><span class="p">]</span>
+<span class="gp">... </span><span class="n">bdg</span><span class="o">.</span><span class="n">probability_gpu</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">zt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="s1">&#39;Moran&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">array([[3.09160e-02, 5.43120e-02, 8.09760e-02, 1.05968e-01, 1.23203e-01,1.27453e-01],</span>
+<span class="go">   [0.00000e+00, 0.00000e+00, 0.00000e+00, 0.00000e+00, 0.00000e+00, 6.30000e-05]])</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>This function requires a compatible Nvidia graphics processing unit and
+drivers to be installed. For more information see <span class="xref std std-ref">here</span>.</p>
+<p>If you use this function for published work, then please cite [1].</p>
+<p>For a text book treatment on the theory of birth-and-death processes
+see [2].</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id1"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id2"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api_cuda_simulate.html" class="btn btn-neutral float-left" title="birdepy.gpu_functions.discrete_gpu()" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Sophie Hautphenne and Brendan Patch.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

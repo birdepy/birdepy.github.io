@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Transition Probabilities &mdash; BirDePy 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/Birdepy_favicon_3.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parameter Estimation" href="estimation.html" />
+    <link rel="prev" title="Birth-and-death Processes" href="processes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/Birdepy_logo_1_resized.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Theoretical Background</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="processes.html">Birth-and-death Processes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processes.html#custom-models">Custom Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Transition Probabilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#matrix-exponential">Matrix exponential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uniformization">Uniformization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#erlangization">Erlangization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inverse-laplace-transform">Inverse Laplace transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#diffusion-approximation">Diffusion approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ornstein-uhlenbeck-approximation">Ornstein–Uhlenbeck approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#saddle-point-approximation">Saddle-point approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation">Simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="estimation.html">Parameter Estimation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#direct-numerical-maximization">Direct Numerical Maximization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#expectation-maximization">Expectation Maximization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#expectation-step-techniques">Expectation Step Techniques</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#acceleration">Acceleration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#least-squares-estimation">Least Squares Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#approximate-bayesian-computation">Approximate Bayesian Computation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#customized-distance">Customized Distance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#known-parameters">Known Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#parameter-constraints">Parameter Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#confidence-regions">Confidence Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#continuously-observed-data">Continuously Observed Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#optimization-options">Optimization Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact-simulation">Exact Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping">tau Leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-leaping">Galton-Watson Leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Core Functions API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_probability.html">birdepy.probability()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-da">birdepy.probability(method=’da’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-erlang">birdepy.probability(method=’Erlang’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-expm">birdepy.probability(method=’expm’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwa">birdepy.probability(method=’gwa’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwasa">birdepy.probability(method=’gwasa’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-ilt">birdepy.probability(method=’ilt’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-oua">birdepy.probability(method=’oua’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-sim">birdepy.probability(method=’sim’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-uniform">birdepy.probability(method=’uniform’)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_estimate.html">birdepy.estimate()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-abc">birdepy.estimate(framework=’abc’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-dnm">birdepy.estimate(framework=’dnm’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em">birdepy.estimate(framework=’em’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-lse">birdepy.estimate(framework=’lse’)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-scheme-continuous">birdepy.estimate(scheme=’continuous’)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_discrete.html">birdepy.simulate.discrete()</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_continuous.html">birdepy.simulate.continuous()</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_forecast.html">birdepy.forecast()</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CUDA Functions API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_simulate.html">birdepy.gpu_functions.discrete_gpu()</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_probabilities.html">birdepy.gpu_functions.probability_gpu()</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BirDePy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Transition Probabilities</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/probabilities.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transition-probabilities">
+<h1>Transition Probabilities<a class="headerlink" href="#transition-probabilities" title="Permalink to this headline">¶</a></h1>
+<p>Explicit solutions are not known for the probability of <span class="math notranslate nohighlight">\(\{Z(t)=j\}\)</span> conditional on <span class="math notranslate nohighlight">\(\{Z(0)=i\}\)</span> for general population-size-dependent birth-and-death processes.
+Specifically, no explicit expression exists for <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta) = \mathbb P(Z(t)=j \mid Z(0)=i)\)</span>.
+This page details the nine methods to approximate this probability which are implemented in the BirDePy function <a class="reference internal" href="api_probability.html#birdepy-probability"><span class="std std-ref">birdepy.probability()</span></a>.</p>
+<p>Three methods are based on truncated transition matrices, four are approximations, one is a transform method and the final is based on simulation.</p>
+<p>To obtain transition probabilities in BirDePy simply call <a class="reference internal" href="api_probability.html#birdepy-probability"><span class="std std-ref">birdepy.probability()</span></a> (after importing BirDePy). For example, to obtain an array containing the probabilities of transitioning from <span class="math notranslate nohighlight">\(Z(0)=20\)</span> to <span class="math notranslate nohighlight">\(Z(1)=25\)</span> for the ‘Verhulst 2 (SIS)’ model with <span class="math notranslate nohighlight">\(\boldsymbol \theta = (0.8, 0.4, 40)\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst 2 (SIS)&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;expm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which returns:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.03688128</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>The method can be replaced by one of the nine choices described on this page.
+Note that output is an array since it is possible to input initial and final populations as lists.</p>
+<div class="section" id="matrix-exponential">
+<h2>Matrix exponential<a class="headerlink" href="#matrix-exponential" title="Permalink to this headline">¶</a></h2>
+<p>Consider the matrix <span class="math notranslate nohighlight">\(Q(\boldsymbol \theta)=\big(q_{i,j}(\boldsymbol \theta); i,j\in\mathcal S\big)\)</span>, with <span class="math notranslate nohighlight">\(q_{i,j}(\boldsymbol \theta)\)</span> representing the rate of transition of a process from state <span class="math notranslate nohighlight">\(i\)</span> to state <span class="math notranslate nohighlight">\(j\)</span>, for <span class="math notranslate nohighlight">\(i\ne j\)</span>, and <span class="math notranslate nohighlight">\(q_{i,i}(\boldsymbol \theta)=-q_i(\boldsymbol \theta)\)</span>, where <span class="math notranslate nohighlight">\(q_i(\boldsymbol \theta) = \sum_{i\ne j} q_{i,j}(\boldsymbol \theta)\)</span> is the total rate at which the process departs state <span class="math notranslate nohighlight">\(i\)</span>.
+Let <span class="math notranslate nohighlight">\(P(t; \boldsymbol \theta) = \big(p_{i,j}(t;\boldsymbol\theta); i,j\in\mathcal S\big)\)</span> denote the matrix having entries corresponding to the probability of the process moving from state <span class="math notranslate nohighlight">\(i\)</span> to state <span class="math notranslate nohighlight">\(j\)</span> in elapsed time <span class="math notranslate nohighlight">\(t\)</span>.
+When the largest possible population size is finite (i.e., <span class="math notranslate nohighlight">\(|\mathcal S|&lt;\infty\)</span>) the matrix <span class="math notranslate nohighlight">\(P(t; \boldsymbol \theta)\)</span> satisfies the first-order differential equation</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\frac{d}{d t} P(t; \boldsymbol \theta) = P(t; \boldsymbol \theta)Q(\boldsymbol \theta)\)</span>,</p>
+</div></blockquote>
+<p>known as the Kolmogorov forward equation.
+This equation has solution given by the matrix exponential <span class="math notranslate nohighlight">\(P(t; \boldsymbol \theta) = \exp\big(Q(\boldsymbol \theta)t\big)\)</span>.
+When the population size is unbounded and <span class="math notranslate nohighlight">\(Q(\boldsymbol \theta)\)</span> therefore has an  infinite number of rows and columns, BirDePy evaluates <span class="math notranslate nohighlight">\(P(t; \boldsymbol \theta)\)</span> with upper and lower truncation levels specified by argument <cite>z_trunc</cite>.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-expm"><span class="std std-ref">birdepy.probability(method=’expm’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="uniformization">
+<h2>Uniformization<a class="headerlink" href="#uniformization" title="Permalink to this headline">¶</a></h2>
+<p>Recall the matrix <span class="math notranslate nohighlight">\(Q(\boldsymbol\theta)\)</span> containing the transition rates of <span class="math notranslate nohighlight">\(Z\)</span> defined above.
+For a finite largest possible population size <span class="math notranslate nohighlight">\(|\mathcal S|&lt;\infty\)</span>, let <span class="math notranslate nohighlight">\(q^\star=\max_i |q_i(\boldsymbol\theta)|\)</span>.
+Then consider the discrete time transition matrix <span class="math notranslate nohighlight">\(A(\boldsymbol\theta) = Q(\boldsymbol\theta)/q^\star+I\)</span>.
+The transition probability vector <span class="math notranslate nohighlight">\(\boldsymbol p_i(t; \boldsymbol \theta) = (p_{i,j}(t;\boldsymbol \theta), j\in\mathcal S)\)</span> is equal to</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol p_i(t; \boldsymbol \theta) = \sum_{k=0}^\infty \exp(-q^\star t) \frac{(q^\star t)^k}{k!} \boldsymbol w(\boldsymbol\theta)^k,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol w(\boldsymbol\theta)^0=\boldsymbol p_i(0; \boldsymbol \theta)\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol w(\boldsymbol\theta)^n = \boldsymbol w(\boldsymbol\theta)^{n-1}A(\boldsymbol\theta)\)</span>.
+This infinite series is truncated at a number of terms specified by argument <cite>k</cite>.
+BirDePy also truncates <span class="math notranslate nohighlight">\(Q(\boldsymbol\theta)\)</span> with upper and lower truncation levels specified by argument <cite>z_trunc</cite>.</p>
+<p>This method is discussed at length in <a class="reference internal" href="#grassman1977" id="id1"><span>[Grassman1977]</span></a> and <a class="reference internal" href="#vandijketal2018" id="id2"><span>[vanDijkEtAl2018]</span></a>.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-uniform"><span class="std std-ref">birdepy.probability(method=’uniform’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="erlangization">
+<h2>Erlangization<a class="headerlink" href="#erlangization" title="Permalink to this headline">¶</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(T\)</span> be an exponentially distributed random variable with mean <span class="math notranslate nohighlight">\(\eta^{-1}&gt;0\)</span>.
+Define</p>
+<div class="math notranslate nohighlight">
+\[r^{(\eta)}_{i,j}(\boldsymbol\theta) = \mathbb P_{\boldsymbol\theta}(Z(T) = j\mid Z(0)= i)\]</div>
+<p>Upon conditioning on the first transition of <span class="math notranslate nohighlight">\(Z\)</span> and the expiry of the time :math`T`, the transition probabilities from <span class="math notranslate nohighlight">\(Z(0)=i\)</span> to <span class="math notranslate nohighlight">\(Z(T)=j\)</span> satisfy the system of equations</p>
+<div class="math notranslate nohighlight">
+\[r^{(\eta)}_{i,j}(\boldsymbol\theta) =  \frac{\mu_i(\boldsymbol\theta)r^{(\eta)}_{i-1,j}(\boldsymbol\theta) + \lambda_i(\boldsymbol\theta)r^{(\eta)}_{i+1,j}(\boldsymbol\theta) + \eta I\{i=j\}}{\lambda_i(\boldsymbol\theta) + \mu_i(\boldsymbol\theta) + \eta},\]</div>
+<p>where <span class="math notranslate nohighlight">\(I\{A\}\)</span> evaluates to 1 when <span class="math notranslate nohighlight">\(A\)</span> is true and otherwise evaluates to 0.
+This system of equations can be reformulated and solved in terms of the generator matrix <span class="math notranslate nohighlight">\(Q(\boldsymbol\theta)\)</span> introduced earlier, leading to</p>
+<div class="math notranslate nohighlight">
+\[R(\eta, \boldsymbol\theta) = \eta\big(\eta I-Q(\boldsymbol\theta)\big)^{-1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(R(\eta, \boldsymbol\theta) = \big(r^{(\eta)}_{i,j}(\boldsymbol\theta)\big)_{i,j}\)</span> contains the solution to the previous equation.</p>
+<p>The matrix <span class="math notranslate nohighlight">\(R(\eta, \boldsymbol\theta)\)</span> can be viewed as the one-step transition probability matrix of a discrete time Markov chain embedded in <span class="math notranslate nohighlight">\(Z\)</span> at the epochs of a Poisson process with rate <span class="math notranslate nohighlight">\(\eta\)</span>.
+Therefore entry <span class="math notranslate nohighlight">\((i,j)\)</span> of the matrix <span class="math notranslate nohighlight">\(R(k/t, \boldsymbol\theta)^k\)</span> contains the probability <span class="math notranslate nohighlight">\(Z(S_{k,t})=j\)</span> conditional on <span class="math notranslate nohighlight">\(Z(0)=i\)</span> where <span class="math notranslate nohighlight">\(S_{k,t}\)</span> is an Erlang distributed random variable with rate parameter <span class="math notranslate nohighlight">\(k/t\)</span> and shape parameter <span class="math notranslate nohighlight">\(k\)</span>.
+The expected value and variance of <span class="math notranslate nohighlight">\(S_{k,t}\)</span> are respectively <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(t/k\)</span>.
+This means that as <span class="math notranslate nohighlight">\(k\to\infty\)</span> the matrix <span class="math notranslate nohighlight">\(R(k/t, \boldsymbol\theta)^k\)</span> converges to the probability transition matrix <span class="math notranslate nohighlight">\(P(t;\boldsymbol\theta) = \big(p_{i,j}(t;\boldsymbol\theta)\)</span>, i.e., for large <span class="math notranslate nohighlight">\(k\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[P(t;\boldsymbol\theta) \approx R(k/t, \boldsymbol\theta)^k.\]</div>
+<p>This method for approximating transition probabilities is discussed in <a class="reference internal" href="#asmussenetal2002" id="id3"><span>[AsmussenEtAl2002]</span></a>, <a class="reference internal" href="#mandjestaylor2016" id="id4"><span>[MandjesTaylor2016]</span></a> and <a class="reference internal" href="#stanfordetal2011" id="id5"><span>[StanfordEtAl2011]</span></a> for models related to those which are covered here.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-erlang"><span class="std std-ref">birdepy.probability(method=’Erlang’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="inverse-laplace-transform">
+<h2>Inverse Laplace transform<a class="headerlink" href="#inverse-laplace-transform" title="Permalink to this headline">¶</a></h2>
+<p>For an initial state <span class="math notranslate nohighlight">\(i \ge 0\)</span> the transition probabilities <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta)\)</span> satisfy the system of ordinary differential equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{ d p_{i,0}(t;\boldsymbol\theta)}{d t} &amp;= \mu_1 p_{i,1}(t;\boldsymbol\theta) - \lambda_0 p_{i,0}(t;\boldsymbol\theta),\\
+\frac{ d p_{i,j}(t;\boldsymbol\theta)}{d t} &amp;= \lambda_{j-1}p_{i,j-1}(t;\boldsymbol\theta) + \mu_{j+1}p_{i,j+1}(t;\boldsymbol\theta)- (\lambda_j+\mu_j)p_{i,j}(t;\boldsymbol\theta), \quad j\ge 1,\\\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(p_{i,i}(0;\boldsymbol\theta) = 1\)</span> and <span class="math notranslate nohighlight">\(p_{i,j}(0;\boldsymbol\theta)=0\)</span> for <span class="math notranslate nohighlight">\(j\ne i\)</span>.
+Let</p>
+<div class="math notranslate nohighlight">
+\[f_{i,j}(s; \boldsymbol\theta) = \mathcal L\left[p_{i,j}(t;\boldsymbol\theta)\right] = \int_0^\infty p_{i,j}(t;\boldsymbol\theta)e^{-st} d t\]</div>
+<p>be the Laplace transform of <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta)\)</span>.
+Following <a class="reference internal" href="#crawfordsuchard2012" id="id6"><span>[CrawfordSuchard2012]</span></a>, applying this transform results in the system of equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}s f_{i,0}(s; \boldsymbol \theta)-\delta_{i,0}&amp;= \mu_1 f_{i,1}(s; \boldsymbol \theta) - \lambda_0f_{i,0}(s; \boldsymbol \theta),\\
+sf_{i,j}(s; \boldsymbol \theta) -\delta_{i,j}&amp;= \lambda_{j-1}f_{i,j-1}(s; \boldsymbol \theta)+ \mu_{j+1}f_{i,j+1}(s; \boldsymbol \theta)- (\lambda_j+\mu_j)f_{i,j}(s; \boldsymbol \theta), \quad j\ge 1.\\\end{split}\]</div>
+<p>As in <a class="reference internal" href="#crawfordsuchard2012" id="id7"><span>[CrawfordSuchard2012]</span></a>, for <span class="math notranslate nohighlight">\(i=0\)</span> these equations can be rearranged to find the recurrence relations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_{0,0}(s;\boldsymbol\theta) &amp;= \frac{1}{s+\lambda_0-\mu_1\left(\frac{f_{0,1}(s;\boldsymbol\theta)}{f_{0,0}(s;\boldsymbol\theta)}\right)},\\
+\frac{f_{0,j}(s;\boldsymbol\theta)}{f_{0,j-1}(s;\boldsymbol\theta)} &amp;= \frac{\lambda_{j-1}}{s+\mu_{j-1}+\lambda_j-\mu_{j+1}\left(\frac{f_{0,j+1}(s;\boldsymbol\theta)}{f_{0,j}(s;\boldsymbol\theta)}\right)}.\end{split}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(a_1=1\)</span> and <span class="math notranslate nohighlight">\(a_j = -\lambda_{j-2}{\mu_{j-1}}\)</span> for <span class="math notranslate nohighlight">\(j\ge2\)</span>, and <span class="math notranslate nohighlight">\(b_1=s+\lambda_0\)</span> and <span class="math notranslate nohighlight">\(b_j=s+\lambda_{j-1}+\mu_{j-1}\)</span> for <span class="math notranslate nohighlight">\(j\ge2\)</span>.
+Inductively combining for <span class="math notranslate nohighlight">\(j=1,2,\dots\)</span> results in the generalized continued fraction</p>
+<div class="math notranslate nohighlight">
+\[f_{0,0}(s;\boldsymbol\theta) = \frac{a_1}{b_1+\frac{a_2}{b_2+\frac{a_3}{b_3+\cdots}}},\]</div>
+<p>which is often written more compactly as</p>
+<div class="math notranslate nohighlight">
+\[f_{0,0}(s;\boldsymbol\theta) = \frac{a_1}{b_1+}\frac{a_2}{b_2+}\frac{a_3}{b_3+}\cdots.\]</div>
+<p>In BirDePy this exact expression for the Laplace transform of <span class="math notranslate nohighlight">\(p_{0,0}(t;\boldsymbol\theta)\)</span> is approximated using the modified Lentz algorithm with a (user adjustable) error tolerance of <span class="math notranslate nohighlight">\(10^{-6}\)</span>.
+Moreover, by combining the above <span class="math notranslate nohighlight">\(f_{i,j}(s;\boldsymbol\theta)\)</span> (the Laplace transform of <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta)\)</span>) for <span class="math notranslate nohighlight">\(i,j&gt;0\)</span> can be derived in continued fraction form as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left(\prod_{k=j+1}^i\mu_k\right)\frac{B_j(s)}{B_{i+1}(s)+}\frac{B_i(s)a_{i+2}}{b_{i+2}+}\frac{a_{i+3}}{b_{i+3}+}\cdots,\quad j \le i,\\
+\left(\prod_{k=i}^{j-1}\lambda_k\right) \frac{B_i(s)}{B_{j+1}(s)+}\frac{B_j(s)a_{j+1}}{b_{j+2}+}\frac{a_{j+3}}{b_{j+3}+}\cdots, \quad i \le j,\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(B_k=b_kB_{k-1}+a_kB_{k-2}\)</span> with <span class="math notranslate nohighlight">\(B_0=1\)</span> and <span class="math notranslate nohighlight">\(B_1=b_1\)</span> (see <a class="reference internal" href="#crawfordsuchard2012" id="id8"><span>[CrawfordSuchard2012]</span></a>).
+BirDePy also evaluates this expression using the modified Lentz algorithm.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-ilt"><span class="std std-ref">birdepy.probability(method=’ilt’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="diffusion-approximation">
+<h2>Diffusion approximation<a class="headerlink" href="#diffusion-approximation" title="Permalink to this headline">¶</a></h2>
+<p>Define <span class="math notranslate nohighlight">\(Z^{(r)}\)</span> to be a version <span class="math notranslate nohighlight">\(Z\)</span> which evolves according to transition rates <span class="math notranslate nohighlight">\(\lambda_z^{(r)}(\boldsymbol\theta) = r\lambda_{z/r}(\boldsymbol\theta)\)</span> and <span class="math notranslate nohighlight">\(\mu_z^{(r)}(\boldsymbol\theta) = r\mu_{z/r}(\boldsymbol\theta)\)</span>.
+Set <span class="math notranslate nohighlight">\(Z^{(r)}(0)=i\)</span>.
+For <span class="math notranslate nohighlight">\(s \in[0, t]\)</span> define the diffusion scaled process</p>
+<div class="math notranslate nohighlight">
+\[\tilde Z(s) = \sqrt{r}\left(\hat Z^{(r)}(s) - \hat z(s; \boldsymbol\theta)\right),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat Z^{(r)}\)</span> is defined as <span class="math notranslate nohighlight">\(\hat Z^{(r)} = \left(\frac{1}{r} Z^{(r)}(s),~s\in[0,t]\right)\)</span> and <span class="math notranslate nohighlight">\(\hat z(t; \boldsymbol\theta)\)</span> satisfies</p>
+<div class="math notranslate nohighlight">
+\[\frac{ d }{d s}\hat z(s;\boldsymbol\theta) = \lambda_{\hat z(s;\boldsymbol\theta)}(\boldsymbol\theta) - \mu_{\hat z(s;\boldsymbol\theta)}(\boldsymbol\theta), \quad s\in[0, t],\]</div>
+<p>with <span class="math notranslate nohighlight">\(\hat z(0;\boldsymbol\theta) = i\)</span>.</p>
+<p>Loosely speaking, Theorem~3.5 in <a class="reference internal" href="#kurtz1971" id="id9"><span>[Kurtz1971]</span></a> can be used to show that <span class="math notranslate nohighlight">\(\tilde Z\)</span> converges weakly in the space of right-continuous left-hand limits functions on <span class="math notranslate nohighlight">\([0, t]\)</span> to a zero-mean Gaussian diffusion with variance</p>
+<div class="math notranslate nohighlight">
+\[\sigma^2(s) := \text{Var}(\tilde Z(s)) = M(s;\boldsymbol\theta)^2\int_0^s \left(\lambda_{\hat z(\tau; \boldsymbol\theta)}(\boldsymbol\theta) + \mu_{\hat z(\tau; \boldsymbol\theta)}(\boldsymbol\theta)\right) M(\tau;\boldsymbol\theta)^{-2} d \tau,\quad s\in[0, t],\]</div>
+<p>where <span class="math notranslate nohighlight">\(M(s;\boldsymbol\theta):= \exp\left(\int_0^s B(\tau;\boldsymbol\theta)d \tau\right)\)</span> with <span class="math notranslate nohighlight">\(B(\tau;\boldsymbol\theta) = H\big(\hat z(\tau;\boldsymbol\theta);\boldsymbol\theta\big)\)</span> defined in terms of</p>
+<div class="math notranslate nohighlight">
+\[H(z;\boldsymbol\theta) = \frac{d}{d z}\Big(\lambda_z(\boldsymbol\theta) - \mu_z(\boldsymbol\theta)\Big).\]</div>
+<p>In particular this implies that <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta)\)</span> can be approximated by</p>
+<div class="math notranslate nohighlight">
+\[\tilde p_{i, j}(t;\boldsymbol\theta) = \frac{1}{\sigma(t)\sqrt{2\pi}} \exp\left\{-\frac{1}{2}\left(\frac{j-\hat z(t; \boldsymbol\theta)}{\sigma(t)}\right)^2\right\},\]</div>
+<p>i.e., by the density of a normally distributed random variable with mean <span class="math notranslate nohighlight">\(\hat z(t; \boldsymbol\theta)\)</span> and variance <span class="math notranslate nohighlight">\(\sigma^2(t)\)</span> as given above.
+Observe that we take <span class="math notranslate nohighlight">\(r=1\)</span> since for this value of the scaling parameter the original model of interest and the diffusion scaled model are the same.</p>
+<p>This approach to approximating transition probabilities is also discussed in <a class="reference internal" href="#rossetal2009" id="id10"><span>[RossEtAl2009]</span></a>.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-da"><span class="std std-ref">birdepy.probability(method=’da’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="ornstein-uhlenbeck-approximation">
+<h2>Ornstein–Uhlenbeck approximation<a class="headerlink" href="#ornstein-uhlenbeck-approximation" title="Permalink to this headline">¶</a></h2>
+<p>The diffusion approximation can be substantially simplified if it is assumed that <span class="math notranslate nohighlight">\(Z\)</span> is fluctuating about a steady state point <span class="math notranslate nohighlight">\(z_{\text{eq}}\)</span> of <span class="math notranslate nohighlight">\(\hat z(\cdot; \boldsymbol\theta)\)</span>.
+Such a point occurs when the birth rate is equal to the death rate, i.e., <span class="math notranslate nohighlight">\(z_{\text{eq}}\)</span> satisfies</p>
+<div class="math notranslate nohighlight">
+\[\lambda_{z_{\text{eq}}}(\boldsymbol\theta) - \mu_{z_{\text{eq}}}(\boldsymbol\theta) = 0.\]</div>
+<p>In this case, as argued in <a class="reference internal" href="#rossetal2006" id="id11"><span>[RossEtAl2006]</span></a>, <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta)\)</span> can be approximated by</p>
+<div class="math notranslate nohighlight">
+\[\tilde p_{i, j}(t;\boldsymbol\theta) = \frac{1}{\sqrt{2\pi\tilde\sigma^2}} \exp\left\{-\frac{1}{2\tilde\sigma^2}\left(j-\tilde z\right)^2\right\},\]</div>
+<p>that is, by a normally distributed random variable with mean and variance given respectively by</p>
+<div class="math notranslate nohighlight">
+\[\tilde z = z_{\text{eq}} + e^{H(z_{\text{eq}};\boldsymbol\theta)t}(i - z_{\text{eq}})\quad\text{and}\quad\tilde\sigma^2 = \frac{\lambda_{z_{\text{eq}}}(\boldsymbol\theta) + \mu_{z_{\text{eq}}}(\boldsymbol\theta)}{2H(z_{\text{eq}};\boldsymbol\theta)}\left(e^{2H(z_{\text{eq}};\boldsymbol\theta)t}-1\right).\]</div>
+<p>This method assumes that <span class="math notranslate nohighlight">\(z_{\text{eq}}\)</span> is asymptotically stable and as such favors values of <span class="math notranslate nohighlight">\(z_{\text{eq}}\)</span> that minimize <span class="math notranslate nohighlight">\(H(z_{\text{eq}};\boldsymbol\theta)\)</span>.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-oua"><span class="std std-ref">birdepy.probability(method=’oua’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="galton-watson-approximation">
+<h2>Galton–Watson approximation<a class="headerlink" href="#galton-watson-approximation" title="Permalink to this headline">¶</a></h2>
+<p>Consider the per-individual birth rates <span class="math notranslate nohighlight">\(\mathring \lambda(\boldsymbol\theta) = \frac{1}{i}\lambda_{i}(\boldsymbol\theta)\)</span> and per-individual death rates <span class="math notranslate nohighlight">\(\mathring \mu(\boldsymbol\theta) = \frac{1}{i}\mu_{i}(\boldsymbol\theta)\)</span>.
+This approach approximates the population-size-dependent process <span class="math notranslate nohighlight">\(Z\)</span> by a process with linear birth-and-death rates <span class="math notranslate nohighlight">\(\mathring \lambda(\boldsymbol\theta)z\)</span> and <span class="math notranslate nohighlight">\(\mathring \mu(\boldsymbol\theta)z\)</span>.</p>
+<p>This means that <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta)\)</span> can be approximated by <span class="math notranslate nohighlight">\(\mathring p_{i,j}(t;\boldsymbol\theta) = \beta_1(\boldsymbol\theta)^{j}\)</span> for <span class="math notranslate nohighlight">\(j=0\)</span>, and for <span class="math notranslate nohighlight">\(j \ge 1\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mathring p_{i,j}(t;\boldsymbol\theta) = \sum_{k=\max(0, i-j)}^{i-1} \binom{i}{k} \binom{j -1}{i-k-1} \beta_{1}(\boldsymbol\theta)^k\Big[\big\{1-\beta_{1}(\boldsymbol\theta)\big\}\big\{1-\beta_{2}(\boldsymbol\theta)\big\}\Big]^{j-k} \beta_{2}(\boldsymbol\theta)^{j-i+k},\]</div>
+<p>where if <span class="math notranslate nohighlight">\(\mathring \lambda(\boldsymbol\theta)\ne \mathring \mu(\boldsymbol\theta)\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[\beta_{1}(\boldsymbol\theta) = \frac{\mathring \mu(\boldsymbol\theta)\Big(\exp\big\{\big[\mathring \lambda(\boldsymbol\theta)-\mathring \mu(\boldsymbol\theta)\big]t\big\}-1\Big)}{\mathring \lambda(\boldsymbol\theta)\exp\big\{\big[\mathring \lambda(\boldsymbol\theta)-\mathring \mu(\boldsymbol\theta)\big]t\big\}-\mathring \mu(\boldsymbol\theta)}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\beta_{2}(\boldsymbol\theta) = \frac{\mathring \lambda(\boldsymbol\theta) \beta_{1}(\boldsymbol\theta)}{\mathring \mu(\boldsymbol\theta)},\]</div>
+<p>while if <span class="math notranslate nohighlight">\(\mathring \lambda(\boldsymbol\theta) = \mathring \mu(\boldsymbol\theta)\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[\beta_{1}(\boldsymbol\theta) = \beta_{2}(\boldsymbol\theta) = \frac{\mathring \lambda(\boldsymbol\theta) t}{1+ \mathring \lambda(\boldsymbol\theta)t}.\]</div>
+<p>Linear birth-and-death processes are discussed at length in <a class="reference internal" href="#guttorp1991" id="id12"><span>[Guttorp1991]</span></a>.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-gwa"><span class="std std-ref">birdepy.probability(method=’gwa’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="saddle-point-approximation">
+<h2>Saddle-point approximation<a class="headerlink" href="#saddle-point-approximation" title="Permalink to this headline">¶</a></h2>
+<p>The two binomial coefficients above may lead to numerical difficulties as <span class="math notranslate nohighlight">\(i\)</span> or <span class="math notranslate nohighlight">\(j\)</span> become large.
+The saddlepoint approximation to <span class="math notranslate nohighlight">\(\mathring p\)</span> developed in <a class="reference internal" href="#davisonetal2020" id="id13"><span>[DavisonEtAl2020]</span></a> overcomes this shortcoming.
+Following this, approximate <span class="math notranslate nohighlight">\(Z(t)\)</span> conditional on <span class="math notranslate nohighlight">\(Z(0)=i\)</span> discrete random variable <span class="math notranslate nohighlight">\(Y\)</span> with probability density <span class="math notranslate nohighlight">\(\mathring p_{i,j}(\boldsymbol \theta)\)</span>.
+The saddlepoint approximation (see <a class="reference internal" href="#butler2007" id="id14"><span>[Butler2007]</span></a>) to <span class="math notranslate nohighlight">\(\mathring p_{i,j}(\boldsymbol \theta)\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\mathring p^{(s)}_{i,j}(\boldsymbol \theta) = \frac{1}{\sqrt{2\pi K''(s^*; \boldsymbol \theta)}}\exp\big(K(s^*; \boldsymbol \theta)- s^*j\big),\]</div>
+<p>where <span class="math notranslate nohighlight">\(K(s; \boldsymbol \theta) = \log\mathbb E\exp\big(Y s\big)\)</span> is the cumulant generating function of <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(s^*\)</span> satisfies <span class="math notranslate nohighlight">\(\frac{d}{d s} K(s^*; \boldsymbol \theta) = j\)</span>.</p>
+<p>Following <a class="reference internal" href="#davisonetal2020" id="id15"><span>[DavisonEtAl2020]</span></a> let <span class="math notranslate nohighlight">\(\lambda = \mathring \lambda(\boldsymbol\theta)\)</span> and <span class="math notranslate nohighlight">\(\mu = \mathring \mu(\boldsymbol\theta)\)</span>, for <span class="math notranslate nohighlight">\(j &gt; 0\)</span> (otherwise <span class="math notranslate nohighlight">\(\mathring p_{i,j}(t;\boldsymbol\theta) = \beta_{1}(\boldsymbol\theta)^{i}\)</span> can be used directly), when <span class="math notranslate nohighlight">\(\lambda \ne \mu\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mathring p^{(s)}_{i,j}(\boldsymbol \theta) = \frac{1}{w^{j}\sqrt{2\pi i}}
+\left(
+\frac{\mu-\lambda w + \mu (w-1)m}{\mu-\lambda w + \lambda(w-1)m}\right)^{i}
+\left(-\frac{(m-1)mw(\lambda-\mu)^2\big\{-\lambda^2 w^2 + \lambda m \mu (w^2-1)+\mu^2\big\}}
+{\big\{\lambda[m(w-1)-w]+\mu\big\}^2\big\{\lambda w + \mu [-m w + m -1]\big\}^2}
+\right)^{-1/2}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}w &amp;= \frac{-b+\sqrt{b^2-4ac}}{2a},\\
+a &amp;= \lambda(m-1)(\lambda-\mu m),\\
+b &amp;= 2\lambda\mu\{1+m^2-m-(i/j)m\}+m(\lambda^2+\mu^2)\big\{(i/j)-1\big\},\\
+c &amp;= \mu\big\{m-1\big\}\big\{\mu-\lambda m\big\},\\
+m &amp;= \exp\big((\lambda-\mu)t\big),\end{split}\]</div>
+<p>and for <span class="math notranslate nohighlight">\(\lambda=\mu\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mathring p^{(s)}_{i,j}(\boldsymbol \theta) = \frac{1}{w^{j}\sqrt{2\pi i}}
+\left(
+\frac{\lambda t (1-w)+w}{1-\lambda t(w-1)}
+\right)^{i}
+\left(
+\frac{\lambda t w\big(-\lambda t w^2 + \lambda t + w^2 + 1\big)}
+{\big\{\lambda t ( w-1) - 1\}^2\big\{-\lambda t w + \lambda t + w\big\}^2}
+\right)^{-1/2},\]</div>
+<p>where <span class="math notranslate nohighlight">\(w\)</span> has the same form but now with</p>
+<div class="math notranslate nohighlight">
+\[a = \lambda t-(\lambda t)^2, \quad b = 2(\lambda t)^2+(i/j)-1, \quad\text{and}\quad c=-\lambda t - (\lambda t)^2.\]</div>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-gwasa"><span class="std std-ref">birdepy.probability(method=’gwasa’)</span></a> for the implementation of this method in BirDePy.</p>
+</div>
+<div class="section" id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<p>Using <code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate()</span></code> it is possible to obtain <span class="math notranslate nohighlight">\(k\)</span> realizations of <span class="math notranslate nohighlight">\(Z(t)\)</span> conditional on <span class="math notranslate nohighlight">\(Z(0)=i\)</span>.
+The proportion of these realisations which equal <span class="math notranslate nohighlight">\(j\)</span> can be used to approximate the transition probability. That is,</p>
+<div class="math notranslate nohighlight">
+\[p_{i,j}(\boldsymbol \theta) \approx \frac{ \sum_{l=1}^k I\{\hat Z_l(t)\}}{k}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat Z_l(t)\)</span> are simulated realisations of <span class="math notranslate nohighlight">\(Z(t)\)</span> and <span class="math notranslate nohighlight">\(I\{A\}\)</span> evaluates to 1 when <span class="math notranslate nohighlight">\(A\)</span> is true and otherwise evaluates to 0.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-sim"><span class="std std-ref">birdepy.probability(method=’sim’)</span></a> and <a class="reference internal" href="api_cuda_probabilities.html#birdepy-gpu-functions-probability-gpu"><span class="std std-ref">birdepy.gpu_functions.probability_gpu()</span></a> for the implementations of this method in BirDePy.</p>
+<dl class="citation">
+<dt class="label" id="grassman1977"><span class="brackets"><a class="fn-backref" href="#id1">Grassman1977</a></span></dt>
+<dd><p>Grassman, W., 1977. Transient solutions in Markovian queues. European Journal of Operations Research, 1(6):396–402.</p>
+</dd>
+<dt class="label" id="vandijketal2018"><span class="brackets"><a class="fn-backref" href="#id2">vanDijkEtAl2018</a></span></dt>
+<dd><p>van Dijk, N.M., van Brummelen, S.P.J. and Boucherie, R.J., 2018. Uniformization: Basics, extensions and applications, 118:8–32.</p>
+</dd>
+<dt class="label" id="asmussenetal2002"><span class="brackets"><a class="fn-backref" href="#id3">AsmussenEtAl2002</a></span></dt>
+<dd><p>Asmussen, S., Avram, F. and Usabel, M., 2002. Erlangian approximations for finite-horizon ruin probabilities, ASTIN Bulletin: The Journal of the IAA, 32(2)267–281.</p>
+</dd>
+<dt class="label" id="mandjestaylor2016"><span class="brackets"><a class="fn-backref" href="#id4">MandjesTaylor2016</a></span></dt>
+<dd><p>Mandjes, M. and Taylor, P., 2016. The running maximum of a level-dependent quasi-birth-death process, Probability in the Engineering and Informational Sciences, 30(2):212–223.</p>
+</dd>
+<dt class="label" id="stanfordetal2011"><span class="brackets"><a class="fn-backref" href="#id5">StanfordEtAl2011</a></span></dt>
+<dd><p>Stanford, D.A., Yu, K. and Ren, J., 2011. Erlangian approximation to finite time ruin probabilities in perturbed risk models, Scandinavian Actuarial Journal, 2011(1):38–58.</p>
+</dd>
+<dt class="label" id="crawfordsuchard2012"><span class="brackets">CrawfordSuchard2012</span><span class="fn-backref">(<a href="#id6">1</a>,<a href="#id7">2</a>,<a href="#id8">3</a>)</span></dt>
+<dd><p>Crawford, F.W. and Suchard, M.A. Transition probabilities for general birth-and-death processes with applications in ecology, genetics, and evolution. Journal of Mathematical Biology, 65(3):553–580.</p>
+</dd>
+<dt class="label" id="kurtz1971"><span class="brackets"><a class="fn-backref" href="#id9">Kurtz1971</a></span></dt>
+<dd><p>Kurtz, T.J., 1971. Limit theorems for sequences of jump Markov processes, Journal of Applied Probability, 8(2):344–356.</p>
+</dd>
+<dt class="label" id="rossetal2009"><span class="brackets"><a class="fn-backref" href="#id10">RossEtAl2009</a></span></dt>
+<dd><p>Ross, J.V., Pagendam, D.E., Pollett, P.K., 2009.  On parameter estimation in population models II: Multi-dimensional processes and transient dynamics, Theoretical Population Biology, 75(2-3):123–132.</p>
+</dd>
+<dt class="label" id="rossetal2006"><span class="brackets"><a class="fn-backref" href="#id11">RossEtAl2006</a></span></dt>
+<dd><p>Ross, J.V., Taimre, T., Pollett, P.K., 2006.  On parameter estimation in population models: Multi-dimensional processes and transient dynamics, Theoretical Population Biology, 70(4):498–510.</p>
+</dd>
+<dt class="label" id="guttorp1991"><span class="brackets"><a class="fn-backref" href="#id12">Guttorp1991</a></span></dt>
+<dd><p>Guttorp, P., 1991.  Statistical inference for branching processes, Vol. 122. Wiley-Interscience.</p>
+</dd>
+<dt class="label" id="davisonetal2020"><span class="brackets">DavisonEtAl2020</span><span class="fn-backref">(<a href="#id13">1</a>,<a href="#id15">2</a>)</span></dt>
+<dd><p>Davison, A.C., Hautphenne, S. and Kraus, A., 2021. Parameter estimation for discretely observed linear birth‐and‐death processes. Biometrics, 77(1), pp.186-196.</p>
+</dd>
+<dt class="label" id="butler2007"><span class="brackets"><a class="fn-backref" href="#id14">Butler2007</a></span></dt>
+<dd><p>Butler, R.W., 2007.  Saddlepoint approximations with applications (Vol. 22). Cambridge University Press.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="estimation.html" class="btn btn-neutral float-right" title="Parameter Estimation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="processes.html" class="btn btn-neutral float-left" title="Birth-and-death Processes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Sophie Hautphenne and Brendan Patch.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
