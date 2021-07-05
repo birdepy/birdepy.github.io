@@ -1,0 +1,62 @@
+=====================
+birdepy.probability()
+=====================
+
+.. currentmodule:: birdepy
+
+.. autofunction:: birdepy.probability
+
+
+birdepy.probability(method='da')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. autofunction:: birdepy.probability_da.probability_da
+
+
+
+birdepy.probability(method='Erlang')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.probability_Erlang.probability_Erlang
+
+
+birdepy.probability(method='expm')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.probability_expm.probability_expm
+
+
+birdepy.probability(method='gwa')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.probability_gwa.probability_gwa
+
+
+birdepy.probability(method='gwasa')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.probability_gwasa.probability_gwasa
+
+
+birdepy.probability(method='ilt')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.probability_ilt.probability_ilt
+
+
+birdepy.probability(method='oua')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: birdepy.probability_oua.probability_oua
+
+
+birdepy.probability(method='sim')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.probability_sim.probability_sim
+
+
+birdepy.probability(method='uniform')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.probability_uniform.probability_uniform

@@ -1,0 +1,430 @@
+====================
+Parameter Estimation
+====================
+The BirDePy function :func:`birdepy.estimate()` contains implementations of four popular parameter estimation frameworks. 
+Two of these are based on maximising the likelihood of observed data either directly (:ref:`birdepy.estimate(framework='dnm')`) or using an expectation-maximisation algorithm (:ref:`birdepy.estimate(framework='em')`). 
+The package also includes implementations of least squares estimation (:ref:`birdepy.estimate(framework='lse')`) and approximate Bayesian computation (:ref:`birdepy.estimate(framework='abc')`). 
+The frameworks are briefly described on this page. 
+
+It is assumed that the data consists of :math:`m` sample paths of :math:`Z` each with observations at specified times :math:`t_{0,k} < t_{1,k} < \dots < t_{n_k,k}` for :math:`k\in(1,\dots, m)`.
+Sample times are passed to BirDePy as a list ``t_data`` of lists where sublists :math:`k\in(1,2,\dots, m)` corresponds to observations times for list :math:`k`. 
+Similarly, population observations ``p_data`` are also passed as a list of lists with populations at the corresponding observations times.  
+If only one sample path is observed, then the outer list is not necessary. 
+On this page denote the population observed at time :math:`t_{i,j}` as :math:`z_{i,j}` and the time between observations by :math:`\Delta_{i,j} = t_{i,j} - t_{i-1,j}`. 
+The collection of all the observations and their times is written :math:`\boldsymbol z`. 
+Let :math:`p_{i,j}(t;\boldsymbol\theta) = \mathbb P(Z(t)=j \mid Z(0)=i)`. 
+
+To obtain parameter estimates in BirDePy simply call :ref:`birdepy.estimate()` (after importing BirDePy). For example, to estimate the parameters of the 'Ricker' model from yearly population census data corresponding to black robin females on the Chatham Islands who survived up to at least 1 year in the years 1972 to 1998: :: 
+
+	import birdepy as bd
+	t_data = [t for t in range(1972, 1999, 1)]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2, 2, 2], [[0,10], [0,10],[0,10]], model='Ricker', se_type='asymptotic')
+	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+
+Which displays: ::
+
+	Estimates are [0.44210365470874396, 0.12455130918493659, 0.01075165187955724] . 
+	The standard errors of these estimates are [0.09834047 0.05670574 0.00442262] . 
+	The carrying capacity is estimated as  117.82623067763707 .
+
+Note that in this analysis we put ``p0=[2,2,2]`` as an initial guess for the parameters and ``p_bounds=[[0,10], [0,10],[0,10]]`` as a reasonable space for the parameters to be estimated from. 
+
+
+Direct Numerical Maximization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A popular parameter estimation framework involves finding the parameters :math:`\boldsymbol\theta^\star` that maximize the probability of the data :math:`\boldsymbol z` under the assumed model.  
+This approach, known as maximum-likelihood-estimation (MLE), therefore aims to find the parameters that maximize the likelihood function :math:`\ell(\boldsymbol z;\boldsymbol \theta)`. 
+That is,
+
+.. math::
+
+	\boldsymbol\theta^\star := \text{argmax}_{\boldsymbol \theta}~\ell(\boldsymbol z;\boldsymbol \theta) =\text{argmax}_{\boldsymbol \theta}~\sum_{j=1}^{m}\sum_{i=1}^{n_j} \log\left(p_{z_{i-1,j}, z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)\right).
+
+In BirDePy approximations to :math:`\ell(\boldsymbol z;\boldsymbol \theta)` can be found using the approximations to :math:`p_{i,j}(t;\boldsymbol\theta)` discussed on the :ref:`Transition Probabilities` page. 
+These approximations are then numerically maximised to obtain estimates. 
+
+See :ref:`birdepy.estimate(framework='dnm')` for the implementation of this method in BirDePy. 
+
+
+Expectation Maximization
+^^^^^^^^^^^^^^^^^^^^^^^^
+Let :math:`\boldsymbol y = (Z(t), [0,T])` denote the data if continuous observation of :math:`Z` is possible over an observation period of length :math:`T`. 
+Call :math:`\boldsymbol y` the 'complete data', in contrast to :math:`\boldsymbol z` which is the 'observed' or 'incomplete' data. 
+The log-likelihood of the complete data is
+
+.. math::
+
+	\tilde\ell(\boldsymbol y ; \boldsymbol \theta) = \sum_{z=0}^\infty U_z(T)\log(\lambda_z(\boldsymbol\theta))+D_z(T)\log(\mu_z(\boldsymbol\theta)) - (\lambda_z(\boldsymbol\theta) + \mu_z(\boldsymbol\theta))H_z(T),
+
+where :math:`U_z(T)` and :math:`D_z(T)` are respectively the number of births and deaths whilst in state :math:`z` and :math:`H_z(T)` is the total time spent (holding) in state :math:`z`. 
+BirDePy is primarily focused on the setting where :math:`\boldsymbol y` is not observed, only :math:`{\boldsymbol z}` is accessible, so :math:`U_z(T)`, :math:`D_z(T)` and :math:`H_z(T)` are unknown. 
+Given a pair of observations :math:`Z(0) = z_{i-1, j}` and :math:`Z(\Delta_{i,j})=z_{i,j}`, if the parameters have values :math:`\boldsymbol\theta`, then
+
+.. math::
+
+	u_{z,i,j}(\boldsymbol\theta) &= \mathbb E[U_z(\Delta_{i,j})\mid Z(0) = z_{i,j}, Z(\Delta_{i,j}) = z_{i-1,j}] = \frac{\int_0^{\Delta_{i,j}}~p_{z_{i-1,j},z}(t;\boldsymbol\theta)~\lambda_z(\boldsymbol\theta)~p_{z+1,z_{i,j}}(\Delta_{i,j}-t;\boldsymbol\theta) d t}{p_{z_{i-1,j},z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)},\\
+	%%
+	d_{z,i,j}(\boldsymbol\theta) &= \mathbb E[D_z(\Delta_{i,j})\mid Z(0) = z_{i-1,j}, Z(\Delta_{i,j}) = z_{i,j}] = \frac{\int_0^{\Delta_{i,j}}~p_{z_{i-1,j},z}(t;\boldsymbol\theta)~\mu_z(\boldsymbol\theta)~p_{z-1,z_{i,j}}(\Delta_{i,j}-t;\boldsymbol\theta)d t}{p_{z_{i-1,j},z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)},\\
+	%%
+	h_{z,i,j}(\boldsymbol\theta) &= \mathbb E[H_z(\Delta_{i,j})\mid Z(0) = z_{i-1,j}, Z(\Delta_{i,j}) = z_{i,j}]  = \frac{\int_0^{\Delta_{i,j}}~p_{z_{i-1,j},z}(t;\boldsymbol\theta)~p_{z,z_{i,j}}(\Delta_{i,j}-t;\boldsymbol\theta)d t}{p_{z_{i-1,j},z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)}.
+
+
+With this in hand the 'surrogate likelihood function' for parameter values :math:`\boldsymbol \theta'` conditional on parameter values :math:`\boldsymbol \theta` and data :math:`\boldsymbol z` can be defined as
+
+.. math::
+
+	f(\boldsymbol \theta', \boldsymbol \theta) &= \mathbb E[\tilde\ell(\boldsymbol y;\boldsymbol \theta' )\mid\boldsymbol z, \boldsymbol \theta]\\
+	 &= \sum_{j=1}^{m}\sum_{i=1}^{n_j}\sum_{z=0}^\infty \Big\{u_{z,i,j}(\boldsymbol\theta)\log(\lambda_z(\boldsymbol\theta'))+ d_{z,i,j}(\boldsymbol\theta)\log(\mu_z(\boldsymbol\theta')) - \big(\lambda_z(\boldsymbol\theta') + \mu_z(\boldsymbol\theta')\big)h_{z,i,j}(\boldsymbol\theta) \Big\},
+
+where :math:`u_{z,i,j}(\boldsymbol\theta) = u(z,z_{i-1,j},z_{i,j},\Delta_{i,j},\boldsymbol\theta^{(k)})`, :math:`d_{z,i,j}(\boldsymbol\theta) = d(z,z_{i-1,j},z_{i,j},\Delta_{i,j},\boldsymbol\theta^{(k)})` and :math:`h_{z,i,j}(\boldsymbol\theta) = h(z,z_{i-1,j},z_{i,j},\Delta_{i,j},\boldsymbol\theta^{(k)})`.
+
+Formulating this function constitutes the 'E' step of the EM algorithm. 
+Below we detail three `techniques` for performing this task (i.e., computing the integrals above) which are implemented in :func:`birdepy.estimate()`. 
+The 'M' step of the EM algorithm consists of finding 
+
+.. math::
+
+	\boldsymbol \theta^{(k+1)} = \text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta', \boldsymbol \theta^{(k)}).
+	
+Beginning with arbitrary :math:`\boldsymbol \theta^{(0)}` the estimate follows from repeating this mapping until :math:`|\boldsymbol \theta^{(k+1)}-\boldsymbol \theta^{(k)}|` is small or a maximum number of iterations has taken place. 
+
+See :ref:`birdepy.estimate(framework='em')` for the implementation of this method in :func:`birdepy.estimate()`. 
+The implementation has two important options `technique` and `accelerator`. 
+
+Expectation Step Techniques
+---------------------------
+As discussed on the transition probability page, it is possible to compute probability transitions in terms of :ref:`matrix exponentials <Matrix exponential>`. 
+This provides :math:`P(t; \boldsymbol \theta) = \big(p_{i,j}(t;\boldsymbol\theta); i,j\in\mathcal S\big)= \exp\big(Q(\boldsymbol \theta)t\big)`. 
+Let :math:`\boldsymbol e_i` be the :math:`i`-th basis vector, then
+
+.. math::
+
+	\int_0^t p_{b,j}(t-s;\boldsymbol\theta) p_{i,a}(s;\boldsymbol\theta) d s = \boldsymbol e_{b+1} \int_0^t \exp\big(Q(\boldsymbol \theta)(t-s)\big) \boldsymbol e_{j+1}^\top\boldsymbol e_{i+1} \exp\big(Q(\boldsymbol \theta)s\big) d s \boldsymbol e_{a+1}^\top.
+
+Let :math:`G(t) = \int_0^t \exp\big(Q(\boldsymbol \theta)(t-s)\big) \boldsymbol e_{j+1}\boldsymbol e_{i+1} \exp\big(Q(\boldsymbol \theta)s\big) d s`. 
+According to [vanLoan1978]_ if 
+
+.. math::
+
+	C = \begin{bmatrix}
+			Q(\boldsymbol \theta) & \boldsymbol e_{j+1}^\top\boldsymbol e_{i+1}\\
+			0 & Q(\boldsymbol \theta)
+		\end{bmatrix},
+
+then
+
+.. math:: 
+
+	\exp(Ct) = \begin{bmatrix}
+					\cdot & G(t)\\
+					\cdot & \cdot
+				\end{bmatrix},
+
+where :math:`\cdot` denotes parts of the matrix that can be discarded. 
+Hence the relevant integrals can be computed by extracting the relevant parts of the matrix exponential :math:`\exp(Ct)`.
+This technique relies on :math:`Q(\boldsymbol \theta)` being truncated according to the argument of `z_trunc`. 
+To do this set the argument of `technique` to 'expm'. 
+
+Let :math:`\mathcal L(f)` be the Laplace transform of the function :math:`f`, and :math:`\mathcal L^{-1}` be the inverse transform. 
+Let 
+
+.. math::
+
+	f_{i,j}(s; \boldsymbol\theta) = \mathcal L\left[p_{i,j}(t;\boldsymbol\theta)\right] = \int_0^\infty p_{i,j}(t;\boldsymbol\theta)e^{-st} d t
+
+be the Laplace transform of :math:`p_{i,j}(t;\boldsymbol\theta)`. 
+As discussed at length in [CrawfordEtAl2014]_, it follows from the properties of Laplace transforms that 
+
+.. math::
+
+	\int_0^{t}~p_{i,a}(s;\boldsymbol\theta)~p_{b,j}(t-s;\boldsymbol\theta) d s &= \mathcal L^{-1}[f_{i,a}(s; \boldsymbol\theta)~f_{b,j}(s; \boldsymbol\theta)](t),\\
+
+The integrals can therefore be computed using numerical Laplace transform techniques (see `this website <https://www.inverselaplace.org/>`_ or the `mpmath package <https://mpmath.org/doc/current/calculus/inverselaplace.html>`_ or `this package <https://pypi.org/project/gwr-inversion/>`_). 
+To do this set the argument of `technique` to 'ilt'. 
+The function :func:`birdepy.estimate()` includes options for numerical Laplace inversion, as controlled by the argument to `laplace_method`. 
+
+Finally, the integrals can be approximated using numerical integration. To do this set the argument of `technique` to 'num'. 
+
+Acceleration
+------------
+The EM algorithm can exhibit slow convergence, requiring many iterations before a suitably accurate estimate is provided.  
+Each iteration may itself require substantial computational time and effort due to requiring many matrix exponential, Laplace transform inversion or integration computations. 
+To mitigate this, several schemes have been developed to accelerate the convergence rate of EM algorithms. 
+Four such accelerators are currently availabe in :func:`birdepy.estimate()`, which are discussed in a general context in [JamshidianJennrich1997]_. 
+Using optimization based ideas, these accelerators can yield substantial improvements in computation speed. 
+Recalling :math:`f` from earlier, let 
+
+.. math:: 
+
+	\tilde {\boldsymbol g}(\boldsymbol\theta) = \big[\text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta', \boldsymbol \theta)\big] - \boldsymbol \theta.
+
+This is the change in parameter values when a non-accelerated EM iteration is performed. 
+Loosely speaking, EM acceleration techniques treat :math:`\tilde g` as a generalized derivative of the likelihood function and aim to find :math:`\boldsymbol \theta^\star` such that :math:`\tilde {\boldsymbol g}(\boldsymbol\theta) = 0`. 
+In :func:`birdepy.estimate()` the argument of the kwarg `accelerator` determines which approach is used.  
+
+
+Least Squares Estimation
+^^^^^^^^^^^^^^^^^^^^^^^^
+Let :math:`m_{i}(t;\boldsymbol \theta) = \mathbb E_{\boldsymbol\theta}[Z(t) \mid Z(0) = i]` correspond to the expected movement of :math:`Z` with parameters :math:`\boldsymbol\theta` from state :math:`i`  in elapsed time :math:`t`. 
+Another approach to parameter estimation follows from choosing the parameter values :math:`\boldsymbol\theta^\dagger` that minimizes the sum of the squared differences :math:`S(\boldsymbol z;\boldsymbol \theta)` between the expected transition from :math:`z_{i-1,j}` in time :math:`\Delta_{i,j}` with the observed transitions :math:`z_{i,j}`. 
+That is,
+
+.. math::
+
+	\boldsymbol\theta^\dagger := \text{argmin}_{\boldsymbol\theta}~S(\boldsymbol z; \boldsymbol \theta) = \text{argmin}_{\boldsymbol \theta}~\sum_{j=1}^m\sum_{i=1}^{n_j} \big(z_{i,j}-m_{z_{i-1,j}}(\Delta_{i,j};\boldsymbol \theta)\big)^2. 
+
+In :func:`birdepy.estimate()` approximations to :math:`m_{z_{i-1,j}}(\Delta_{i,j};\boldsymbol \theta)` are found using the matrix exponential, by using the mean associated with the :ref:`diffusion approximation <Diffusion approximation>`, and by assuming a :ref:`linear birth-and-death process approximation <Galton--Watson approximation>`. 
+These approaches are specified by setting the argument of the kwarg `squares` respectively to 'expm', 'fm', and 'gwa'.   
+
+See :ref:`birdepy.estimate(framework='lse')` for the implementation of this method in BirDePy. 
+
+
+Approximate Bayesian Computation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The frameworks dicussed so far have relied on using approximations to unknown model properties (specifically the likelihood and expectation). 
+Approximate Bayesian computation (ABC) bypasses the need to use these model properties in the first place. 
+This framework instead repeatedly compares simulated data with the observed data to find an approximation to the likelihood function. 
+Simulations are performed according to parameters :math:`\boldsymbol \theta` sampled from a prior distribution :math:`\pi(\cdot)`. 
+Simulated data :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` consists of points :math:`\hat{z}_{i,j}(\boldsymbol \theta)` generated using :func:`birdepy.simulate.discrete()` with the arguments of `param`, `z0` and `times` set respectively to :math:`\boldsymbol\theta`, :math:`z_{i-1,j}` and :math:`\Delta_{i,j}`. 
+Given a distance measure :math:`d`, the standard ABC method (as proposed in [PritchardEtAl1999]_) consists of repeating the steps:
+
+1. Generate a parameter proposal :math:`\boldsymbol \theta` from the prior :math:`\pi(\cdot)`.
+2. Simulate observations :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` according to :math:`\boldsymbol \theta`.
+3. Accept :math:`\boldsymbol \theta` as an approximate observation from the posterior if :math:`d(\boldsymbol z, \boldsymbol z) < \epsilon`. 
+
+The steps are repeated until `k` parameter proposals are accepted. 
+The parameter estimate is then the mean of the accepted parameter proposals. 
+In :func:`birdepy.estimate()` the default distance :math:`d` between observed data :math:`\boldsymbol z` and simulated data :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` is computed as 
+
+.. math::
+
+	d(\boldsymbol z, \hat{\boldsymbol z}) = \sqrt{\frac{1}{|\boldsymbol z|}\sum_{j=1}^m\sum_{i=1}^{n_j} \big(z_{i,j}-\hat{z_{i,j}}(\boldsymbol \theta))\big)^2}. 
+
+See below for instructions on how to use a customized distance function. 
+The prior :math:`\pi(\cdot)` is taken to be a uniform distribution on the set of parameters satisfying the arguments of `p_bounds` and `con`.  
+
+The choice of :math:`\epsilon` in Step 3 above has a strong influence on the probability of a parameter proposal being accepted. 
+Larger choices of :math:`\epsilon` may allow `k` parameter proposals to be found more quickly, but this could be at the expense of accuracy. 
+Similarly, the choice of the prior :math:`\pi(\cdot)` has a major impact on performance. 
+Using methods from [BeaumontEtAl2009]_ and [MoralEtAl2012]_ in :func:`birdepy.estimate()` the standard ABC method can be applied multiple times (as determined by the argument of `its`), with dynamically determined :math:`\epsilon` and  :math:`\pi(\cdot)`. 
+At the end of each iteration a new :math:`\epsilon'` is determined from the current iterations accepted samples :math:`(\boldsymbol\theta)_{j=1}^k` such that 
+
+.. math:: 
+
+	\left\lceil\left(\sum_{j=1}^k \frac{\pi(\boldsymbol\theta_{j})}{\hat\pi_{\epsilon}(\boldsymbol\theta_{j} \mid \boldsymbol z)}I\{d(\boldsymbol z, \hat{\boldsymbol z})<\epsilon'\} \right)^{-1}\right\rceil = \frac{k}{2}, 
+
+where :math:`\epsilon` and :math:`\pi(\cdot\mid \boldsymbol z)` were the tolerance and prior used in the current iteration. 
+The prior is then updated for the next iteration to be a mixture of `c` multivariate normals truncated to satisfy the arguments of `p_bounds` and `con`.  
+
+
+Customized Distance
+-------------------
+The kwarg `distance` can be used to specify an alternative form for the distance function :math:`d`. 
+To do this a callable must be specified that takes as input a value of `epsilon` and a list of pairs :math:`[z_{i,j}, \hat{z_{i,j}}(\boldsymbol \theta)]` and returns a scalar. 
+For example, to specify 
+
+.. math::
+
+	d(\boldsymbol z, \hat{\boldsymbol z}) = \frac{1}{|\boldsymbol z|}\sum_{j=1}^m\sum_{i=1}^{n_j} \big|z_{i,j}-\hat{z_{i,j}}(\boldsymbol \theta))\big| 
+
+as a custom distance, first define a callable representing the distance: ::
+
+	def custom_distance(eps, data_pairs):
+	    data_pairs = np.array(data_pairs)
+	    dist = np.sqrt(np.sum(np.abs(data_pairs[:, 0] - data_pairs[:, 1])) / data_pairs.shape[0]) - eps
+	    return dist
+
+Then call :ref:`birdepy.estimate(framework='abc')` with `distance` utilizing the callable: :: 
+
+
+	bd.estimate(t_data, p_data, p0, p_bounds, framework='abc', distance=custom_distance)
+
+
+Known Parameters
+^^^^^^^^^^^^^^^^
+It may be the case that some of the parameters of a model are already known. 
+In this case the kwargs `known_p` and `idx_known_p` can be passed to :func:`birdepy.estimate()`. 
+The kwarg `known_p` is an ordered list of of known parameter values and `idx_known_p` is an ordered list containing the indices of the known parameters as they would be in the argument to `param` in the function :func:`birdepy.probability`. 
+For built-in models the indices of parameters corresponds to the canonical order they are given :ref:`here <Birth-and-death Processes>`. 
+
+For example, suppose that it is already known that the death rate the analysis conducted above is 0.25. 
+Then instead do this: ::
+
+	import birdepy as bd
+	t_data = [t for t in range(1972, 1999, 1)]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2, 2], [[0,10],[0,10]], model='Ricker', se_type='asymptotic', 
+			  known_p=[0.25], idx_known_p=[1])
+	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+
+Which displays: ::
+
+	Parameter estimates are [0.5463522549990415, 0.007247784869588989] . 
+	The standard errors of these estimates are [0.10016046 0.00332748] . 
+	The carrying capacity is estimated as  107.86785474489912 .
+
+Parameter Constraints
+^^^^^^^^^^^^^^^^^^^^^
+Constraints on parameters are passed to :func:`birdepy.estimate()` through the kwarg `con`. 
+This is in addition to the bounds that are passed as the argument to `p_bounds`. 
+Constraints are ultimately used in :func:`scipy.optimize.minimize()` or :func:`scipy.optimize.differential_evolution()`.  
+Each constraint must be a dictionary with fields:
+
+    type : str
+        Constraint type: 'eq' for equality, 'ineq' for inequality.
+    fun : callable
+        The function defining the constraint.
+    args : sequence, optional
+        Extra arguments to be passed to the function. 
+
+Equality constraint means that the constraint function result is to be zero whereas inequality means that it is to be non-negative. 
+Note that setting `opt_method` to 'COBYLA' means only inequality constraints are supported.
+
+When there is only one constraint it can be passed as a dictionary. 
+Where there are multiple constraints they must be passed as a list of dictionaries. 
+When constraints are specified the default optimization routine is 'SLQSP'. 
+
+For example to specify the constraint :math:`\gamma > \nu`: ::
+
+	import birdepy as bd
+	t_data = [t for t in range(1972, 1999, 1)]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2, 2, 2], [[0,10], [0,10],[0,10]], model='Ricker', se_type='asymptotic',
+			  con={'type': 'ineq', 'fun': lambda p: p[0]-p[1]})
+	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+
+Which displays: ::
+
+	Estimates are [0.44210365470874396, 0.12455130918493659, 0.01075165187955724] . 
+	The standard errors of these estimates are [0.09834047 0.05670574 0.00442262] . 
+	The carrying capacity is estimated as  117.82623067763707 .
+
+The result is the same as without the constraint. 
+
+Specifying the constraint :math:`\gamma < \nu` results in errors due to this case not matching with the data well. 
+
+It is better to use the :ref:`known parameter <Known Parameters>` functionality when constraining individual parameters to be equal to constants. 
+
+
+Confidence Regions
+^^^^^^^^^^^^^^^^^^
+Attributes `se` and `cov` of the output can be used to quantify the uncertainty of parameter estimates. 
+Confidence regions can be computed by assuming a normal distribution with mean given by attribute `p` and covariance given by attribute `cov`. 
+Under this assumption standard errors are given by attribute `se`. 
+In addition, when one or two parameters are being estimated kwarg `ci_plot` can be set to ``True`` to enable plotting of confidence regions. 
+
+The method for computing a confidence region to quantify the uncertainty of parameter estimates depends on the framework being employed. 
+Since computing a confidence region is closely related to computing standard errors, the argument of `se_type` determines which is applied. 
+
+For frameworks 'dnm' and 'em' a covariance matrix is returned as the negative of the inverse of the Hessian matrix of the approximate log-likelihood function at the point of the parameter estimate. 
+This is returned as the attribute `cov` and can be used to characterize the uncertainty of the estimate given by attribute `p`. 
+
+The method `simulated` can be used for frameworks 'dnm', 'em' and 'lse'. 
+Given a parameter estimate :math:`\boldsymbol\theta^\star`, this approach proceeds by repeating the steps:
+
+1. Simulate data :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` consisting of points :math:`\hat{z}_{i,j}(\boldsymbol \theta)` generated using :func:`birdepy.simulate.discrete()` with the arguments of `param`, `z0` and `times` set respectively to :math:`\boldsymbol\theta^\star`, :math:`z_{i-1,j}` and :math:`\Delta_{i,j}`. 
+2. Apply the same parameter estimation technique to find the estimate corresponding to :math:`\hat{\boldsymbol z}(\boldsymbol \theta)`
+
+These steps are repeated 100 times (or a different number of times as specified by kwarg `num_bs_samples`) and then a multivariate normal is fitted to the collection of estimates which is generated. 
+From this a covariance matrix is returned as the attribute `cov`, which characterizes the uncertainty of the estimate given by attribute `p`. 
+
+For framework `abc` the attribute `samples` is returned which is a recording of the accepted parameter proposals.
+Performing a density estimate on these samples is a standard method of characterizing uncertainty for ABC estimates. 
+In addition attribute `cov` is returned as an estimate of the covariance of the final iteration accepted parameter proposals.  
+
+For example, to generate an asymptotic confidence region (assuming the death rate is 0.25): ::
+
+	import birdepy as bd
+	t_data = [t for t in range(1972, 1999, 1)]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2, 2], [[0,10],[0,10]], model='Ricker', 
+					  se_type='asymptotic', known_p=[0.25], idx_known_p=[1], ci_plot=True)
+
+
+Which produces: 
+
+.. image:: confidence_fig_1.png
+
+Alternatively, to generate a simulated confidence region (assuming the death rate is 025): ::
+
+	import birdepy as bd
+	t_data = [t for t in range(1972, 1999, 1)]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2, 2], [[0,10],[0,10]], model='Ricker', 
+					  se_type='simulated', known_p=[0.25], idx_known_p=[1], ci_plot=True)
+
+
+.. image:: confidence_fig_2.png
+
+Observe the strong agreement between the two approaches to generating confidence regions for this example. 
+
+Continuously Observed Data
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+Let :math:`\boldsymbol y = (Z(t), [0,T])` denote the data if continuous observation of :math:`Z` is possible over an observation period of length :math:`T`. 
+Call :math:`\boldsymbol y` the 'complete data', in contrast to :math:`\boldsymbol z` which is the 'observed' or 'incomplete' data. 
+The log-likelihood of the complete data is
+
+.. math::
+
+	\tilde\ell(\boldsymbol y ; \boldsymbol \theta) = \sum_{z=0}^\infty U_z(T)\log(\lambda_z(\boldsymbol\theta))+D_z(T)\log(\mu_z(\boldsymbol\theta)) - (\lambda_z(\boldsymbol\theta) + \mu_z(\boldsymbol\theta))H_z(T),
+
+
+where :math:`U_z(T)` and :math:`D_z(T)` are respectively the number of births and deaths whilst in state :math:`z` and :math:`H_z(T)` is the total time spent (holding) in state :math:`z`. 
+
+When continuously observed sample paths are available :func:`birdepy.estimate()` can be used to estimate parameters by setting kwarg `scheme` to 'continuous'. 
+Under this scheme BirDePy numerically optimizes the above likelihood function to obtain maximum likelihood estimates of parameters. 
+
+For example, generate continuously observed data using :ref:`birdepy.simulate.continuous()`: ::
+
+	import birdepy as bd
+	t_data, p_data = bd.simulate.continuous([0.75, 0.25, 50],'Verhulst 2 (SIS)', 10, 100, seed=2021)
+
+Then estimate the parameters: ::
+
+	est = bd.estimate(t_data, p_data, [0.5, 0.5, 100], [[1e-6, 10], [1e-6, 10], [1,200]], model ='Verhulst 2 (SIS)', scheme='continuous')
+	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+
+Which displays: ::
+
+	Parameter estimates are [0.8468206412942119, 0.24924760035405574, 47.52248709677161] . 
+	The standard errors of these estimates are [0.07463472 0.00879576 1.67719753] . 
+	The carrying capacity is estimated as  33.53503179144962 .
+
+
+See :ref:`birdepy.estimate(scheme='continuous')` for the implementation of this method in BirDePy. 
+
+
+Optimization Options
+^^^^^^^^^^^^^^^^^^^^
+By default when an optimization routine is needed :func:`birdepy.estimate()` uses 'L-BFGS-B' as implemented in :func:`scipy.optimize.minimize()` unless constraints are specified in which case 'SLSQP' is used instead. 
+The other choices of `method` in :func:`scipy.optimize.minimize()` can be accessed in :func:`birdepy.estimate()` using the kwarg `opt_method`. 
+It is also possible to use :func:`scipy.optimize.differential_evolution()` by setting `opt_method` to 'differential-evolution'. 
+
+In addition many of the optional arguments of the functions :func:`scipy.optimize.minimize()` and :func:`scipy.optimize.differential_evolution()` can be used as kwargs in :func:`birdepy.estimate()`. 
+
+For example, to use differential-evolution as an optimizer with `maxiter` set to 100 and `seed` set to 2021: ::
+
+	import birdepy as bd
+	t_data = [t for t in range(100)]
+	p_data = bd.simulate.discrete([0.75, 0.25, 50], model='Verhulst 2 (SIS)', z0=10,
+                              	   times=t_data, k=1, survival=True, seed=2021)
+	est = bd.estimate(t_data, p_data, [0.5], [[1e-6, 1]], model='Verhulst 2 (SIS)', 
+                  	  known_p=[0.25, 50], idx_known_p=[1, 2], opt_method='differential-evolution',
+                  	  maxiter=100, seed=2021)
+
+Which returns an estimate of 0.7617 for the transmission rate. 
+
+
+.. [vanLoan1978] Van Loan, C., 1978. Computing integrals involving the matrix exponential. IEEE transactions on automatic control, 23(3), pp.395-404.
+
+
+.. [CrawfordEtAl2014] Crawford, F.W., Minin, V.N. and Suchard, M.A., 2014. Estimation for general birth-death processes. Journal of the American Statistical Association, 109(506), pp.730-747.
+
+.. [JamshidianJennrich1997] Jamshidian, M. and Jennrich, R.I., 1997. Acceleration of the EM algorithm by using quasi‐Newton methods. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 59(3), pp.569-587.
+
+.. [PritchardEtAl1999] Pritchard, J.K., Seielstad, M.T., Perez-Lezaun, A. and Feldman, M.W., 1999. Population growth of human Y chromosomes: a study of Y chromosome microsatellites. Molecular biology and evolution, 16(12), pp.1791-1798.
+
+.. [BeaumontEtAl2009] Beaumont, M.A., Cornuet, J.M., Marin, J.M. and Robert, C.P., 2009. Adaptive approximate Bayesian computation. Biometrika, 96(4), pp.983-990.
+
+.. [MoralEtAl2012] Del Moral, P., Doucet, A. and Jasra, A., 2012. An adaptive sequential Monte Carlo method for approximate Bayesian computation. Statistics and computing, 22(5), pp.1009-1020.

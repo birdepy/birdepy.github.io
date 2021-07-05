@@ -1,0 +1,121 @@
+=========================
+Birth-and-death Processes
+=========================
+
+A `birth-and-death process <https://en.wikipedia.org/wiki/Birth-and-death_process>`_ :math:`(Z(t) : t \ge 0)` is a `continuous-time Markov chain evolving on <https://en.wikipedia.org/wiki/Continuous-time_Markov_chain>`_ :math:`\mathcal S = \{0,1,\dots,N\}`, where :math:`N` may be infinite, that tracks the number of individuals in a population.  
+The state transitions up by one when an individual is added to the population and transitions down by one when an individual is removed from the population.  
+The evolution of the process is governed by non-negative real valued functions of the current population size :math:`z` denoted by :math:`\lambda_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+` and :math:`\mu_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+`, which are parametrized by a finite set of real numbers denoted :math:`\boldsymbol\theta`.  
+When the process is in state :math:`z` the time until the process transitions to another state is exponentially distributed with mean :math:`(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))^{-1}` (where :math:`1/0=\infty`).  
+At a transition time from state :math:`z` the process transitions to state :math:`z+1` with probability :math:`\lambda_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))` or to state :math:`z-1` with probability :math:`\mu_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))`. 
+Some popular models, which are included by default in BirDePy, are listed in the table below. 
+
+.. list-table:: Transition rates and parameters for :math:`z \ge 0`. 
+   :widths: 18 20 20 25
+   :header-rows: 1
+
+   * - Model
+     - :math:`\lambda_z(\boldsymbol\theta)`
+     - :math:`\mu_z(\boldsymbol\theta)`
+     - :math:`\boldsymbol\theta`
+   * - Verhulst 1
+     - :math:`\gamma z`
+     - :math:`\nu z+ \frac{z^2}{N}\left(\gamma-\nu\right)`
+     - :math:`\gamma`, :math:`\nu`, :math:`N`
+   * - Verhulst 2 (SIS) 
+     - :math:`\gamma z\left(1-\frac{z}{N}\right)I\{z \le N\}`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`, :math:`N`
+   * - Ricker
+     - :math:`\gamma z \exp\left(-\alpha z \right)`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`
+   * - Hassell 
+     - :math:`\frac{\gamma z}{(1+\frac{z}{\alpha})^c}`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`c`
+   * - M-SS 
+     - :math:`\frac{\gamma z}{1+ \left(\frac{z}{\alpha}\right)^c}`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`,  :math:`\alpha`, :math:`c`
+   * - Moran 
+     - :math:`\frac{N-z}{N}\left(\alpha\frac{z}{N}(1-u) + \beta\frac{N-z}{N}v\right)`
+     - :math:`\frac{z}{N}\left(\beta\frac{N-z}{N}(1-v) +\alpha\frac{z}{N}u\right)`
+     - :math:`\alpha`, :math:`\beta`, :math:`u`, :math:`\nu`, :math:`N`
+   * - pure-birth
+     - :math:`\gamma z`
+     - :math:`0`
+     - :math:`\gamma`
+   * - pure-death
+     - :math:`0`
+     - :math:`\nu z`
+     - :math:`\nu`
+   * - Poisson
+     - :math:`\gamma`
+     - :math:`0`
+     - :math:`\gamma`
+   * - linear
+     - :math:`\gamma z`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`
+   * - linear-migration
+     - :math:`\gamma z + \alpha`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`
+   * - M/M/1
+     - :math:`\gamma`
+     - :math:`\nu I\{z > 0\}`
+     - :math:`\gamma`, :math:`\nu`
+   * - M/M/:math:`\infty`
+     - :math:`\gamma`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`
+   * - loss system
+     - :math:`\gamma I\{z < c\}`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`, :math:`c`
+
+Note: :math:`I\{A\}` evaluates to 1 when :math:`A` is true and otherwise evaluates to 0. 
+
+
+Custom Models
+-------------
+It is possible to specify custom birth and death rates for the five core BirDePy functions. This is achieved by specifying the argument of `model` as 'custom' and passing as kwargs the callables `b_rate` and `d_rate`.  Each of these callables must take as input a population size 'z' and a list of parameters 'p', and respectively return scalars :math:`\lambda` and :math:`\mu` corresponding to the birth and death rates: ``b_rate(z, p) -> \lambda``, ``d_rate(z, p) -> \mu``. 
+
+As an example we will consider a process with :math:`\lambda_z(\boldsymbol\theta) = \gamma` and :math:`\mu_z(\boldsymbol\theta) = \nu z^2`. 
+
+If not already done, first install BirDePy (as described :ref:`here <BirDePy: Birth-and-death Processes in Python>`). 
+Then import BirDePy::
+
+    import birdepy as bd
+
+Now specify custom birth and death rates::
+
+    def custom_b_rate(z, p): return p[0] * z
+    def custom_d_rate(z, p): return p[1] * z**2
+
+Suppose that :math:`\gamma = 5`, :math:`\nu = 0.25` and :math:`Z(0)=10`. To simulate a trajectory::
+
+    obs_times = [t for t in range(100)]
+    pop_sizes = bd.simulate.discrete([0.5, 0.25], model='custom', z0=10, times=obs_times,
+                                     b_rate=custom_b_rate, d_rate=custom_d_rate)
+
+The trajectory can be plotted using Matplotlib::
+
+    import matplotlib.pyplot as plt
+
+    plt.step(obs_times, pop_sizes, 'r', where='post')
+    plt.ylabel('Z(t)')
+    plt.xlabel('t')
+    plt.show()
+
+For example: 
+
+.. image:: custom_fig_1.png
+
+The parameters can then be estimated from the simulated sample path:: 
+
+    p0 = [1,1]
+    p_bounds = [[0,100], [0,10]]
+    est = bd.estimate(obs_times, pop_sizes, p01, p_bounds, model='custom',
+                      b_rate=custom_b_rate, d_rate=custom_d_rate)
+    print(est.p)

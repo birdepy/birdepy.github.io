@@ -1,0 +1,7 @@
+==================
+birdepy.forecast()
+==================
+
+.. currentmodule:: birdepy
+
+.. autofunction:: birdepy.forecast

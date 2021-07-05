@@ -1,0 +1,38 @@
+==================
+birdepy.estimate()
+==================
+
+.. currentmodule:: birdepy
+
+.. autofunction:: birdepy.estimate
+
+
+
+birdepy.estimate(framework='abc')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.interface_abc.discrete_est_abc
+
+
+birdepy.estimate(framework='dnm')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.interface_dnm.discrete_est_dnm
+
+
+birdepy.estimate(framework='em')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.interface_em.discrete_est_em
+
+
+birdepy.estimate(framework='lse')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.interface_lse.discrete_est_lse
+
+
+birdepy.estimate(scheme='continuous')
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autofunction:: birdepy.interface_dnm.continuous_est_dnm

@@ -1,0 +1,7 @@
+=============================
+birdepy.simulate.continuous()
+=============================
+
+.. currentmodule:: birdepy
+
+.. autofunction:: birdepy.simulate.continuous

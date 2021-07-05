@@ -1,0 +1,128 @@
+============================================
+BirDePy: Birth-and-death Processes in Python
+============================================
+
+IMPORTANT: This website is still under construction and is missing several parts. 
+
+`BirDePy` is a Python package for working with continuous time `birth-and-death processes <https://en.wikipedia.org/wiki/Birth-and-death_process>`_. It includes functions which can be used to approximate transition probabilities (:ref:`birdepy.probability()<birdepy.probability()>`) estimate parameter values from data (:ref:`birdepy.estimate()<birdepy.estimate()>`), simulate sample paths (:ref:`birdepy.simulate.discrete()<birdepy.simulate.discrete()>` and :ref:`birdepy.simulate.continuous()<birdepy.simulate.continuous()>`) and generate forecasts (:ref:`birdepy.forecast()<birdepy.forecast()>`). The main focus of the package is the estimation of parameter values from discretely-observed sample paths, however the much more straightforward case of estimation of parameter values from continuously observed sample paths is also included. 
+
+You can install `BirDePy` using `pip <https://pypi.org/project/pip/>`_. To do this open Python and execute::
+
+    pip install birdepy
+
+You may also need to install some dependencies (listed below).  
+
+Usage Example 
+-------------
+Suppose we are interested in the susceptible-infective-susceptible model: ::
+
+   model = 'Verhulst 2 (SIS)'
+   rate_of_spread = 0.75
+   recovery_rate = 0.25
+   population_size = 1000
+   true_parameters = [rate_of_spread, recovery_rate, population_size]
+   simulation_horizon = 100
+   initial_number_infected = 10
+   obs_times = [t for t in range(simulation_horizon)]
+
+BirDePy's function :func:`birdepy.simulate.discrete()` can be used to simulate a possible sample path: ::
+
+   number_infected = bd.simulate.discrete(true_parameters,
+                                          model,
+                                          initial_number_infected,
+                                          obs_times,
+                                          seed=2021)
+
+The path can be plotted: ::
+
+   import matplotlib.pyplot as plt
+
+   plt.step(obs_times, number_infected, 'r', where='post')
+   plt.ylabel('infected population')
+   plt.xlabel('day')
+   plt.show()
+
+It looks like this:
+
+.. image:: example_fig_1.png
+
+BirDepy's function :func:`birdepy.estimate()` can be used to estimate the parameter values (assuming a known population size): ::
+
+   est = bd.estimate(obs_times, 
+                     number_infected, 
+                     [5, 5], 
+                     [[1e-6, 10], [1e-6, 10]],
+                     framework='dnm',
+                     likelihood='da',
+                     model=model,
+                     known_p=[population_size], 
+                     idx_known_p=[2],
+                     ci_plot=True)
+   print('Estimate:', est.p)
+   print('Standard error:', est.se)
+
+Which returns an estimate of [0.7489, 0.2474] with standard errors [0.0494, 0.0170]. 
+The argument of `framework` is set to 'dnm' so :ref:`direct numerical maximisation <Direct Numerical Maximization>` is used to find a maximum likeliood estimate. 
+The argument of `likelihood` is set to 'da' so a :ref:`diffusion approximation <Diffusion approximation>` is used to approximate the likelihood function. 
+
+A confidence region is also produced: 
+
+.. image:: example_fig_2.png
+
+
+
+Dependency List
+---------------
+
+* Required build time:
+
+  * ``numpy``
+  * ``mpmath``
+  * ``scipy``
+  * ``gwr_inversion``
+  * ``matplotlib``
+
+
+.. toctree::
+   :caption: Theoretical Background
+    
+   processes
+   probabilities
+   estimation
+   simulation
+   forecasting
+   cuda_user_guide
+
+.. toctree::
+   :caption: Core Functions API
+
+   api_probability
+   api_estimate
+   api_simulate_discrete
+   api_simulate_continuous
+   api_forecast
+
+
+.. toctree::
+   :caption: CUDA Functions API
+
+   api_cuda_simulate
+   api_cuda_probabilities
+
+
+.. toctree::
+   :caption: Development
+
+   contributing
+   reporting_bugs
+   release_notes
+   license
+
+
+
+Further reading
+---------------
+The package is also described in detail in [HautphennePatch2021]_ . If you use BirDePy for published research, then please cite this paper.
+
+
+.. [HautphennePatch2021] Hautphenne, S. and Patch, B., 2021. BirDePy: Parameter estimation for population-size-dependent birth-and-death processes in Python. 

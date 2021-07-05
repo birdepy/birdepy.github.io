@@ -1,0 +1,9 @@
+===========================
+birdepy.simulate.discrete()
+===========================
+
+.. currentmodule:: birdepy
+
+
+.. autofunction:: birdepy.simulate.discrete
+
