@@ -2,7 +2,10 @@
 Release Notes
 =============
 
-
+0.0.2
+^^^^^
+- Commented out some print statements in function birdepy.simulate.discrete_gwa 
+ 
 0.0.1
 ^^^^^
 

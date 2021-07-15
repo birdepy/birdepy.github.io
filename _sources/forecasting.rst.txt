@@ -1,4 +1,18 @@
 ====================
 Forecasting
 ====================
-Under Construction
+BirDePy provides a basic forecasting function :func:`birdepy.forecast()`. 
+Recall the example from the :ref:`parameter estimation <Parameter Estimation>` page, where parameters are estimated using: ::
+
+	import birdepy as bd
+	t_data = [t for t in range(1972, 1999, 1)]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2, 2, 2], [[0,10], [0,10],[0,10]], model='Ricker', se_type='asymptotic')
+
+Then, use the estimated parameters to generate a forecast: ::
+
+	bd.forecast(86, [t for t in range(1999, 2021, 1)], est.p, model='Ricker',display=True)
+
+Which produces a plot:
+
+.. image:: forecast_fig.png

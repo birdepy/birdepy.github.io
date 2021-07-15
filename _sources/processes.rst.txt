@@ -17,18 +17,14 @@ Some popular models, which are included by default in BirDePy, are listed in the
      - :math:`\lambda_z(\boldsymbol\theta)`
      - :math:`\mu_z(\boldsymbol\theta)`
      - :math:`\boldsymbol\theta`
-   * - Verhulst 1
-     - :math:`\gamma z`
-     - :math:`\nu z+ \frac{z^2}{N}\left(\gamma-\nu\right)`
-     - :math:`\gamma`, :math:`\nu`, :math:`N`
-   * - Verhulst 2 (SIS) 
-     - :math:`\gamma z\left(1-\frac{z}{N}\right)I\{z \le N\}`
-     - :math:`\nu z`
-     - :math:`\gamma`, :math:`\nu`, :math:`N`
+   * - Verhulst
+     - :math:`\gamma\left(1-\alpha z\right) z`
+     - :math:`\nu\left(1+\beta z\right)z`
+     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`\beta`
    * - Ricker
-     - :math:`\gamma z \exp\left(-\alpha z \right)`
+     - :math:`\gamma z \exp\left(-(\alpha z)^c \right)`
      - :math:`\nu z`
-     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`
+     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`c`
    * - Hassell 
      - :math:`\frac{\gamma z}{(1+\frac{z}{\alpha})^c}`
      - :math:`\nu z`

@@ -16,6 +16,7 @@ Usage Example
 -------------
 Suppose we are interested in the susceptible-infective-susceptible model: ::
 
+   import birdepy as bd
    model = 'Verhulst 2 (SIS)'
    rate_of_spread = 0.75
    recovery_rate = 0.25
@@ -46,7 +47,7 @@ It looks like this:
 
 .. image:: example_fig_1.png
 
-BirDepy's function :func:`birdepy.estimate()` can be used to estimate the parameter values (assuming a known population size): ::
+BirDePy's function :func:`birdepy.estimate()` can be used to estimate the parameter values (assuming a known population size): ::
 
    est = bd.estimate(obs_times, 
                      number_infected, 
@@ -69,18 +70,24 @@ A confidence region is also produced:
 
 .. image:: example_fig_2.png
 
+A forecast can be made: ::
+
+   bd.forecast(number_infected[-1], [t for t in range(100, 121, 1)], est.p, model=model,
+               known_p=[population_size], idx_known_p=[2], display=True)
+
+It looks like this:
+
+.. image:: example_fig_3.png
 
 
 Dependency List
 ---------------
 
-* Required build time:
-
-  * ``numpy``
-  * ``mpmath``
-  * ``scipy``
-  * ``gwr_inversion``
-  * ``matplotlib``
+* ``numpy``
+* ``mpmath``
+* ``scipy``
+* ``gwr_inversion``
+* ``matplotlib``
 
 
 .. toctree::

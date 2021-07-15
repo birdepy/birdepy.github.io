@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Transition Probabilities &mdash; BirDePy 0.1 documentation</title>
+  <title>Transition Probabilities &mdash; BirDePy 0.0.2 documentation</title>
   
 
   
@@ -177,7 +177,8 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -309,7 +310,7 @@ This system of equations can be reformulated and solved in terms of the generato
 <p>The matrix <span class="math notranslate nohighlight">\(R(\eta, \boldsymbol\theta)\)</span> can be viewed as the one-step transition probability matrix of a discrete time Markov chain embedded in <span class="math notranslate nohighlight">\(Z\)</span> at the epochs of a Poisson process with rate <span class="math notranslate nohighlight">\(\eta\)</span>.
 Therefore entry <span class="math notranslate nohighlight">\((i,j)\)</span> of the matrix <span class="math notranslate nohighlight">\(R(k/t, \boldsymbol\theta)^k\)</span> contains the probability <span class="math notranslate nohighlight">\(Z(S_{k,t})=j\)</span> conditional on <span class="math notranslate nohighlight">\(Z(0)=i\)</span> where <span class="math notranslate nohighlight">\(S_{k,t}\)</span> is an Erlang distributed random variable with rate parameter <span class="math notranslate nohighlight">\(k/t\)</span> and shape parameter <span class="math notranslate nohighlight">\(k\)</span>.
 The expected value and variance of <span class="math notranslate nohighlight">\(S_{k,t}\)</span> are respectively <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(t/k\)</span>.
-This means that as <span class="math notranslate nohighlight">\(k\to\infty\)</span> the matrix <span class="math notranslate nohighlight">\(R(k/t, \boldsymbol\theta)^k\)</span> converges to the probability transition matrix <span class="math notranslate nohighlight">\(P(t;\boldsymbol\theta) = \big(p_{i,j}(t;\boldsymbol\theta)\)</span>, i.e., for large <span class="math notranslate nohighlight">\(k\)</span>,</p>
+This means that as <span class="math notranslate nohighlight">\(k\to\infty\)</span> the matrix <span class="math notranslate nohighlight">\(R(k/t, \boldsymbol\theta)^k\)</span> converges to the probability transition matrix <span class="math notranslate nohighlight">\(P(t;\boldsymbol\theta)\)</span>, i.e., for large <span class="math notranslate nohighlight">\(k\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[P(t;\boldsymbol\theta) \approx R(k/t, \boldsymbol\theta)^k.\]</div>
 <p>This method for approximating transition probabilities is discussed in <a class="reference internal" href="#asmussenetal2002" id="id3"><span>[AsmussenEtAl2002]</span></a>, <a class="reference internal" href="#mandjestaylor2016" id="id4"><span>[MandjesTaylor2016]</span></a> and <a class="reference internal" href="#stanfordetal2011" id="id5"><span>[StanfordEtAl2011]</span></a> for models related to those which are covered here.</p>
