@@ -83,7 +83,7 @@ where :math:`R(\eta, \boldsymbol\theta) = \big(r^{(\eta)}_{i,j}(\boldsymbol\thet
 The matrix :math:`R(\eta, \boldsymbol\theta)` can be viewed as the one-step transition probability matrix of a discrete time Markov chain embedded in :math:`Z` at the epochs of a Poisson process with rate :math:`\eta`. 
 Therefore entry :math:`(i,j)` of the matrix :math:`R(k/t, \boldsymbol\theta)^k` contains the probability :math:`Z(S_{k,t})=j` conditional on :math:`Z(0)=i` where :math:`S_{k,t}` is an Erlang distributed random variable with rate parameter :math:`k/t` and shape parameter :math:`k`. 
 The expected value and variance of :math:`S_{k,t}` are respectively :math:`t` and :math:`t/k`.
-This means that as :math:`k\to\infty` the matrix :math:`R(k/t, \boldsymbol\theta)^k` converges to the probability transition matrix :math:`P(t;\boldsymbol\theta) = \big(p_{i,j}(t;\boldsymbol\theta)`, i.e., for large :math:`k`, 
+This means that as :math:`k\to\infty` the matrix :math:`R(k/t, \boldsymbol\theta)^k` converges to the probability transition matrix :math:`P(t;\boldsymbol\theta)`, i.e., for large :math:`k`, 
 
 .. math::
 

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Parameter Estimation &mdash; BirDePy 0.1 documentation</title>
+  <title>Parameter Estimation &mdash; BirDePy 0.0.2 documentation</title>
   
 
   
@@ -177,7 +177,8 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -390,7 +391,7 @@ Given a distance measure <span class="math notranslate nohighlight">\(d\)</span>
 <ol class="arabic simple">
 <li><p>Generate a parameter proposal <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span> from the prior <span class="math notranslate nohighlight">\(\pi(\cdot)\)</span>.</p></li>
 <li><p>Simulate observations <span class="math notranslate nohighlight">\(\hat{\boldsymbol z}(\boldsymbol \theta)\)</span> according to <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span>.</p></li>
-<li><p>Accept <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span> as an approximate observation from the posterior if <span class="math notranslate nohighlight">\(d(\boldsymbol z, \boldsymbol z) &lt; \epsilon\)</span>.</p></li>
+<li><p>Accept <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span> as an approximate observation from the posterior if <span class="math notranslate nohighlight">\(d(\boldsymbol z, \hat{\boldsymbol z}(\boldsymbol \theta)) &lt; \epsilon\)</span>.</p></li>
 </ol>
 <p>The steps are repeated until <cite>k</cite> parameter proposals are accepted.
 The parameter estimate is then the mean of the accepted parameter proposals.

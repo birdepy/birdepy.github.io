@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Birth-and-death Processes &mdash; BirDePy 0.1 documentation</title>
+  <title>Birth-and-death Processes &mdash; BirDePy 0.0.2 documentation</title>
   
 
   
@@ -177,7 +177,8 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -272,72 +273,67 @@ Some popular models, which are included by default in BirDePy, are listed in the
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Verhulst 1</p></td>
-<td><p><span class="math notranslate nohighlight">\(\gamma z\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\nu z+ \frac{z^2}{N}\left(\gamma-\nu\right)\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(N\)</span></p></td>
+<tr class="row-even"><td><p>Verhulst</p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\left(1-\alpha z\right) z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu\left(1+\beta z\right)z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>Verhulst 2 (SIS)</p></td>
-<td><p><span class="math notranslate nohighlight">\(\gamma z\left(1-\frac{z}{N}\right)I\{z \le N\}\)</span></p></td>
+<tr class="row-odd"><td><p>Ricker</p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma z \exp\left(-(\alpha z)^c \right)\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(N\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>Ricker</p></td>
-<td><p><span class="math notranslate nohighlight">\(\gamma z \exp\left(-\alpha z \right)\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p>Hassell</p></td>
+<tr class="row-even"><td><p>Hassell</p></td>
 <td><p><span class="math notranslate nohighlight">\(\frac{\gamma z}{(1+\frac{z}{\alpha})^c}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>M-SS</p></td>
+<tr class="row-odd"><td><p>M-SS</p></td>
 <td><p><span class="math notranslate nohighlight">\(\frac{\gamma z}{1+ \left(\frac{z}{\alpha}\right)^c}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>,  <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>Moran</p></td>
+<tr class="row-even"><td><p>Moran</p></td>
 <td><p><span class="math notranslate nohighlight">\(\frac{N-z}{N}\left(\alpha\frac{z}{N}(1-u) + \beta\frac{N-z}{N}v\right)\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\frac{z}{N}\left(\beta\frac{N-z}{N}(1-v) +\alpha\frac{z}{N}u\right)\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, <span class="math notranslate nohighlight">\(u\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(N\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>pure-birth</p></td>
+<tr class="row-odd"><td><p>pure-birth</p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>pure-death</p></td>
+<tr class="row-even"><td><p>pure-death</p></td>
 <td><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>Poisson</p></td>
+<tr class="row-odd"><td><p>Poisson</p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>linear</p></td>
+<tr class="row-even"><td><p>linear</p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>linear-migration</p></td>
+<tr class="row-odd"><td><p>linear-migration</p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma z + \alpha\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>M/M/1</p></td>
+<tr class="row-even"><td><p>M/M/1</p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu I\{z &gt; 0\}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>M/M/<span class="math notranslate nohighlight">\(\infty\)</span></p></td>
+<tr class="row-odd"><td><p>M/M/<span class="math notranslate nohighlight">\(\infty\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>loss system</p></td>
+<tr class="row-even"><td><p>loss system</p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma I\{z &lt; c\}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>

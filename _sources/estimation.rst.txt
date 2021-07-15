@@ -191,7 +191,7 @@ Given a distance measure :math:`d`, the standard ABC method (as proposed in [Pri
 
 1. Generate a parameter proposal :math:`\boldsymbol \theta` from the prior :math:`\pi(\cdot)`.
 2. Simulate observations :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` according to :math:`\boldsymbol \theta`.
-3. Accept :math:`\boldsymbol \theta` as an approximate observation from the posterior if :math:`d(\boldsymbol z, \boldsymbol z) < \epsilon`. 
+3. Accept :math:`\boldsymbol \theta` as an approximate observation from the posterior if :math:`d(\boldsymbol z, \hat{\boldsymbol z}(\boldsymbol \theta)) < \epsilon`. 
 
 The steps are repeated until `k` parameter proposals are accepted. 
 The parameter estimate is then the mean of the accepted parameter proposals. 
