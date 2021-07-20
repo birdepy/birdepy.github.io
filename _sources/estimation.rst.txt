@@ -18,17 +18,21 @@ To obtain parameter estimates in BirDePy simply call :ref:`birdepy.estimate()` (
 
 	import birdepy as bd
 	t_data = [t for t in range(1972, 1999, 1)]
-	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
-	est = bd.estimate(t_data, p_data, [2, 2, 2], [[0,10], [0,10],[0,10]], model='Ricker', se_type='asymptotic')
-	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
+	          44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10],[0,10], [0.5, 10]], 
+	                  model='Ricker', se_type='asymptotic')
+	print('Parameter estimates are', est.p, 
+	      '. \nThe standard errors of these estimates are', est.se,
+	      '. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
 
 Which displays: ::
 
-	Estimates are [0.44210365470874396, 0.12455130918493659, 0.01075165187955724] . 
-	The standard errors of these estimates are [0.09834047 0.05670574 0.00442262] . 
-	The carrying capacity is estimated as  117.82623067763707 .
+	Parameter estimates are [0.3878995609084285, 0.12357106533023712, 0.010995524807027462, 1.7121790781632777] . 
+	The standard errors of these estimates are [0.09980387 0.05682818 0.00267044 1.26765449] . 
+	The carrying capacity is estimated as  98.37671193540476 .
 
-Note that in this analysis we put ``p0=[2,2,2]`` as an initial guess for the parameters and ``p_bounds=[[0,10], [0,10],[0,10]]`` as a reasonable space for the parameters to be estimated from. 
+Note that in this analysis we put ``p0=[2]*4`` as an initial guess for the parameters and ``p_bounds=[[0,10], [0,10], [0,10], [0.5,10]]`` as a reasonable space for the parameters to be estimated from. 
 
 
 Direct Numerical Maximization
@@ -253,23 +257,29 @@ Then instead do this: ::
 
 	import birdepy as bd
 	t_data = [t for t in range(1972, 1999, 1)]
-	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
-	est = bd.estimate(t_data, p_data, [2, 2], [[0,10],[0,10]], model='Ricker', se_type='asymptotic', 
-			  known_p=[0.25], idx_known_p=[1])
-	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
+	          44, 62, 60, 70, 75, 79, 86]
+	est = bd.estimate(t_data, p_data, [2]*3, [[0,10], [0,10], [0.5, 10]], 
+	                  model='Ricker', se_type='asymptotic', known_p=[0.25], 
+	                  idx_known_p=[1])
+	print('Parameter estimates are', est.p, 
+	      '. \nThe standard errors of these estimates are', est.se,
+	      '. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+
+
 
 Which displays: ::
 
-	Parameter estimates are [0.5463522549990415, 0.007247784869588989] . 
-	The standard errors of these estimates are [0.10016046 0.00332748] . 
-	The carrying capacity is estimated as  107.86785474489912 .
+	Parameter estimates are [0.49036967662220443, 0.009035150396231916, 1.9785349325654842] . 
+	The standard errors of these estimates are [0.09762967 0.00296603 1.91677105] . 
+	The carrying capacity is estimated as  90.64982307689301 .
 
 Parameter Constraints
 ^^^^^^^^^^^^^^^^^^^^^
 Constraints on parameters are passed to :func:`birdepy.estimate()` through the kwarg `con`. 
 This is in addition to the bounds that are passed as the argument to `p_bounds`. 
 Constraints are ultimately used in :func:`scipy.optimize.minimize()` or :func:`scipy.optimize.differential_evolution()`.  
-Each constraint must be a dictionary with fields:
+For optimization methods 'SLSQP' and 'COBYLA' constraints can be specified as a dictionary with fields:
 
     type : str
         Constraint type: 'eq' for equality, 'ineq' for inequality.
@@ -285,26 +295,46 @@ When there is only one constraint it can be passed as a dictionary.
 Where there are multiple constraints they must be passed as a list of dictionaries. 
 When constraints are specified the default optimization routine is 'SLQSP'. 
 
-For example to specify the constraint :math:`\gamma > \nu`: ::
+Alternatively it is possible to import and use :func:`NonlinearConstraint` from `scipy.optimize`. This is necessary when using 'differential-evolution' to optimize. 
+
+For example to specify the constraint :math:`\gamma \ge \nu`: ::
 
 	import birdepy as bd
+	from scipy.optimize import NonlinearConstraint
+	import numpy as np
 	t_data = [t for t in range(1972, 1999, 1)]
-	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
-	est = bd.estimate(t_data, p_data, [2, 2, 2], [[0,10], [0,10],[0,10]], model='Ricker', se_type='asymptotic',
-			  con={'type': 'ineq', 'fun': lambda p: p[0]-p[1]})
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
+			  44, 62, 60, 70, 75, 79, 86]
+
+Using :func:`NonlinearConstraint`:
+
+	def constr_f(p):
+    	return p[0] - p[1]
+    nlc = NonlinearConstraint(constr_f, 0, np.inf)
+	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10], [0,10], [0.5, 10]], 
+	                  model='Ricker', se_type='asymptotic', con=(nlc))
 	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
 
 Which displays: ::
 
-	Estimates are [0.44210365470874396, 0.12455130918493659, 0.01075165187955724] . 
-	The standard errors of these estimates are [0.09834047 0.05670574 0.00442262] . 
-	The carrying capacity is estimated as  117.82623067763707 .
+	Parameter estimates are [4.549043705033482, 4.89126920630982e-09, 0.0019891584261715763, 0.50000001297632] . 
+	The standard errors of these estimates are [3.59456242e-01 1.51703612e-06 3.22904617e-04 3.35752161e-02] . 
+	The carrying capacity is estimated as  214388.4671765286 .
 
-The result is the same as without the constraint. 
+Alternatively using a dictionary for the constraint: ::
 
-Specifying the constraint :math:`\gamma < \nu` results in errors due to this case not matching with the data well. 
+	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10], [0,10], [0.5, 10]], 
+	                  model='Ricker', se_type='asymptotic', 
+	                  con={'type': 'ineq', 'fun': lambda p: p[0]-p[1]})
 
-It is better to use the :ref:`known parameter <Known Parameters>` functionality when constraining individual parameters to be equal to constants. 
+
+Which displays the same result. 
+
+This parameter estimate does not match with the unconstrained estimate given at the beginning of this section, which is surprising since that estimate satisfies the constraints. 
+Moreover the provided estimate does not seem to make much sense as the carrying capacity is estimated to be extremely high relative to the observed population sizes. 
+In a later section we apply a global optimization algorithm to find the parameter estimates and see that this resolves the problem. 
+
+Note: It is better to use the :ref:`known parameter <Known Parameters>` functionality when constraining individual parameters to be equal to constants. 
 
 
 Confidence Regions
@@ -337,9 +367,10 @@ For example, to generate an asymptotic confidence region (assuming the death rat
 
 	import birdepy as bd
 	t_data = [t for t in range(1972, 1999, 1)]
-	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
+			  44, 62, 60, 70, 75, 79, 86]
 	est = bd.estimate(t_data, p_data, [2, 2], [[0,10],[0,10]], model='Ricker', 
-					  se_type='asymptotic', known_p=[0.25], idx_known_p=[1], ci_plot=True)
+		se_type='asymptotic', known_p=[0.25, 1], idx_known_p=[1, 3], ci_plot=True)
 
 
 Which produces: 
@@ -352,7 +383,7 @@ Alternatively, to generate a simulated confidence region (assuming the death rat
 	t_data = [t for t in range(1972, 1999, 1)]
 	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 44, 62, 60, 70, 75, 79, 86]
 	est = bd.estimate(t_data, p_data, [2, 2], [[0,10],[0,10]], model='Ricker', 
-					  se_type='simulated', known_p=[0.25], idx_known_p=[1], ci_plot=True)
+		se_type='simulated', known_p=[0.25, 1], idx_known_p=[1, 3], ci_plot=True)
 
 
 .. image:: confidence_fig_2.png
@@ -378,18 +409,20 @@ Under this scheme BirDePy numerically optimizes the above likelihood function to
 For example, generate continuously observed data using :ref:`birdepy.simulate.continuous()`: ::
 
 	import birdepy as bd
-	t_data, p_data = bd.simulate.continuous([0.75, 0.25, 50],'Verhulst 2 (SIS)', 10, 100, seed=2021)
-
+	t_data, p_data = bd.simulate.continuous([0.75, 0.25, 0.02, 1], 'Ricker', 10, 
+	                                        100, survival=True, seed=2021)
 Then estimate the parameters: ::
 
-	est = bd.estimate(t_data, p_data, [0.5, 0.5, 100], [[1e-6, 10], [1e-6, 10], [1,200]], model ='Verhulst 2 (SIS)', scheme='continuous')
-	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+	est = bd.estimate(t_data, p_data, [0.5, 0.5, 0.05], [[0,1], [0,1], [0, 0.1]],
+	                  model='Ricker', idx_known_p=[3], known_p=[1], scheme='continuous')
+	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are',
+	      est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
 
 Which displays: ::
 
-	Parameter estimates are [0.8468206412942119, 0.24924760035405574, 47.52248709677161] . 
-	The standard errors of these estimates are [0.07463472 0.00879576 1.67719753] . 
-	The carrying capacity is estimated as  33.53503179144962 .
+	Parameter estimates are [0.7603171062895576, 0.2514810854871476, 0.020294342655751033] . 
+	The standard errors of these estimates are [0.11869234 0.00695346 0.00292079] . 
+	The carrying capacity is estimated as  54.51607032766247 .
 
 
 See :ref:`birdepy.estimate(scheme='continuous')` for the implementation of this method in BirDePy. 
@@ -406,15 +439,33 @@ In addition many of the optional arguments of the functions :func:`scipy.optimiz
 For example, to use differential-evolution as an optimizer with `maxiter` set to 100 and `seed` set to 2021: ::
 
 	import birdepy as bd
-	t_data = [t for t in range(100)]
-	p_data = bd.simulate.discrete([0.75, 0.25, 50], model='Verhulst 2 (SIS)', z0=10,
-                              	   times=t_data, k=1, survival=True, seed=2021)
-	est = bd.estimate(t_data, p_data, [0.5], [[1e-6, 1]], model='Verhulst 2 (SIS)', 
-                  	  known_p=[0.25, 50], idx_known_p=[1, 2], opt_method='differential-evolution',
-                  	  maxiter=100, seed=2021)
+	from scipy.optimize import NonlinearConstraint
+	import numpy as np
 
-Which returns an estimate of 0.7617 for the transmission rate. 
+	t_data = [t for t in range(1972, 1999, 1)]
+	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
+	          44, 62, 60, 70, 75, 79, 86]
 
+	def constr_f(p):
+	    return p[0] - p[1]
+
+	nlc = NonlinearConstraint(constr_f, 0, np.inf)
+
+	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10], [0,10], [0.5, 10]], 
+	                  model='Ricker', se_type='asymptotic', 
+	                  con=(nlc), opt_method='differential-evolution', maxiter=100,
+	                  seed=2021)
+	print('Parameter estimates are', est.p, 
+	      '. \nThe standard errors of these estimates are', est.se,
+	      '. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
+
+Which displays: ::
+
+	Parameter estimates are [0.3879013278329143, 0.12357278747247143, 0.010995518495442384, 1.712175721772404] . 
+	The standard errors of these estimates are [0.09980256 0.0568292  0.00267043 1.26755574] . 
+	The carrying capacity is estimated as  98.37631234940528 .
+
+Contrast this with the erroneous results given when a non-global optimization algorithm is used (in the :ref:`Parameter Constraints` section). 
 
 .. [vanLoan1978] Van Loan, C., 1978. Computing integrals involving the matrix exponential. IEEE transactions on automatic control, 23(3), pp.395-404.
 

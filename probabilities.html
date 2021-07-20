@@ -132,14 +132,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact-simulation">Exact Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping">tau Leaping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-leaping">Galton-Watson Leaping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Core Functions API</span></p>
 <ul>
@@ -174,14 +170,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 
             
@@ -257,14 +252,14 @@ This page details the nine methods to approximate this probability which are imp
 <p>Three methods are based on truncated transition matrices, four are approximations, one is a transform method and the final is based on simulation.</p>
 <p>To obtain transition probabilities in BirDePy simply call <a class="reference internal" href="api_probability.html#birdepy-probability"><span class="std std-ref">birdepy.probability()</span></a> (after importing BirDePy). For example, to obtain an array containing the probabilities of transitioning from <span class="math notranslate nohighlight">\(Z(0)=20\)</span> to <span class="math notranslate nohighlight">\(Z(1)=25\)</span> for the ‘Verhulst 2 (SIS)’ model with <span class="math notranslate nohighlight">\(\boldsymbol \theta = (0.8, 0.4, 40)\)</span>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst 2 (SIS)&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;expm&#39;</span><span class="p">)</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;expm&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Which returns:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.03688128</span><span class="p">]])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.08189476</span><span class="p">]])</span>
 </pre></div>
 </div>
-<p>The method can be replaced by one of the nine choices described on this page.
+<p>The method ‘expm’ can be replaced by one of the nine choices described on this page.
 Note that output is an array since it is possible to input initial and final populations as lists.</p>
 <div class="section" id="matrix-exponential">
 <h2>Matrix exponential<a class="headerlink" href="#matrix-exponential" title="Permalink to this headline">¶</a></h2>
@@ -407,7 +402,7 @@ This approach approximates the population-size-dependent process <span class="ma
 <p>while if <span class="math notranslate nohighlight">\(\mathring \lambda(\boldsymbol\theta) = \mathring \mu(\boldsymbol\theta)\)</span>, then</p>
 <div class="math notranslate nohighlight">
 \[\beta_{1}(\boldsymbol\theta) = \beta_{2}(\boldsymbol\theta) = \frac{\mathring \lambda(\boldsymbol\theta) t}{1+ \mathring \lambda(\boldsymbol\theta)t}.\]</div>
-<p>Linear birth-and-death processes are discussed at length in <a class="reference internal" href="#guttorp1991" id="id12"><span>[Guttorp1991]</span></a>.</p>
+<p>Linear birth-and-death processes are discussed at length in <a class="reference internal" href="simulation.html#guttorp1991" id="id12"><span>[Guttorp1991]</span></a>.</p>
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-gwa"><span class="std std-ref">birdepy.probability(method=’gwa’)</span></a> for the implementation of this method in BirDePy.</p>
 </div>
 <div class="section" id="saddle-point-approximation">

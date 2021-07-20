@@ -1,19 +1,133 @@
 =====================
 Simulation Algorithms
 =====================
-UNDER CONSTRUCTION
+The goal of simulating a birth-and-death process may be to obtain a sequence of times at which the process transitions with a corresponding sequence of states that the process transitions into. 
+We call this continuous simulation since the output provides sufficient information to recover the state of the process at any time within the simulation horizon. 
+An advantage of continuous simulation is that it is possible to know whether certain events have occurred, for example whether the process has crossed a boundary by a certain time. 
+An alternative goal may be to obtain samples of a birth-and-death process at pre-specified observation times. 
+In this discrete simulation case observation times are specified and the state of the process at those times is the output. 
+An advantage of discrete simulation is that it is straightforward to combine simulated sample paths together to find, for example, the expected value or variance of a process as a function of time. 
 
-Exact Simulation
-^^^^^^^^^^^^^^^^
+To perform continuous simulation over the interval :math:`[0,t]`, initialise :math:`j=0`, :math:`t_0=0` and :math:`z_0=Z(0)`, and then repeat these steps:
 
-tau Leaping
-^^^^^^^^^^^
+1. Generate an exponentially distributed random variable :math:`\Delta` with mean :math:`(\lambda_{z_j}+\mu_{z_j})^{-1}`.
+2. If :math:`t_j+\Delta\le t`, set :math:`t_{j+1}=t_j+\Delta`; otherwise stop. 
+3. With probability :math:`\lambda_{z_j}/(\lambda_{z_j}+\mu_{z_j})` set :math:`z_{j+1}=z_j+1`; otherwise set :math:`z_{j+1}=z_j-1`. 
 
+See :ref:`birdepy.simulate.continuous()` for an implementation of this algorithm. 
 
-Galton-Watson Leaping
-^^^^^^^^^^^^^^^^^^^^^
+Discrete simulation proceeds in a similar fashion. 
+To simulate a birth-and-death process at the time points :math:`t_0<t_1<\dots t_n`, initialise :math:`j=0`, :math:`t_0=t` and :math:`z_0=Z(t_0)`, and then repeat these steps:
 
+1. Generate an exponentially distributed random variable :math:`\Delta` with mean :math:`(\lambda_{z_j}+\mu_{z_j})^{-1}`.
+2. Set :math:`t = t_j+\Delta`. 
+3. While :math:`t_j < t` set `z_{j+1}=z_j` and then :math:`j=j+1`. 
+4. With probability :math:`\lambda_{z_{j-1}}/(\lambda_{z_{j-1}}+\mu_{z_{j-1}})` set :math:`z_{j}=z_{j-1}+1`; otherwise set :math:`z_{j}=z_{j-1}-1`. 
+
+See :ref:`birdepy.simulate.discrete()` (with `method` set to 'exact') and :ref:`birdepy.gpu_functions.discrete_gpu()` for implementations of this algorithm. 
+
+It is thought within the probability community that the exact discrete simulation algorithms just presented were first considered created by Joseph L.\ Doob and his collaborators in approximately 1945. 
+To our knowledge the first implementation on a computer is described in [Kendall1050]_, and the algorithm was popularised more widely in [Gillespie1977]_. 
+
+A well known drawback of exact simulation algorithms is that they may take considerable computational time to produce sample paths. 
+An alternative approximate simulation method known as tau-leaping was introduced in [Gillespie2001]_ that allows the user to trade accuracy for speed. 
+This algorithm provides an approximation to :math:`Z` at times :math:`(t_j = hj,~j=0,1,\dots,n)` where :math:`h` is a predetermined constant. 
+Upon initializing :math:`j=0`, :math:`t_0=0` and :math:`z_0=Z(t_0)`, the basic Euler form of the algorithm proceeds by repeat these steps until all times :math:`t_j` are sampled:
+
+1. Generate two Poisson distributed random variables :math:`\mathfrak L` and :math:`\mathfrak M` with respective means :math:`\lambda_{z_j}h` and :math:`\mu_{z_j}h`. 
+2. Set :math:`z_{j+1}= z_j +\mathfrak L -\mathfrak M` and then :math:`j=j+1`. 
+
+See :ref:`birdepy.simulate.discrete()` (with `method` set to 'ea') for an implementation of this algorithm. 
+
+Several variations of this algorithm have been developed which focus primarily on step-size selection (e.g., [GillespiePetzold2003]_ and [CaoGillespiePetzold2006]_) and ensuring that the population size does not go negative during the simulation (e.g., [CaoGillespiePetzold2005]_, [ChatterjeeEtAl2005]_ and [Anderson2008]_). 
+
+In [AndersonGangulyKurtz2011]_ a midpoint variant of the basic algorithm is developed and elegantly analyzed. 
+Upon defining :math:`\rho_z=\frac{1}{2}h\big(\lambda_z-\mu_z\big)`, upon initializing :math:`j=0`, :math:`t_0=0` and :math:`z_0=Z(t_0)` this algorithm proceeds by repeating the steps:
+
+1. Generate two Poisson distributed random variables :math:`\mathfrak L` and :math:`\mathfrak M` with respective means :math:`\lambda\circ \rho \circ z_{j}h` and :math:`\mu\circ \rho \circ z_{j}h`. 
+2. Set :math:`z_{j+1}= z_j +\mathfrak L -\mathfrak M` and then :math:`j=j+1`. 
+
+This algorithm can provide substantial improvements in accuracy relative to the Euler version at only a minor increase in computational cost. 
+Both of the above approximations can be thought of as utilizing a zero order approximation to :math:`Z` on each interval :math:`[jh, (j+1)h]`. 
+
+See :ref:`birdepy.simulate.discrete()` (with `method` set to 'ma') for an implementation of this algorithm. 
+
+Recently a new approach utilizing a linear approximation was proposed in [NEEDS CITATION]. 
+This approximate simulation algorithm relies on the fact that a discretely observed linear birth-and-death process corresponds to a Galton--Watson process (see [Guttorp1991]_). 
+This means that for a linear birth-and-death process with birth rates :math:`\lambda_z=\mathring\lambda z` and death rates :math:`\mu_z=\mathring\mu z`, the probability of any particular individual that is present at time :math:`0` 'dying' before time :math:`h` is given by 
+
+	.. math:: 
+
+		\alpha = \left\{\begin{array}{cc} \mathring\mu\{\exp\big((\mathring\lambda-\mathring\mu)h\big)-1\}/\{\mathring\lambda \exp\big((\mathring\lambda-\mathring\mu)h\big)-\mathring\mu\} & \text{if } \mathring\lambda\ne \mathring\mu, \\ 
+		\mathring\lambda h/(1+\mathring\lambda h) & \text{if } \mathring\lambda = \mathring\mu. 
+		\end{array}\right.
+
+Each surviving individual results in a geometrically distributed number of other individuals being present at time :math:`h` with failure probability
+
+	.. math::
+
+		\beta = \left\{ \begin{array}{cc} \mathring\lambda\alpha/\mathring\mu& \text{if } \mathring\lambda\ne \mathring\mu, \\ 
+		\alpha & \text{if } \mathring\lambda = \mathring\mu. 
+		\end{array}\right.
+
+Therefore given :math:`Z(t_{j-1})=z_{j-1}` a realisation of :math:`Z(t_{j})` can be found by generating :math:`\mathfrak B`  
+which is binomially distributed with :math:`z_{j-1}` trials and success probability :math:`1-\alpha` and then :math:`Z(t_j)` is negative binomially distributed with parameters :math:`\mathfrak B` and :math:`1-\beta`, that is:
+
+	.. math:: 
+
+		\mathbb P(Z(t_j) = k) = \binom{k+\mathfrak B-1}{k}\beta^{\mathfrak B}(1-\beta)^k. 
+
+This evolution of a linear birth-and-death process can be utilized to approximate a population-size-dependent birth-and-death process by fixing the linear rates equal to the nonlinear rates at time :math:`0`. 
+Therefore upon initializing :math:`j=0`, :math:`t_0=0` and :math:`z_0=Z(t_0)` proceed by repeating the steps:
+
+1. Set :math:`\mathring\lambda = \lambda_{z_i}/z_i` and :math:`\mathring\mu = \mu_{z_i}/z_i`. 
+2. Generate a binomially distributed random variable :math:`\mathfrak B` with success probability :math:`1-\alpha` with :math:`\alpha` as given above and number of trials :math:`z_{j}`. 
+3. Generate a negatively binomially distributed random variable :math:`\mathfrak C` with success probability :math:`1-\beta` with :math:`\beta` as given above and number of trials :math:`\mathfrak B`. 
+4. Set :math:`z_{j+1}= z_j +\mathfrak C` and then :math:`j=j+1`. 
+
+This algorithm is efficient to implement and highly accurate. 
+It also explicitly avoids the possibility of the population size becoming negative during the simulation. 
+
+See :ref:`birdepy.simulate.discrete()` (with `method` set to 'gwa') for an implementation of this algorithm. 
 
 
 Reproducibility
 ^^^^^^^^^^^^^^^
+BirDePy uses `numpy.random <https://numpy.org/doc/1.21/reference/random/index.html?highlight=random#module-numpy.random>`_ to generate random numbers. 
+Functions which utilize random numbers have a seed parameter that can be used for reproducibility. 
+The seed parameters accept either an integer number or a `Generator <https://numpy.org/doc/1.21/reference/random/generator.html#numpy.random.Generator>`_ as input. 
+Sometimes a script uses multiple functions and the user only wishes to specify a single seed.
+The recommended way to handle this situation is to create a generator `rng` with the preferred seed: ::
+
+	import numpy as np
+	seed = 2021
+	rng = np.random.default_rng(seed)
+
+
+The generator can then be passed to all of the functions which have a seed parameter. 
+For example: ::
+
+	import birdepy as bd
+	for _ in range(10):
+	    print(bd.simulate.discrete(1, 'Poisson', 0, times=[10], seed=rng)[0])
+
+
+.. [Kendall1050] Kendall, D.G., 1950. An artificial realization of a simple" birth-and-death" process. Journal of the Royal Statistical Society. Series B (Methodological), 12(1), pp.116-119.
+
+.. [Gillespie1977] Gillespie, D.T., 1977. Exact stochastic simulation of coupled chemical reactions. The journal of physical chemistry, 81(25), pp.2340-2361.
+
+.. [Gillespie2001] Gillespie, D.T., 2001. Approximate accelerated stochastic simulation of chemically reacting systems. The Journal of chemical physics, 115(4), pp.1716-1733.
+
+.. [GillespiePetzold2003] Gillespie, D.T. and Petzold, L.R., 2003. Improved leap-size selection for accelerated stochastic simulation. The journal of chemical physics, 119(16), pp.8229-8234.
+
+.. [CaoGillespiePetzold2006] Cao, Y., Gillespie, D.T. and Petzold, L.R., 2006. Efficient step size selection for the tau-leaping simulation method. The Journal of chemical physics, 124(4), p.044109.
+
+.. [CaoGillespiePetzold2005] Cao, Y., Gillespie, D.T. and Petzold, L.R., 2005. Avoiding negative populations in explicit Poisson tau-leaping. The Journal of chemical physics, 123(5), p.054104.
+
+.. [ChatterjeeEtAl2005] Chatterjee, A., Vlachos, D.G. and Katsoulakis, M.A., 2005. Binomial distribution based τ-leap accelerated stochastic simulation. The Journal of chemical physics, 122(2), p.024112.
+
+.. [Anderson2008] Anderson, D.F., 2008. Incorporating postleap checks in tau-leaping. The Journal of chemical physics, 128(5), p.054103.
+
+.. [AndersonGangulyKurtz2011] Anderson, D.F., Ganguly, A. and Kurtz, T.G., 2011. Error analysis of tau-leap simulation methods. The Annals of Applied Probability, 21(6), pp.2226-2262.
+
+.. [Guttorp1991] Guttorp, P., 1991. Statistical inference for branching processes (Vol. 122). Wiley-Interscience.

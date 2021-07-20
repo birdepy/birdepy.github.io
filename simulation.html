@@ -38,6 +38,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -131,14 +132,10 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#exact-simulation">Exact Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tau-leaping">tau Leaping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#galton-watson-leaping">Galton-Watson Leaping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Core Functions API</span></p>
 <ul>
@@ -173,14 +170,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 
             
@@ -250,18 +246,133 @@
             
   <div class="section" id="simulation-algorithms">
 <h1>Simulation Algorithms<a class="headerlink" href="#simulation-algorithms" title="Permalink to this headline">¶</a></h1>
-<p>UNDER CONSTRUCTION</p>
-<div class="section" id="exact-simulation">
-<h2>Exact Simulation<a class="headerlink" href="#exact-simulation" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="tau-leaping">
-<h2>tau Leaping<a class="headerlink" href="#tau-leaping" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="galton-watson-leaping">
-<h2>Galton-Watson Leaping<a class="headerlink" href="#galton-watson-leaping" title="Permalink to this headline">¶</a></h2>
-</div>
+<p>The goal of simulating a birth-and-death process may be to obtain a sequence of times at which the process transitions with a corresponding sequence of states that the process transitions into.
+We call this continuous simulation since the output provides sufficient information to recover the state of the process at any time within the simulation horizon.
+An advantage of continuous simulation is that it is possible to know whether certain events have occurred, for example whether the process has crossed a boundary by a certain time.
+An alternative goal may be to obtain samples of a birth-and-death process at pre-specified observation times.
+In this discrete simulation case observation times are specified and the state of the process at those times is the output.
+An advantage of discrete simulation is that it is straightforward to combine simulated sample paths together to find, for example, the expected value or variance of a process as a function of time.</p>
+<p>To perform continuous simulation over the interval <span class="math notranslate nohighlight">\([0,t]\)</span>, initialise <span class="math notranslate nohighlight">\(j=0\)</span>, <span class="math notranslate nohighlight">\(t_0=0\)</span> and <span class="math notranslate nohighlight">\(z_0=Z(0)\)</span>, and then repeat these steps:</p>
+<ol class="arabic simple">
+<li><p>Generate an exponentially distributed random variable <span class="math notranslate nohighlight">\(\Delta\)</span> with mean <span class="math notranslate nohighlight">\((\lambda_{z_j}+\mu_{z_j})^{-1}\)</span>.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(t_j+\Delta\le t\)</span>, set <span class="math notranslate nohighlight">\(t_{j+1}=t_j+\Delta\)</span>; otherwise stop.</p></li>
+<li><p>With probability <span class="math notranslate nohighlight">\(\lambda_{z_j}/(\lambda_{z_j}+\mu_{z_j})\)</span> set <span class="math notranslate nohighlight">\(z_{j+1}=z_j+1\)</span>; otherwise set <span class="math notranslate nohighlight">\(z_{j+1}=z_j-1\)</span>.</p></li>
+</ol>
+<p>See <a class="reference internal" href="api_simulate_continuous.html#birdepy-simulate-continuous"><span class="std std-ref">birdepy.simulate.continuous()</span></a> for an implementation of this algorithm.</p>
+<p>Discrete simulation proceeds in a similar fashion.
+To simulate a birth-and-death process at the time points <span class="math notranslate nohighlight">\(t_0&lt;t_1&lt;\dots t_n\)</span>, initialise <span class="math notranslate nohighlight">\(j=0\)</span>, <span class="math notranslate nohighlight">\(t_0=t\)</span> and <span class="math notranslate nohighlight">\(z_0=Z(t_0)\)</span>, and then repeat these steps:</p>
+<ol class="arabic simple">
+<li><p>Generate an exponentially distributed random variable <span class="math notranslate nohighlight">\(\Delta\)</span> with mean <span class="math notranslate nohighlight">\((\lambda_{z_j}+\mu_{z_j})^{-1}\)</span>.</p></li>
+<li><p>Set <span class="math notranslate nohighlight">\(t = t_j+\Delta\)</span>.</p></li>
+<li><p>While <span class="math notranslate nohighlight">\(t_j &lt; t\)</span> set <cite>z_{j+1}=z_j</cite> and then <span class="math notranslate nohighlight">\(j=j+1\)</span>.</p></li>
+<li><p>With probability <span class="math notranslate nohighlight">\(\lambda_{z_{j-1}}/(\lambda_{z_{j-1}}+\mu_{z_{j-1}})\)</span> set <span class="math notranslate nohighlight">\(z_{j}=z_{j-1}+1\)</span>; otherwise set <span class="math notranslate nohighlight">\(z_{j}=z_{j-1}-1\)</span>.</p></li>
+</ol>
+<p>See <a class="reference internal" href="api_simulate_discrete.html#birdepy-simulate-discrete"><span class="std std-ref">birdepy.simulate.discrete()</span></a> (with <cite>method</cite> set to ‘exact’) and <a class="reference internal" href="api_cuda_simulate.html#birdepy-gpu-functions-discrete-gpu"><span class="std std-ref">birdepy.gpu_functions.discrete_gpu()</span></a> for implementations of this algorithm.</p>
+<p>It is thought within the probability community that the exact discrete simulation algorithms just presented were first considered created by Joseph L.Doob and his collaborators in approximately 1945.
+To our knowledge the first implementation on a computer is described in <a class="reference internal" href="#kendall1050" id="id1"><span>[Kendall1050]</span></a>, and the algorithm was popularised more widely in <a class="reference internal" href="#gillespie1977" id="id2"><span>[Gillespie1977]</span></a>.</p>
+<p>A well known drawback of exact simulation algorithms is that they may take considerable computational time to produce sample paths.
+An alternative approximate simulation method known as tau-leaping was introduced in <a class="reference internal" href="#gillespie2001" id="id3"><span>[Gillespie2001]</span></a> that allows the user to trade accuracy for speed.
+This algorithm provides an approximation to <span class="math notranslate nohighlight">\(Z\)</span> at times <span class="math notranslate nohighlight">\((t_j = hj,~j=0,1,\dots,n)\)</span> where <span class="math notranslate nohighlight">\(h\)</span> is a predetermined constant.
+Upon initializing <span class="math notranslate nohighlight">\(j=0\)</span>, <span class="math notranslate nohighlight">\(t_0=0\)</span> and <span class="math notranslate nohighlight">\(z_0=Z(t_0)\)</span>, the basic Euler form of the algorithm proceeds by repeat these steps until all times <span class="math notranslate nohighlight">\(t_j\)</span> are sampled:</p>
+<ol class="arabic simple">
+<li><p>Generate two Poisson distributed random variables <span class="math notranslate nohighlight">\(\mathfrak L\)</span> and <span class="math notranslate nohighlight">\(\mathfrak M\)</span> with respective means <span class="math notranslate nohighlight">\(\lambda_{z_j}h\)</span> and <span class="math notranslate nohighlight">\(\mu_{z_j}h\)</span>.</p></li>
+<li><p>Set <span class="math notranslate nohighlight">\(z_{j+1}= z_j +\mathfrak L -\mathfrak M\)</span> and then <span class="math notranslate nohighlight">\(j=j+1\)</span>.</p></li>
+</ol>
+<p>See <a class="reference internal" href="api_simulate_discrete.html#birdepy-simulate-discrete"><span class="std std-ref">birdepy.simulate.discrete()</span></a> (with <cite>method</cite> set to ‘ea’) for an implementation of this algorithm.</p>
+<p>Several variations of this algorithm have been developed which focus primarily on step-size selection (e.g., <a class="reference internal" href="#gillespiepetzold2003" id="id4"><span>[GillespiePetzold2003]</span></a> and <a class="reference internal" href="#caogillespiepetzold2006" id="id5"><span>[CaoGillespiePetzold2006]</span></a>) and ensuring that the population size does not go negative during the simulation (e.g., <a class="reference internal" href="#caogillespiepetzold2005" id="id6"><span>[CaoGillespiePetzold2005]</span></a>, <a class="reference internal" href="#chatterjeeetal2005" id="id7"><span>[ChatterjeeEtAl2005]</span></a> and <a class="reference internal" href="#anderson2008" id="id8"><span>[Anderson2008]</span></a>).</p>
+<p>In <a class="reference internal" href="#andersongangulykurtz2011" id="id9"><span>[AndersonGangulyKurtz2011]</span></a> a midpoint variant of the basic algorithm is developed and elegantly analyzed.
+Upon defining <span class="math notranslate nohighlight">\(\rho_z=\frac{1}{2}h\big(\lambda_z-\mu_z\big)\)</span>, upon initializing <span class="math notranslate nohighlight">\(j=0\)</span>, <span class="math notranslate nohighlight">\(t_0=0\)</span> and <span class="math notranslate nohighlight">\(z_0=Z(t_0)\)</span> this algorithm proceeds by repeating the steps:</p>
+<ol class="arabic simple">
+<li><p>Generate two Poisson distributed random variables <span class="math notranslate nohighlight">\(\mathfrak L\)</span> and <span class="math notranslate nohighlight">\(\mathfrak M\)</span> with respective means <span class="math notranslate nohighlight">\(\lambda\circ \rho \circ z_{j}h\)</span> and <span class="math notranslate nohighlight">\(\mu\circ \rho \circ z_{j}h\)</span>.</p></li>
+<li><p>Set <span class="math notranslate nohighlight">\(z_{j+1}= z_j +\mathfrak L -\mathfrak M\)</span> and then <span class="math notranslate nohighlight">\(j=j+1\)</span>.</p></li>
+</ol>
+<p>This algorithm can provide substantial improvements in accuracy relative to the Euler version at only a minor increase in computational cost.
+Both of the above approximations can be thought of as utilizing a zero order approximation to <span class="math notranslate nohighlight">\(Z\)</span> on each interval <span class="math notranslate nohighlight">\([jh, (j+1)h]\)</span>.</p>
+<p>See <a class="reference internal" href="api_simulate_discrete.html#birdepy-simulate-discrete"><span class="std std-ref">birdepy.simulate.discrete()</span></a> (with <cite>method</cite> set to ‘ma’) for an implementation of this algorithm.</p>
+<p>Recently a new approach utilizing a linear approximation was proposed in [NEEDS CITATION].
+This approximate simulation algorithm relies on the fact that a discretely observed linear birth-and-death process corresponds to a Galton–Watson process (see <a class="reference internal" href="#guttorp1991" id="id10"><span>[Guttorp1991]</span></a>).
+This means that for a linear birth-and-death process with birth rates <span class="math notranslate nohighlight">\(\lambda_z=\mathring\lambda z\)</span> and death rates <span class="math notranslate nohighlight">\(\mu_z=\mathring\mu z\)</span>, the probability of any particular individual that is present at time <span class="math notranslate nohighlight">\(0\)</span> ‘dying’ before time <span class="math notranslate nohighlight">\(h\)</span> is given by</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}\alpha = \left\{\begin{array}{cc} \mathring\mu\{\exp\big((\mathring\lambda-\mathring\mu)h\big)-1\}/\{\mathring\lambda \exp\big((\mathring\lambda-\mathring\mu)h\big)-\mathring\mu\} &amp; \text{if } \mathring\lambda\ne \mathring\mu, \\
+\mathring\lambda h/(1+\mathring\lambda h) &amp; \text{if } \mathring\lambda = \mathring\mu.
+\end{array}\right.\end{split}\]</div>
+</div></blockquote>
+<p>Each surviving individual results in a geometrically distributed number of other individuals being present at time <span class="math notranslate nohighlight">\(h\)</span> with failure probability</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}\beta = \left\{ \begin{array}{cc} \mathring\lambda\alpha/\mathring\mu&amp; \text{if } \mathring\lambda\ne \mathring\mu, \\
+\alpha &amp; \text{if } \mathring\lambda = \mathring\mu.
+\end{array}\right.\end{split}\]</div>
+</div></blockquote>
+<p>Therefore given <span class="math notranslate nohighlight">\(Z(t_{j-1})=z_{j-1}\)</span> a realisation of <span class="math notranslate nohighlight">\(Z(t_{j})\)</span> can be found by generating <span class="math notranslate nohighlight">\(\mathfrak B\)</span>
+which is binomially distributed with <span class="math notranslate nohighlight">\(z_{j-1}\)</span> trials and success probability <span class="math notranslate nohighlight">\(1-\alpha\)</span> and then <span class="math notranslate nohighlight">\(Z(t_j)\)</span> is negative binomially distributed with parameters <span class="math notranslate nohighlight">\(\mathfrak B\)</span> and <span class="math notranslate nohighlight">\(1-\beta\)</span>, that is:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\mathbb P(Z(t_j) = k) = \binom{k+\mathfrak B-1}{k}\beta^{\mathfrak B}(1-\beta)^k.\]</div>
+</div></blockquote>
+<p>This evolution of a linear birth-and-death process can be utilized to approximate a population-size-dependent birth-and-death process by fixing the linear rates equal to the nonlinear rates at time <span class="math notranslate nohighlight">\(0\)</span>.
+Therefore upon initializing <span class="math notranslate nohighlight">\(j=0\)</span>, <span class="math notranslate nohighlight">\(t_0=0\)</span> and <span class="math notranslate nohighlight">\(z_0=Z(t_0)\)</span> proceed by repeating the steps:</p>
+<ol class="arabic simple">
+<li><p>Set <span class="math notranslate nohighlight">\(\mathring\lambda = \lambda_{z_i}/z_i\)</span> and <span class="math notranslate nohighlight">\(\mathring\mu = \mu_{z_i}/z_i\)</span>.</p></li>
+<li><p>Generate a binomially distributed random variable <span class="math notranslate nohighlight">\(\mathfrak B\)</span> with success probability <span class="math notranslate nohighlight">\(1-\alpha\)</span> with <span class="math notranslate nohighlight">\(\alpha\)</span> as given above and number of trials <span class="math notranslate nohighlight">\(z_{j}\)</span>.</p></li>
+<li><p>Generate a negatively binomially distributed random variable <span class="math notranslate nohighlight">\(\mathfrak C\)</span> with success probability <span class="math notranslate nohighlight">\(1-\beta\)</span> with <span class="math notranslate nohighlight">\(\beta\)</span> as given above and number of trials <span class="math notranslate nohighlight">\(\mathfrak B\)</span>.</p></li>
+<li><p>Set <span class="math notranslate nohighlight">\(z_{j+1}= z_j +\mathfrak C\)</span> and then <span class="math notranslate nohighlight">\(j=j+1\)</span>.</p></li>
+</ol>
+<p>This algorithm is efficient to implement and highly accurate.
+It also explicitly avoids the possibility of the population size becoming negative during the simulation.</p>
+<p>See <a class="reference internal" href="api_simulate_discrete.html#birdepy-simulate-discrete"><span class="std std-ref">birdepy.simulate.discrete()</span></a> (with <cite>method</cite> set to ‘gwa’) for an implementation of this algorithm.</p>
 <div class="section" id="reproducibility">
 <h2>Reproducibility<a class="headerlink" href="#reproducibility" title="Permalink to this headline">¶</a></h2>
+<p>BirDePy uses <a class="reference external" href="https://numpy.org/doc/1.21/reference/random/index.html?highlight=random#module-numpy.random">numpy.random</a> to generate random numbers.
+Functions which utilize random numbers have a seed parameter that can be used for reproducibility.
+The seed parameters accept either an integer number or a <a class="reference external" href="https://numpy.org/doc/1.21/reference/random/generator.html#numpy.random.Generator">Generator</a> as input.
+Sometimes a script uses multiple functions and the user only wishes to specify a single seed.
+The recommended way to handle this situation is to create a generator <cite>rng</cite> with the preferred seed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">2021</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The generator can then be passed to all of the functions which have a seed parameter.
+For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">discrete</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Poisson&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="n">rng</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="citation">
+<dt class="label" id="kendall1050"><span class="brackets"><a class="fn-backref" href="#id1">Kendall1050</a></span></dt>
+<dd><p>Kendall, D.G., 1950. An artificial realization of a simple” birth-and-death” process. Journal of the Royal Statistical Society. Series B (Methodological), 12(1), pp.116-119.</p>
+</dd>
+<dt class="label" id="gillespie1977"><span class="brackets"><a class="fn-backref" href="#id2">Gillespie1977</a></span></dt>
+<dd><p>Gillespie, D.T., 1977. Exact stochastic simulation of coupled chemical reactions. The journal of physical chemistry, 81(25), pp.2340-2361.</p>
+</dd>
+<dt class="label" id="gillespie2001"><span class="brackets"><a class="fn-backref" href="#id3">Gillespie2001</a></span></dt>
+<dd><p>Gillespie, D.T., 2001. Approximate accelerated stochastic simulation of chemically reacting systems. The Journal of chemical physics, 115(4), pp.1716-1733.</p>
+</dd>
+<dt class="label" id="gillespiepetzold2003"><span class="brackets"><a class="fn-backref" href="#id4">GillespiePetzold2003</a></span></dt>
+<dd><p>Gillespie, D.T. and Petzold, L.R., 2003. Improved leap-size selection for accelerated stochastic simulation. The journal of chemical physics, 119(16), pp.8229-8234.</p>
+</dd>
+<dt class="label" id="caogillespiepetzold2006"><span class="brackets"><a class="fn-backref" href="#id5">CaoGillespiePetzold2006</a></span></dt>
+<dd><p>Cao, Y., Gillespie, D.T. and Petzold, L.R., 2006. Efficient step size selection for the tau-leaping simulation method. The Journal of chemical physics, 124(4), p.044109.</p>
+</dd>
+<dt class="label" id="caogillespiepetzold2005"><span class="brackets"><a class="fn-backref" href="#id6">CaoGillespiePetzold2005</a></span></dt>
+<dd><p>Cao, Y., Gillespie, D.T. and Petzold, L.R., 2005. Avoiding negative populations in explicit Poisson tau-leaping. The Journal of chemical physics, 123(5), p.054104.</p>
+</dd>
+<dt class="label" id="chatterjeeetal2005"><span class="brackets"><a class="fn-backref" href="#id7">ChatterjeeEtAl2005</a></span></dt>
+<dd><p>Chatterjee, A., Vlachos, D.G. and Katsoulakis, M.A., 2005. Binomial distribution based τ-leap accelerated stochastic simulation. The Journal of chemical physics, 122(2), p.024112.</p>
+</dd>
+<dt class="label" id="anderson2008"><span class="brackets"><a class="fn-backref" href="#id8">Anderson2008</a></span></dt>
+<dd><p>Anderson, D.F., 2008. Incorporating postleap checks in tau-leaping. The Journal of chemical physics, 128(5), p.054103.</p>
+</dd>
+<dt class="label" id="andersongangulykurtz2011"><span class="brackets"><a class="fn-backref" href="#id9">AndersonGangulyKurtz2011</a></span></dt>
+<dd><p>Anderson, D.F., Ganguly, A. and Kurtz, T.G., 2011. Error analysis of tau-leap simulation methods. The Annals of Applied Probability, 21(6), pp.2226-2262.</p>
+</dd>
+<dt class="label" id="guttorp1991"><span class="brackets"><a class="fn-backref" href="#id10">Guttorp1991</a></span></dt>
+<dd><p>Guttorp, P., 1991. Statistical inference for branching processes (Vol. 122). Wiley-Interscience.</p>
+</dd>
+</dl>
 </div>
 </div>
 

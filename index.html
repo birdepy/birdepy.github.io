@@ -38,6 +38,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -130,14 +131,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact-simulation">Exact Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping">tau Leaping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-leaping">Galton-Watson Leaping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Core Functions API</span></p>
 <ul>
@@ -172,14 +169,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 
             
@@ -250,7 +246,7 @@
   <div class="section" id="birdepy-birth-and-death-processes-in-python">
 <h1>BirDePy: Birth-and-death Processes in Python<a class="headerlink" href="#birdepy-birth-and-death-processes-in-python" title="Permalink to this headline">¶</a></h1>
 <p>IMPORTANT: This website is still under construction and is missing several parts.</p>
-<p><cite>BirDePy</cite> is a Python package for working with continuous time <a class="reference external" href="https://en.wikipedia.org/wiki/Birth-and-death_process">birth-and-death processes</a>. It includes functions which can be used to approximate transition probabilities (<a class="reference internal" href="api_probability.html#birdepy-probability"><span class="std std-ref">birdepy.probability()</span></a>) estimate parameter values from data (<a class="reference internal" href="api_estimate.html#birdepy-estimate"><span class="std std-ref">birdepy.estimate()</span></a>), simulate sample paths (<a class="reference internal" href="api_simulate_discrete.html#birdepy-simulate-discrete"><span class="std std-ref">birdepy.simulate.discrete()</span></a> and <a class="reference internal" href="api_simulate_continuous.html#birdepy-simulate-continuous"><span class="std std-ref">birdepy.simulate.continuous()</span></a>) and generate forecasts (<a class="reference internal" href="api_forecast.html#birdepy-forecast"><span class="std std-ref">birdepy.forecast()</span></a>). The main focus of the package is the estimation of parameter values from discretely-observed sample paths, however the much more straightforward case of estimation of parameter values from continuously observed sample paths is also included.</p>
+<p><cite>BirDePy</cite> is a Python package for working with continuous time <a class="reference external" href="https://en.wikipedia.org/wiki/Birth-and-death_process">birth-and-death processes</a>. It includes functions which can be used to approximate transition probabilities (<a class="reference internal" href="api_probability.html#birdepy-probability"><span class="std std-ref">birdepy.probability()</span></a>),` estimate parameter values from data (<a class="reference internal" href="api_estimate.html#birdepy-estimate"><span class="std std-ref">birdepy.estimate()</span></a>), simulate sample paths (<a class="reference internal" href="api_simulate_discrete.html#birdepy-simulate-discrete"><span class="std std-ref">birdepy.simulate.discrete()</span></a> and <a class="reference internal" href="api_simulate_continuous.html#birdepy-simulate-continuous"><span class="std std-ref">birdepy.simulate.continuous()</span></a>) and generate forecasts (<a class="reference internal" href="api_forecast.html#birdepy-forecast"><span class="std std-ref">birdepy.forecast()</span></a>). The main focus of the package is the estimation of parameter values from discretely-observed sample paths, however the much more straightforward case of estimation of parameter values from continuously observed sample paths is also included.</p>
 <p>You can install <cite>BirDePy</cite> using <a class="reference external" href="https://pypi.org/project/pip/">pip</a>. To do this open Python and execute:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">birdepy</span>
 </pre></div>
@@ -258,24 +254,22 @@
 <p>You may also need to install some dependencies (listed below).</p>
 <div class="section" id="usage-example">
 <h2>Usage Example<a class="headerlink" href="#usage-example" title="Permalink to this headline">¶</a></h2>
-<p>Suppose we are interested in the susceptible-infective-susceptible model:</p>
+<p>Suppose we are interested in the susceptible-infective-susceptible model. This is the Verhulst model with rate of spread given by <span class="math notranslate nohighlight">\(\gamma\)</span>, recovery rate given by <span class="math notranslate nohighlight">\(\nu\)</span>, population size given by <span class="math notranslate nohighlight">\(1/\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta=0\)</span>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;Verhulst 2 (SIS)&#39;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;Verhulst&#39;</span>
 <span class="n">rate_of_spread</span> <span class="o">=</span> <span class="mf">0.75</span>
 <span class="n">recovery_rate</span> <span class="o">=</span> <span class="mf">0.25</span>
 <span class="n">population_size</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">true_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">rate_of_spread</span><span class="p">,</span> <span class="n">recovery_rate</span><span class="p">,</span> <span class="n">population_size</span><span class="p">]</span>
+<span class="n">true_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">rate_of_spread</span><span class="p">,</span> <span class="n">recovery_rate</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">population_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">simulation_horizon</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">initial_number_infected</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">obs_times</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">simulation_horizon</span><span class="p">)]</span>
+<span class="n">obs_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">simulation_horizon</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>BirDePy’s function <a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> can be used to simulate a possible sample path:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">number_infected</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">discrete</span><span class="p">(</span><span class="n">true_parameters</span><span class="p">,</span>
-                                       <span class="n">model</span><span class="p">,</span>
-                                       <span class="n">initial_number_infected</span><span class="p">,</span>
-                                       <span class="n">obs_times</span><span class="p">,</span>
-                                       <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">number_infected</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">discrete</span><span class="p">(</span><span class="n">true_parameters</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">initial_number_infected</span><span class="p">,</span>
+                                       <span class="n">obs_times</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The path can be plotted:</p>
@@ -289,42 +283,54 @@
 </div>
 <p>It looks like this:</p>
 <img alt="_images/example_fig_1.png" src="_images/example_fig_1.png" />
-<p>BirDePy’s function <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> can be used to estimate the parameter values (assuming a known population size):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span>
-                  <span class="n">number_infected</span><span class="p">,</span>
-                  <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-                  <span class="p">[[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span>
-                  <span class="n">framework</span><span class="o">=</span><span class="s1">&#39;dnm&#39;</span><span class="p">,</span>
-                  <span class="n">likelihood</span><span class="o">=</span><span class="s1">&#39;da&#39;</span><span class="p">,</span>
-                  <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-                  <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="n">population_size</span><span class="p">],</span>
-                  <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                  <span class="n">ci_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>BirDePy’s function <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> can be used to estimate the parameter values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">initial_guess</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span>
+<span class="n">p_bounds</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span><span class="o">*</span><span class="mi">3</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">number_infected</span><span class="p">,</span> <span class="n">initial_guess</span><span class="p">,</span> <span class="n">p_bounds</span><span class="p">,</span>
+                  <span class="n">framework</span><span class="o">=</span><span class="s1">&#39;dnm&#39;</span><span class="p">,</span> <span class="n">likelihood</span><span class="o">=</span><span class="s1">&#39;da&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                  <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimate:&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Standard error:&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">se</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Which returns an estimate of [0.7489, 0.2474] with standard errors [0.0494, 0.0170].
+<p>Although some errors may be displayed, BirDePy overcomes these issues and an accurate estimate of [0.7475, 0.2494, 0.0010] with standard errors [4.6778-02 2.6329e-02 3.6641e-05] is returned.
 The argument of <cite>framework</cite> is set to ‘dnm’ so <a class="reference internal" href="estimation.html#direct-numerical-maximization"><span class="std std-ref">direct numerical maximisation</span></a> is used to find a maximum likeliood estimate.
 The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="reference internal" href="probabilities.html#diffusion-approximation"><span class="std std-ref">diffusion approximation</span></a> is used to approximate the likelihood function.</p>
-<p>A confidence region is also produced:</p>
+<p>If we suppose that <span class="math notranslate nohighlight">\(\alpha=0.001\)</span> is known, a confidence region can be produced for the remaining two unknown parameters by setting <cite>ci_plot</cite> to ‘True’:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">number_infected</span><span class="p">,</span> <span class="n">initial_guess</span><span class="p">,</span> <span class="n">p_bounds</span><span class="p">,</span>
+                  <span class="n">framework</span><span class="o">=</span><span class="s1">&#39;dnm&#39;</span><span class="p">,</span> <span class="n">likelihood</span><span class="o">=</span><span class="s1">&#39;da&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                  <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>It looks like this:</p>
 <img alt="_images/example_fig_2.png" src="_images/example_fig_2.png" />
-<p>A forecast can be made:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">number_infected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-            <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="n">population_size</span><span class="p">],</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>Observe that no errors are printed when the population is assumed known since this is a much easier estimation task.</p>
+<p>A forecast confidence interval can be made:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">future_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">201</span><span class="p">,</span> <span class="mi">251</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">number_infected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">future_t</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">est</span><span class="o">.</span><span class="n">cov</span><span class="p">,</span>
+            <span class="n">p_bounds</span><span class="o">=</span><span class="p">[[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>  <span class="n">xticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">201</span><span class="p">,</span> <span class="mi">251</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>It looks like this:</p>
 <img alt="_images/example_fig_3.png" src="_images/example_fig_3.png" />
+<p>The confidence intervals contain future mean behavior with high probability.</p>
 </div>
 <div class="section" id="dependency-list">
 <h2>Dependency List<a class="headerlink" href="#dependency-list" title="Permalink to this headline">¶</a></h2>
+<p>Required:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">mpmath</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scipy</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gwr_inversion</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></p></li>
+</ul>
+<p>Optional:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gwr_inversion</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numba</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cudatoolkit</span></code></p></li>
 </ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Theoretical Background</span></p>
@@ -365,14 +371,10 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact-simulation">Exact Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping">tau Leaping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-leaping">Galton-Watson Leaping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -413,14 +415,13 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 </div>
 </div>
