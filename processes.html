@@ -132,14 +132,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact-simulation">Exact Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping">tau Leaping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-leaping">Galton-Watson Leaping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Core Functions API</span></p>
 <ul>
@@ -174,14 +170,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 
             
@@ -355,16 +350,16 @@ Then import BirDePy:</p>
 <span class="k">def</span> <span class="nf">custom_d_rate</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span> <span class="k">return</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
-<p>Suppose that <span class="math notranslate nohighlight">\(\gamma = 5\)</span>, <span class="math notranslate nohighlight">\(\nu = 0.25\)</span> and <span class="math notranslate nohighlight">\(Z(0)=10\)</span>. To simulate a trajectory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">obs_times</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
-<span class="n">pop_sizes</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">discrete</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="n">z0</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="n">obs_times</span><span class="p">,</span>
-                                 <span class="n">b_rate</span><span class="o">=</span><span class="n">custom_b_rate</span><span class="p">,</span> <span class="n">d_rate</span><span class="o">=</span><span class="n">custom_d_rate</span><span class="p">)</span>
+<p>Suppose that <span class="math notranslate nohighlight">\(\gamma = 5\)</span>, <span class="math notranslate nohighlight">\(\nu = 0.5\)</span> and <span class="math notranslate nohighlight">\(Z(0)=10\)</span>. To simulate a trajectory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">obs_times</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">)]</span>
+<span class="n">pop_sizes</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">discrete</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="n">z0</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="n">obs_times</span><span class="p">,</span>
+                                 <span class="n">b_rate</span><span class="o">=</span><span class="n">custom_b_rate</span><span class="p">,</span> <span class="n">d_rate</span><span class="o">=</span><span class="n">custom_d_rate</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The trajectory can be plotted using Matplotlib:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">pop_sizes</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">pop_sizes</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:purple&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Z(t)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -373,11 +368,14 @@ Then import BirDePy:</p>
 <p>For example:</p>
 <img alt="_images/custom_fig_1.png" src="_images/custom_fig_1.png" />
 <p>The parameters can then be estimated from the simulated sample path:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">p_bounds</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]]</span>
-<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">pop_sizes</span><span class="p">,</span> <span class="n">p01</span><span class="p">,</span> <span class="n">p_bounds</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p_bounds</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">pop_sizes</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">p_bounds</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span>
                   <span class="n">b_rate</span><span class="o">=</span><span class="n">custom_b_rate</span><span class="p">,</span> <span class="n">d_rate</span><span class="o">=</span><span class="n">custom_d_rate</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which displays the estimate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">7.029076385718105</span><span class="p">,</span> <span class="mf">0.6961996442136139</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>

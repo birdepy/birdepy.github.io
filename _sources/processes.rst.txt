@@ -89,17 +89,17 @@ Now specify custom birth and death rates::
     def custom_b_rate(z, p): return p[0] * z
     def custom_d_rate(z, p): return p[1] * z**2
 
-Suppose that :math:`\gamma = 5`, :math:`\nu = 0.25` and :math:`Z(0)=10`. To simulate a trajectory::
+Suppose that :math:`\gamma = 5`, :math:`\nu = 0.5` and :math:`Z(0)=10`. To simulate a trajectory::
 
-    obs_times = [t for t in range(100)]
-    pop_sizes = bd.simulate.discrete([0.5, 0.25], model='custom', z0=10, times=obs_times,
-                                     b_rate=custom_b_rate, d_rate=custom_d_rate)
+    obs_times = [t for t in range(25)]
+    pop_sizes = bd.simulate.discrete([5, 0.5], model='custom', z0=10, times=obs_times,
+                                     b_rate=custom_b_rate, d_rate=custom_d_rate, seed=2021)
 
 The trajectory can be plotted using Matplotlib::
 
     import matplotlib.pyplot as plt
 
-    plt.step(obs_times, pop_sizes, 'r', where='post')
+    plt.step(obs_times, pop_sizes, 'r', where='post', color='tab:purple')
     plt.ylabel('Z(t)')
     plt.xlabel('t')
     plt.show()
@@ -110,8 +110,11 @@ For example:
 
 The parameters can then be estimated from the simulated sample path:: 
 
-    p0 = [1,1]
-    p_bounds = [[0,100], [0,10]]
-    est = bd.estimate(obs_times, pop_sizes, p01, p_bounds, model='custom',
+    p_bounds = [[0,10], [0,10]]
+    est = bd.estimate(obs_times, pop_sizes, [1, 1], p_bounds, model='custom',
                       b_rate=custom_b_rate, d_rate=custom_d_rate)
     print(est.p)
+
+Which displays the estimate::
+
+  [7.029076385718105, 0.6961996442136139]

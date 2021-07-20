@@ -11,13 +11,13 @@ Three methods are based on truncated transition matrices, four are approximation
 To obtain transition probabilities in BirDePy simply call :ref:`birdepy.probability()` (after importing BirDePy). For example, to obtain an array containing the probabilities of transitioning from :math:`Z(0)=20` to :math:`Z(1)=25` for the 'Verhulst 2 (SIS)' model with :math:`\boldsymbol \theta = (0.8, 0.4, 40)`:: 
 	 
    import birdepy as bd
-   bd.probability(20, 25, 1.0, [0.8, 0.4, 40], model='Verhulst 2 (SIS)', method='expm')
+   bd.probability(20, 25, 1.0, [0.8, 0.4, 0.01, 0.001], model='Verhulst', method='expm')
 
 Which returns::
 
-   array([[0.03688128]])
+   array([[0.08189476]])
 
-The method can be replaced by one of the nine choices described on this page. 
+The method 'expm' can be replaced by one of the nine choices described on this page. 
 Note that output is an array since it is possible to input initial and final populations as lists. 
 
 

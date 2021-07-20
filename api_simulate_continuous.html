@@ -131,14 +131,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact-simulation">Exact Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping">tau Leaping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-leaping">Galton-Watson Leaping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuda_user_guide.html">CUDA Functions</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Core Functions API</span></p>
 <ul class="current">
@@ -173,14 +169,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reporting_bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.1</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 
             
@@ -266,12 +261,11 @@ param.</p></li>
 <blockquote>
 <div><blockquote>
 <div><ul>
-<li><p>’Verhulst 1’</p></li>
-<li><p>’Verhulst 2 (SIS)’</p></li>
-<li><p>’Ricker 1’</p></li>
+<li><p>’Verhulst’</p></li>
+<li><p>’Ricker’</p></li>
 <li><p>’Beverton-Holt’</p></li>
 <li><p>’Hassell’</p></li>
-<li><p>’M-SS’</p></li>
+<li><p>’MS-S’</p></li>
 <li><p>’pure-birth’</p></li>
 <li><p>’pure-death’</p></li>
 <li><p>’Poisson’ (default)</p></li>
@@ -314,11 +308,9 @@ or according to a birth-and-death process evolving according to
 <cite>b_rate</cite> and <cite>d_rate</cite>.
 Or if n&gt;= 1, a list of lists where each list corresponds to the jump
 times from one sample path.</p></li>
-<li><p><strong>pop_sizes</strong> (<em>list</em>) – If n=1 a list containing population sizes at the corresponding jump
-times, generated according to <cite>model</cite> or according to a
-birth-and-death process evolving according to <cite>b_rate</cite> and
-<cite>d_rate</cite>.
-Or if n&gt;= 1, a list of lists where each list corresponds to the
+<li><p><strong>pop_sizes</strong> (<em>list</em>) – If k=1 a list containing population sizes at the corresponding jump
+times, generated according to <cite>model</cite>.
+Or if k&gt;1, a list of lists where each list corresponds to the
 population sizes corresponding to jump times from one sample path.</p></li>
 </ul>
 </p>
@@ -332,22 +324,6 @@ population sizes corresponding to jump times from one sample path.</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">pop_sizes</span><span class="p">)</span>
 <span class="go">[0, 0.0664050052043501, 0.48462937097695785, 2.2065719224651157]</span>
 <span class="go">[0, 1, 2, 3]</span>
-</pre></div>
-</div>
-<p>Now simulate 5 sample paths of an <em>Verhulst 2 (SIS)</em> model with rate of spread 1,
-recovery rate 0.5 and a population of 1000 individuals, starting with 100
-infected individuals:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">jump_times</span><span class="p">,</span> <span class="n">pop_sizes</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">continuous</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst 2 (SIS)&#39;</span><span class="p">,</span> <span class="n">z0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-<span class="gp">... </span>                                                <span class="n">b_rate</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The results can be plotted:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-<span class="gp">... </span>   <span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">jump_times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pop_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;infected population&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;day&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
