@@ -26,11 +26,11 @@ Some popular models, which are included by default in BirDePy, are listed in the
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`c`
    * - Hassell 
-     - :math:`\frac{\gamma z}{(1+\frac{z}{\alpha})^c}`
+     - :math:`\frac{\gamma z}{(1+\alpha z)^c}`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`c`
-   * - M-SS 
-     - :math:`\frac{\gamma z}{1+ \left(\frac{z}{\alpha}\right)^c}`
+   * - MS-S 
+     - :math:`\frac{\gamma z}{1+ \left(\alpha z\right)^c}`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`,  :math:`\alpha`, :math:`c`
    * - Moran 

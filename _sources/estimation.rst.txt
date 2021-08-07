@@ -295,24 +295,17 @@ When there is only one constraint it can be passed as a dictionary.
 Where there are multiple constraints they must be passed as a list of dictionaries. 
 When constraints are specified the default optimization routine is 'SLQSP'. 
 
-Alternatively it is possible to import and use :func:`NonlinearConstraint` from `scipy.optimize`. This is necessary when using 'differential-evolution' to optimize. 
 
 For example to specify the constraint :math:`\gamma \ge \nu`: ::
 
 	import birdepy as bd
-	from scipy.optimize import NonlinearConstraint
 	import numpy as np
 	t_data = [t for t in range(1972, 1999, 1)]
 	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
 			  44, 62, 60, 70, 75, 79, 86]
-
-Using :func:`NonlinearConstraint`:
-
-	def constr_f(p):
-    	return p[0] - p[1]
-    nlc = NonlinearConstraint(constr_f, 0, np.inf)
 	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10], [0,10], [0.5, 10]], 
-	                  model='Ricker', se_type='asymptotic', con=(nlc))
+	                  model='Ricker', se_type='asymptotic', 
+	                  con={'type': 'ineq', 'fun': lambda p: p[0]-p[1]})
 	print('Parameter estimates are', est.p, '. \nThe standard errors of these estimates are', est.se,'. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
 
 Which displays: ::
@@ -320,15 +313,6 @@ Which displays: ::
 	Parameter estimates are [4.549043705033482, 4.89126920630982e-09, 0.0019891584261715763, 0.50000001297632] . 
 	The standard errors of these estimates are [3.59456242e-01 1.51703612e-06 3.22904617e-04 3.35752161e-02] . 
 	The carrying capacity is estimated as  214388.4671765286 .
-
-Alternatively using a dictionary for the constraint: ::
-
-	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10], [0,10], [0.5, 10]], 
-	                  model='Ricker', se_type='asymptotic', 
-	                  con={'type': 'ineq', 'fun': lambda p: p[0]-p[1]})
-
-
-Which displays the same result. 
 
 This parameter estimate does not match with the unconstrained estimate given at the beginning of this section, which is surprising since that estimate satisfies the constraints. 
 Moreover the provided estimate does not seem to make much sense as the carrying capacity is estimated to be extremely high relative to the observed population sizes. 
@@ -446,15 +430,10 @@ For example, to use differential-evolution as an optimizer with `maxiter` set to
 	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
 	          44, 62, 60, 70, 75, 79, 86]
 
-	def constr_f(p):
-	    return p[0] - p[1]
-
-	nlc = NonlinearConstraint(constr_f, 0, np.inf)
-
 	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10], [0,10], [0.5, 10]], 
 	                  model='Ricker', se_type='asymptotic', 
-	                  con=(nlc), opt_method='differential-evolution', maxiter=100,
-	                  seed=2021)
+	                  con={'type': 'ineq', 'fun': lambda p: p[0]-p[1]}, opt_method='differential-evolution',
+	                  maxiter=100, seed=2021)
 	print('Parameter estimates are', est.p, 
 	      '. \nThe standard errors of these estimates are', est.se,
 	      '. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
