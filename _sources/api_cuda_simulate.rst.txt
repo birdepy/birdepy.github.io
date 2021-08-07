@@ -1,7 +1,7 @@
-====================================
-birdepy.gpu_functions.discrete_gpu()
-====================================
+================================
+birdepy.gpu_functions.discrete()
+================================
 
 .. currentmodule:: birdepy
 
-.. autofunction:: birdepy.gpu_functions.discrete_gpu
+.. autofunction:: birdepy.gpu_functions.discrete

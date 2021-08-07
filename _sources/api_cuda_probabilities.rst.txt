@@ -1,7 +1,7 @@
-=======================================
-birdepy.gpu_functions.probability_gpu()
-=======================================
+===================================
+birdepy.gpu_functions.probability()
+===================================
 
 .. currentmodule:: birdepy
 
-.. autofunction:: birdepy.gpu_functions.probability_gpu
+.. autofunction:: birdepy.gpu_functions.probability

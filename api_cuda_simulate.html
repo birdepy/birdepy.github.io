@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>birdepy.gpu_functions.discrete_gpu() &mdash; BirDePy 0.0.2 documentation</title>
+  <title>birdepy.gpu_functions.discrete() &mdash; BirDePy 0.0.2 documentation</title>
   
 
   
@@ -44,7 +44,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="birdepy.gpu_functions.probability_gpu()" href="api_cuda_probabilities.html" />
+    <link rel="next" title="birdepy.gpu_functions.probability()" href="api_cuda_probabilities.html" />
     <link rel="prev" title="birdepy.forecast()" href="api_forecast.html" /> 
 </head>
 
@@ -164,16 +164,17 @@
 </ul>
 <p class="caption"><span class="caption-text">CUDA Functions API</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">birdepy.gpu_functions.discrete_gpu()</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_cuda_probabilities.html">birdepy.gpu_functions.probability_gpu()</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">birdepy.gpu_functions.discrete()</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_probabilities.html">birdepy.gpu_functions.probability()</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.1</a></li>
 </ul>
 </li>
 </ul>
@@ -224,7 +225,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>birdepy.gpu_functions.discrete_gpu()</li>
+      <li>birdepy.gpu_functions.discrete()</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -243,11 +244,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="birdepy-gpu-functions-discrete-gpu">
-<h1>birdepy.gpu_functions.discrete_gpu()<a class="headerlink" href="#birdepy-gpu-functions-discrete-gpu" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="birdepy-gpu-functions-discrete">
+<h1>birdepy.gpu_functions.discrete()<a class="headerlink" href="#birdepy-gpu-functions-discrete" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="birdepy.gpu_functions.discrete_gpu">
-<span class="sig-prename descclassname"><span class="pre">birdepy.gpu_functions.</span></span><span class="sig-name descname"><span class="pre">discrete_gpu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survival</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.discrete_gpu" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="birdepy.gpu_functions.discrete">
+<span class="sig-prename descclassname"><span class="pre">birdepy.gpu_functions.</span></span><span class="sig-name descname"><span class="pre">discrete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survival</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.discrete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulation of continuous-time birth-and-death processes at time ‘t’
 using CUDA.</p>
 <dl class="field-list simple">
@@ -280,11 +281,11 @@ parameters.</p></li>
 for custom models.</p>
 </div></blockquote>
 </p></li>
-<li><p><strong>z0</strong> (<em>int</em><em> or </em><em>callable</em>) – The initial population for each sample path.</p></li>
+<li><p><strong>z0</strong> (<em>int</em><em> or </em><em>callable</em>) – The initial population size for each sample path.</p></li>
 <li><p><strong>t</strong> (<em>scalar</em>) – The time at which the simulated birth-and-death is observed.</p></li>
 <li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of sample paths to be simulated.</p></li>
 <li><p><strong>survival</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True, then the simulated sample paths are conditioned to
-have a positive population size at the final observation time.  This
+have a positive population size at the final observation time.  Since This
 can greatly increase computation time.</p></li>
 <li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for simulation.</p></li>
 </ul>
@@ -302,7 +303,7 @@ time <cite>t</cite>, generated according to <cite>model</cite>.</p>
 service rates 0.4 and arrival rate 0.2, with 10 items initially in the queue,
 observed at time 1.0:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">birdepy</span> <span class="kn">import</span> <span class="n">gpu_functions</span> <span class="k">as</span> <span class="n">bdg</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bdg</span><span class="o">.</span><span class="n">discrete_gpu</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span> <span class="s1">&#39;M/M/inf&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bdg</span><span class="o">.</span><span class="n">discrete</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span> <span class="s1">&#39;M/M/inf&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">8</span><span class="p">)</span>
 <span class="go">array([8, 6, 3, ..., 8, 7, 9], dtype=int64)</span>
 </pre></div>
 </div>
@@ -345,7 +346,7 @@ applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="api_cuda_probabilities.html" class="btn btn-neutral float-right" title="birdepy.gpu_functions.probability_gpu()" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api_cuda_probabilities.html" class="btn btn-neutral float-right" title="birdepy.gpu_functions.probability()" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="api_forecast.html" class="btn btn-neutral float-left" title="birdepy.forecast()" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

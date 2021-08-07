@@ -2,6 +2,58 @@
 Release Notes
 =============
 
+0.0.6
+^^^^^
+Date: August 7 2021
+
+Contributors: Brendan Patch 
+
+Notes: 
+
+1. Added scikit-learn>=0.24.2 to requirements.txt.
+
+
+0.0.5
+^^^^^
+Date: August 7 2021
+
+Contributors: Sophie Hautphenne and Brendan Patch 
+
+Notes: 
+
+1. Added gwr-inversion to requirements.txt.
+2. Changed where gwr-inversion is imported.
+3. Ensured that :func:`np.ix_` receives arrays containing np.int32 objects.
+4. Fixed a bug in the GPU version of the Verhulst model.
+5. Attribute se of the output of :func:`bd.estimate()` is now a list instead of an array.
+6. Simulation based standard errors and confidence intervals now use the estimated parameter as the initial condition for the optimisation procedure.
+7. Improved how having a terminal state equal to 0 is handled by :func:`bd.probability(method='gwasa')`.
+8. Made it so an a value equal to 0 raises an exception in probability.gwasa.w_fun so that the high precision version of the function is invoked. 
+9. Updated how constraints are handled when differential evolution is used as an optimizer. Constraints are now always specified as dictionaries. 
+10. When polishing is used to enhance the output of differential evolution (which is the default action) it is done using method 'SLSQP' of :func:`scipy.minimize()` instead of method 'trust-constr' (which causes problems in other parts of the package).
+11. Added the parameter 'stat' to the ABC algorithm so that 'mean' or 'median' can be used as a summary statistics for the posterior distribution. 
+12. Transition probability approximation methods 'gwa' and 'gwasa' now use a midpoint to anchor the linear approximation underlying their output.
+13. Fixed a bug in :func:`bd.forecast()` related to displaying xticks.
+14. Changed the default labels of x and y axis in bd.forecast().
+15. Added the 'export' parameter to :func:`bd.estimate()` and :func:`bd.forecast()` which allows plots to be exported as tex files. 
+16. Removed a constant from the distance function in :func:`bd.estimate(framework='abc')`. 
+17. Renamed :func:`bdg.discrete_gpu` to :func:`bdg.discrete`.
+18. Renamed :func:`bdg.probability_gpu` to :func:`bdg.probability`.
+19. Renamed attribute 'err' of :func:`bd.estimate()`'s output to 'val'. 
+20. Renamed argument 'num_bs_samples' of :func:`bd.estimate()` to 'num_samples'. 
+
+
+0.0.4
+^^^^^
+Date: July 21 2021
+
+Contributors: Brendan Patch
+
+Notes: 
+
+1. Replaced iltcme.json with iltcme.py to fix a bug where iltcme.json would not load properly
+
+
 0.0.3
 ^^^^^
 Date: July 20 2021
