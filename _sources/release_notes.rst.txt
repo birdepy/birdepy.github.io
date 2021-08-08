@@ -2,6 +2,16 @@
 Release Notes
 =============
 
+0.0.7
+^^^^^
+Date: August 9 2021
+
+Contributors: Brendan Patch 
+
+Notes: 
+
+1. Added parameter `tau` as a kwarg for :func:`birdepy.probability()` when `method` is set to 'sim'. 
+
 0.0.6
 ^^^^^
 Date: August 7 2021
