@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>birdepy.gpu_functions.probability() &mdash; BirDePy 0.0.2 documentation</title>
+  <title>birdepy.gpu_functions.probability() &mdash; BirDePy 0.0.7 documentation</title>
   
 
   
@@ -171,10 +171,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.1</a></li>
 </ul>
 </li>
 </ul>
@@ -248,7 +251,7 @@
 <h1>birdepy.gpu_functions.probability()<a class="headerlink" href="#birdepy-gpu-functions-probability" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="birdepy.gpu_functions.probability">
-<span class="sig-prename descclassname"><span class="pre">birdepy.gpu_functions.</span></span><span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.probability" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">birdepy.gpu_functions.</span></span><span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 generated using Monte Carlo on a GPU.</p>
 <dl class="field-list simple">
