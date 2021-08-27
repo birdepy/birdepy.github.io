@@ -13,59 +13,59 @@ Some popular models, which are included by default in BirDePy, are listed in the
    :widths: 18 20 20 25
    :header-rows: 1
 
-   * - Model
+   * - Model label
      - :math:`\lambda_z(\boldsymbol\theta)`
      - :math:`\mu_z(\boldsymbol\theta)`
      - :math:`\boldsymbol\theta`
-   * - Verhulst
+   * - :code:`'Verhulst'`
      - :math:`\gamma\left(1-\alpha z\right) z`
      - :math:`\nu\left(1+\beta z\right)z`
      - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`\beta`
-   * - Ricker
+   * - :code:`'Ricker'`
      - :math:`\gamma z \exp\left(-(\alpha z)^c \right)`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`c`
-   * - Hassell 
+   * - :code:`'Hassell'`
      - :math:`\frac{\gamma z}{(1+\alpha z)^c}`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`, :math:`\alpha`, :math:`c`
-   * - MS-S 
+   * - :code:`'MS-S` 
      - :math:`\frac{\gamma z}{1+ \left(\alpha z\right)^c}`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`,  :math:`\alpha`, :math:`c`
-   * - Moran 
+   * - :code:`'Moran'`
      - :math:`\frac{N-z}{N}\left(\alpha\frac{z}{N}(1-u) + \beta\frac{N-z}{N}v\right)`
      - :math:`\frac{z}{N}\left(\beta\frac{N-z}{N}(1-v) +\alpha\frac{z}{N}u\right)`
      - :math:`\alpha`, :math:`\beta`, :math:`u`, :math:`\nu`, :math:`N`
-   * - pure-birth
+   * - :code:`'pure-birth'`
      - :math:`\gamma z`
      - :math:`0`
      - :math:`\gamma`
-   * - pure-death
+   * - :code:`'pure-death'`
      - :math:`0`
      - :math:`\nu z`
      - :math:`\nu`
-   * - Poisson
+   * - :code:`'Poisson`
      - :math:`\gamma`
      - :math:`0`
      - :math:`\gamma`
-   * - linear
+   * - :code:`'linear'`
      - :math:`\gamma z`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`
-   * - linear-migration
+   * - :code:`'linear-migration'`
      - :math:`\gamma z + \alpha`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`, :math:`\alpha`
-   * - M/M/1
+   * - :code:`'M/M/1'`
      - :math:`\gamma`
      - :math:`\nu I\{z > 0\}`
      - :math:`\gamma`, :math:`\nu`
-   * - M/M/:math:`\infty`
+   * - :code:`'M/M/inf'`
      - :math:`\gamma`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`
-   * - loss system
+   * - :code:`'loss-system'`
      - :math:`\gamma I\{z < c\}`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`, :math:`c`
