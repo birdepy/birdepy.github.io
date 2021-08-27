@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
@@ -38,6 +39,8 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -263,7 +266,7 @@
 process.
 Array of real elements of size (n,), where ‘n’ is the number of
 parameters.</p></li>
-<li><p><strong>model</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Model specifying birth and death rates of process (see <span class="xref std std-ref">here</span>). Should be one of:</p>
+<li><p><strong>model</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
 <blockquote>
 <div><ul>
 <li><p>’Verhulst’ (default)</p></li>
@@ -320,17 +323,21 @@ coordinate corresponds to <cite>zt</cite>.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;da&#39;</span><span class="p">,</span> <span class="s1">&#39;Erlang&#39;</span><span class="p">,</span> <span class="s1">&#39;expm&#39;</span><span class="p">,</span> <span class="s1">&#39;gwa&#39;</span><span class="p">,</span> <span class="s1">&#39;gwasa&#39;</span><span class="p">,</span> <span class="s1">&#39;ilt&#39;</span><span class="p">,</span> <span class="s1">&#39;oua&#39;</span><span class="p">,</span> <span class="s1">&#39;uniform&#39;</span><span class="p">]:</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;approximation:&#39;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-<span class="go">da approximation: 0.016040426614336103</span>
-<span class="go">Erlang approximation: 0.0161337966847677</span>
-<span class="go">expm approximation: 0.016191045449304713</span>
-<span class="go">gwa approximation: 0.014646030484734228</span>
-<span class="go">gwasa approximation: 0.014622270048744283</span>
-<span class="go">ilt approximation: 0.01618465415009876</span>
-<span class="go">oua approximation: 0.021627234315268227</span>
-<span class="go">uniform approximation: 0.016191045442910168</span>
+<p>Approximate transition probability for a Verhulst model using various methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;da&#39;</span><span class="p">,</span> <span class="s1">&#39;Erlang&#39;</span><span class="p">,</span> <span class="s1">&#39;expm&#39;</span><span class="p">,</span> <span class="s1">&#39;gwa&#39;</span><span class="p">,</span> <span class="s1">&#39;gwasa&#39;</span><span class="p">,</span> <span class="s1">&#39;ilt&#39;</span><span class="p">,</span> <span class="s1">&#39;oua&#39;</span><span class="p">,</span> <span class="s1">&#39;uniform&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;approximation:&#39;</span><span class="p">,</span>
+    <span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.016040426614336103</span>
+<span class="n">Erlang</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.0161337966847677</span>
+<span class="n">expm</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.016191045449304713</span>
+<span class="n">gwa</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.014646030484734228</span>
+<span class="n">gwasa</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.014622270048744283</span>
+<span class="n">ilt</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.01618465415009876</span>
+<span class="n">oua</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.021627234315268227</span>
+<span class="n">uniform</span> <span class="n">approximation</span><span class="p">:</span> <span class="mf">0.016191045442910168</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -367,7 +374,7 @@ applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
 using the <em>diffusion approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
 ‘da’:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">birdepy</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">zt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;da&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">zt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;da&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The parameters associated with this method (listed below) can be
@@ -380,9 +387,13 @@ to compute integrals.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="go">bd.probability(19, 27, 1.0, [0.5, 0.3, 0.01, 0.01], model=&#39;Verhulst&#39;, method=&#39;da&#39;)[0][0])</span>
-<span class="go">0.002266101391343583</span>
+<p>Approximate transition probability for a Verhulst model using diffusion approximation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;da&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.002266101391343583</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -424,8 +435,7 @@ dynamics. Theoretical Population Biology, 75(2-3):123-132, 2009.</p>
 using the <em>Erlangization</em> method.</p>
 <p>To use this function call <code class="docutils literal notranslate"><span class="pre">birdepy.probability</span></code> with <cite>method</cite> set to
 ‘Erlang’:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">birdepy</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">zt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;Erlang&#39;</span><span class="p">,</span> <span class="n">z_trunc</span><span class="o">=</span><span class="p">(),</span> <span class="n">k</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
-                    <span class="n">cut_meth</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">zt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;Erlang&#39;</span><span class="p">,</span> <span class="n">z_trunc</span><span class="o">=</span><span class="p">(),</span> <span class="n">k</span><span class="o">=</span><span class="mi">1502</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The parameters associated with this method (listed below) can be
@@ -438,15 +448,18 @@ of <a class="reference internal" href="#birdepy.probability" title="birdepy.prob
 considered. Array of real elements of size (2,) by default
 <code class="docutils literal notranslate"><span class="pre">z_trunc=[z_min,</span> <span class="pre">z_max]</span></code> where <code class="docutils literal notranslate"><span class="pre">z_min=max(0,</span> <span class="pre">min(z0,</span> <span class="pre">zt)</span> <span class="pre">-</span> <span class="pre">100)</span></code>
 and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code></p></li>
-<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability. If <cite>eps</cite>
-is not None, then this is determined dynamically.</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">... </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;Erlang&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.002731464736623327</span>
+<p>Approximate transition probability for a Verhulst model using Erlangization:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;Erlang&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.002731464736623327</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -503,9 +516,13 @@ and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;expm&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.0027414224836612463</span>
+<p>Approximate transition probability for a Verhulst model using a matrix exponential:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;expm&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.0027414224836612463</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -550,9 +567,13 @@ Should be one of: ‘initial’ (z0 is used), ‘midpoint’ (default, 0.5*(z0+z
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gwa&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.00227651766770292</span>
+<p>Approximate transition probability for a Verhulst model using a linear approximation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gwa&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.00227651766770292</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -602,9 +623,14 @@ Should be one of: ‘initial’ (z0 is used), ‘midpoint’ (default, 0.5*(z0+z
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gwasa&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.002271944691896704</span>
+<p>Approximate transition probability for a Verhulst model using the saddlepoint approximation
+to a linear approximation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gwasa&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.002271944691896704</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -664,9 +690,13 @@ See <a class="reference external" href="https://www.inverselaplace.org/">https:/
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ilt&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.0027403264310572615</span>
+<p>Approximate transition probability for a Verhulst model using numerical inverse Laplace transform:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ilt&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.0027403264310572615</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -714,9 +744,13 @@ using the <em>Ornstein-Uhlenbeck approximation</em> method.</p>
 <p>This function does not have any arguments which are not already described
 by the documentation of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a></p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;oua&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.0018882966813798246</span>
+<p>Approximate transition probability for a Verhulst model using Ornstein–Uhlenbeck approximation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;oua&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.0018882966813798246</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -788,10 +822,14 @@ generated according to <em>np.random.default_rng(seed)</em>. If seed is a
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;sim&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
-<span class="gp">... </span>               <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.00294</span>
+<p>Approximate transition probability for a Verhulst model using simulation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;sim&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
+               <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.00294</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
@@ -833,8 +871,7 @@ and evolution. Journal of Mathematical Biology, 65(3), pp.553-580.</p>
 using the <em>uniformization</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
 ‘uniform’:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">birdepy</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">zt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">cut_meth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                    <span class="n">z_trunc</span><span class="o">=</span><span class="p">())</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">birdepy</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="n">z0</span><span class="p">,</span> <span class="n">zt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">z_trunc</span><span class="o">=</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>The parameters associated with this method (listed below) can be
@@ -847,15 +884,18 @@ of <a class="reference internal" href="#birdepy.probability" title="birdepy.prob
 considered. Array of real elements of size (2,) by default
 <code class="docutils literal notranslate"><span class="pre">z_trunc=[z_min,</span> <span class="pre">z_max]</span></code> where <code class="docutils literal notranslate"><span class="pre">z_min=max(0,</span> <span class="pre">min(z0,</span> <span class="pre">zt)</span> <span class="pre">-</span> <span class="pre">100)</span></code>
 and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code>.</p></li>
-<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability. If <cite>eps</cite>
-is not None, then this is determined dynamically.</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">0.002741422482539626</span>
+<p>Approximate transition probability for a Verhulst model using uniformization:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.002741422482539626</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
