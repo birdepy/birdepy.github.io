@@ -174,13 +174,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id8">0.0.1</a></li>
 </ul>
 </li>
 </ul>
@@ -252,158 +253,6 @@
             
   <div class="section" id="birdepy-forecast">
 <h1>birdepy.forecast()<a class="headerlink" href="#birdepy-forecast" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="birdepy.forecast">
-<span class="sig-prename descclassname"><span class="pre">birdepy.</span></span><span class="sig-name descname"><span class="pre">forecast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">model</span></em>, <em class="sig-param"><span class="pre">z0</span></em>, <em class="sig-param"><span class="pre">times</span></em>, <em class="sig-param"><span class="pre">param</span></em>, <em class="sig-param"><span class="pre">cov=None</span></em>, <em class="sig-param"><span class="pre">interval='confidence'</span></em>, <em class="sig-param"><span class="pre">method=None</span></em>, <em class="sig-param"><span class="pre">percentiles=(0</span></em>, <em class="sig-param"><span class="pre">2.5</span></em>, <em class="sig-param"><span class="pre">10</span></em>, <em class="sig-param"><span class="pre">25</span></em>, <em class="sig-param"><span class="pre">50</span></em>, <em class="sig-param"><span class="pre">75</span></em>, <em class="sig-param"><span class="pre">90</span></em>, <em class="sig-param"><span class="pre">97.5</span></em>, <em class="sig-param"><span class="pre">100)</span></em>, <em class="sig-param"><span class="pre">labels=('$95\\%$'</span></em>, <em class="sig-param"><span class="pre">'$80\\%$'</span></em>, <em class="sig-param"><span class="pre">'$50\\%$')</span></em>, <em class="sig-param"><span class="pre">p_bounds=None</span></em>, <em class="sig-param"><span class="pre">con=()</span></em>, <em class="sig-param"><span class="pre">known_p=()</span></em>, <em class="sig-param"><span class="pre">idx_known_p=()</span></em>, <em class="sig-param"><span class="pre">k=1000</span></em>, <em class="sig-param"><span class="pre">n=1000</span></em>, <em class="sig-param"><span class="pre">seed=None</span></em>, <em class="sig-param"><span class="pre">colormap=&lt;matplotlib.colors.LinearSegmentedColormap</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">xlabel='t'</span></em>, <em class="sig-param"><span class="pre">ylabel='default'</span></em>, <em class="sig-param"><span class="pre">xticks='default'</span></em>, <em class="sig-param"><span class="pre">rotation=45</span></em>, <em class="sig-param"><span class="pre">display=False</span></em>, <em class="sig-param"><span class="pre">export=False</span></em>, <em class="sig-param"><span class="pre">**options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.forecast" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulation based forecasting for continuous-time birth-and-death processes.
-Produces a plot of the likely range of mean population sizes subject to parameter uncertainty
-(confidence intervals) or the likely range of population sizes subject to parameter
-uncertainty and model stochasticity (prediction intervals).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
-<blockquote>
-<div><blockquote>
-<div><ul>
-<li><p>’Verhulst’ (default)</p></li>
-<li><p>’Ricker’</p></li>
-<li><p>’Hassell’</p></li>
-<li><p>’MS-S’</p></li>
-<li><p>’Moran’</p></li>
-<li><p>’pure-birth’</p></li>
-<li><p>’pure-death’</p></li>
-<li><p>’Poisson’</p></li>
-<li><p>’linear’</p></li>
-<li><p>’linear-migration’</p></li>
-<li><p>’M/M/1’</p></li>
-<li><p>’M/M/inf’</p></li>
-<li><p>’loss-system’</p></li>
-<li><p>’custom’</p></li>
-</ul>
-</div></blockquote>
-<p>If set to ‘custom’, then kwargs <cite>b_rate</cite> and <cite>d_rate</cite> must also be
-specified. See <a class="reference internal" href="processes.html#custom-models"><span class="std std-ref">here</span></a> for more information.</p>
-</div></blockquote>
-</p></li>
-<li><p><strong>z0</strong> (<em>int</em><em> or </em><em>callable</em>) – <p>The population for each sample path at the time of the first element
-of the argument of <cite>times</cite>.
-If it is a callable it should be a function that has no arguments and
-returns an int:</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">z0()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></p>
-</div></blockquote>
-</p></li>
-<li><p><strong>times</strong> (<em>array_like</em>) – Times to provide a forecast for.</p></li>
-<li><p><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
-process to be forecast.
-Array of real elements of size (m,), where ‘m’ is the number of
-parameters.
-When <cite>cov</cite> is provided this is taken to be a mean value.</p></li>
-<li><p><strong>cov</strong> (<em>array_like</em><em>, </em><em>optional</em>) – The parameters are assumed to follow a truncated normal distribution
-with this covariance. If this is specified, then p_bounds should also be
-specified to avoid unwanted parameters.</p></li>
-<li><p><strong>interval</strong> (<em>string</em><em>, </em><em>optional</em>) – Type of forecast. Should be one of ‘confidence’ (default) or
-‘prediction’. Confidence intervals show the likely range of mean future
-population values, reflecting parameter uncertainty. Prediction interals
-show the likely range of future population values, incorporating
-parameter uncertainty and model stochasticity.</p></li>
-<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Method used to generate samples. For confidence intervals samples are
-trajectories of future expected values. For prediction intervals
-samples are trajectories of future population values. Should be one of:</p>
-<blockquote>
-<div><ul>
-<li><p>’fm’ (default for confidence intervals)</p></li>
-<li><p>’exact’</p></li>
-<li><p>’ea’</p></li>
-<li><p>’ma’</p></li>
-<li><p>’gwa’ (default for prediction intervals)</p></li>
-</ul>
-</div></blockquote>
-</p></li>
-<li><p><strong>percentiles</strong> (<em>list</em><em>, </em><em>optional</em>) – List of percentiles to split the data into.</p></li>
-<li><p><strong>labels</strong> (<em>list</em><em>, </em><em>optional</em>) – List of strings containing labels for each percentile split.</p></li>
-<li><p><strong>p_bounds</strong> (<em>list</em>) – Bounds on parameters. Should be specified as a sequence of
-<code class="docutils literal notranslate"><span class="pre">(min,</span> <span class="pre">max)</span></code> pairs for each unknown parameter. See <a class="reference internal" href="estimation.html#parameter-constraints"><span class="std std-ref">here</span></a>.</p></li>
-<li><p><strong>con</strong> (<em>{Constraint</em><em>, </em><em>dict}</em><em> or </em><em>List of {Constraint</em><em>, </em><em>dict}</em><em>, </em><em>optional</em>) – Constraints definition for parameters.
-See <a class="reference internal" href="estimation.html#parameter-constraints"><span class="std std-ref">here</span></a> for more information.</p></li>
-<li><p><strong>known_p</strong> (<em>array_like</em><em>, </em><em>optional</em>) – List of known parameter values. For built in models these must be in
-their canonical order as given (<a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). If this
-argument is given, then argument <cite>idx_known_p</cite> must also be specified.
-See <a class="reference internal" href="estimation.html#known-parameters"><span class="std std-ref">here</span></a> for more information.</p></li>
-<li><p><strong>idx_known_p</strong> (<em>array_like</em><em>, </em><em>optional</em>) – List of indices of known parameters (as given in argument ‘known_p’).
-For built in models indices must correspond to canonical order as given
-<a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>. If this argument is given, then argument
-<cite>known_p</cite> must also be specified. See <a class="reference internal" href="estimation.html#known-parameters"><span class="std std-ref">here</span></a>
-for more information.</p></li>
-<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples used to generate forecast. For confidence intervals
-each sample corresponds to an estimate of the mean for a sampled
-parameter value. For prediction intervals each sample corresponds to
-a trajectory of population size for a sampled parameter value.</p></li>
-<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples used to estimate each sample of a mean for confidence
-interval samples. Only applicable when method is ‘exact’, ‘ea’, ‘ma’
-or ‘gwa’.</p></li>
-<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>Generator</em><em>, </em><em>optional</em>) – If <em>seed</em> is not specified the random numbers are generated according
-to <em>np.random.default_rng()</em>. If <em>seed</em> is an <em>int</em>, random numbers are
-generated according to <em>np.random.default_rng(seed)</em>. If seed is a
-<em>Generator</em>, then that object is used. See
-<a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</p></li>
-<li><p><strong>colormap</strong> (<em>matplotlib.colors.LinearSegmentedColormap</em><em>, </em><em>optional</em>) – Colors used for plot.</p></li>
-<li><p><strong>xlabel</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for x axis of plot.</p></li>
-<li><p><strong>ylabel</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for y axis of plot.</p></li>
-<li><p><strong>xticks</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Locations of x ticks.</p></li>
-<li><p><strong>rotation</strong> (<em>int</em><em>, </em><em>optional</em>) – Rotation of x tick labels.</p></li>
-<li><p><strong>display</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, then progress updates are provided.</p></li>
-<li><p><strong>export</strong> (<em>str</em><em>, </em><em>optional</em>) – File name for export of the figure to a tex file.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<p>First simulate some sample paths using : :<cite>birdepy.simulate.discrete()</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="n">t_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">)]</span>
-<span class="n">p_data</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">discrete</span><span class="p">([</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">t_data</span><span class="p">,</span>
-                              <span class="n">survival</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Then, using the simulated data, estimate the parameters:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]],</span>
-                  <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Then, use the estimated parameters and covariances to generate a forecast:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">future_t</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">,</span><span class="mi">151</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span>
-<span class="n">bd</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">p_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">future_t</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">est</span><span class="o">.</span><span class="n">cov</span><span class="p">,</span>
-            <span class="n">p_bounds</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]],</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;prediction&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="rubric">Notes</p>
-<p>This function creates a plot but does not return anything.</p>
-<p>For a text book treatment on the theory of birth-and-death processes
-see [2].</p>
-<p>If <cite>model</cite> is ‘Poisson’, then the true dnm is immediately returned (i.e.,
-the total number of events during the observation periods divided by the
-total observation time).</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
-<p><a class="reference internal" href="api_cuda_probabilities.html#birdepy.gpu_functions.probability" title="birdepy.gpu_functions.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.probability()</span></code></a>  <a class="reference internal" href="api_cuda_simulate.html#birdepy.gpu_functions.discrete" title="birdepy.gpu_functions.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.discrete()</span></code></a></p>
-</div>
-<p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id1"><span class="brackets">1</span></dt>
-<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
-</dd>
-<dt class="label" id="id2"><span class="brackets">2</span></dt>
-<dd><p>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 
 

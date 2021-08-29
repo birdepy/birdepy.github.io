@@ -174,13 +174,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id8">0.0.1</a></li>
 </ul>
 </li>
 </ul>
@@ -252,98 +253,6 @@
             
   <div class="section" id="birdepy-gpu-functions-discrete">
 <h1>birdepy.gpu_functions.discrete()<a class="headerlink" href="#birdepy-gpu-functions-discrete" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="birdepy.gpu_functions.discrete">
-<span class="sig-prename descclassname"><span class="pre">birdepy.gpu_functions.</span></span><span class="sig-name descname"><span class="pre">discrete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survival</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.gpu_functions.discrete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulation of continuous-time birth-and-death processes at time ‘t’
-using CUDA.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
-process to be simulated.
-Array of real elements of size (m,), where ‘m’ is the number of
-parameters.</p></li>
-<li><p><strong>model</strong> (<em>string</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
-<blockquote>
-<div><blockquote>
-<div><ul>
-<li><p>’Verhulst’ (default)</p></li>
-<li><p>’Ricker’</p></li>
-<li><p>’Hassell’</p></li>
-<li><p>’MS-S’</p></li>
-<li><p>’Moran’</p></li>
-<li><p>’pure-birth’</p></li>
-<li><p>’pure-death’</p></li>
-<li><p>’Poisson’</p></li>
-<li><p>’linear’</p></li>
-<li><p>’linear-migration’</p></li>
-<li><p>’M/M/1’</p></li>
-<li><p>’M/M/inf’</p></li>
-<li><p>’loss-system’</p></li>
-</ul>
-</div></blockquote>
-<p>Custom models are not available for this function. See <a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a>
-for custom models.</p>
-</div></blockquote>
-</p></li>
-<li><p><strong>z0</strong> (<em>int</em><em> or </em><em>callable</em>) – The initial population size for each sample path.</p></li>
-<li><p><strong>t</strong> (<em>scalar</em>) – The time at which the simulated birth-and-death is observed.</p></li>
-<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of sample paths to be simulated.</p></li>
-<li><p><strong>survival</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True, then the simulated sample paths are conditioned to
-have a positive population size at the final observation time.  Since This
-can greatly increase computation time.</p></li>
-<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for simulation.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>out</strong> – A list containing sampled population size observations at
-time <cite>t</cite>, generated according to <cite>model</cite>.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<p>Simulating 10 ** 8 sample paths of an M/M/inf queue with
-service rates 0.4 and arrival rate 0.2, with 10 items initially in the queue,
-observed at time 1.0:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">birdepy</span> <span class="kn">import</span> <span class="n">gpu_functions</span> <span class="k">as</span> <span class="n">bdg</span>
-<span class="n">bdg</span><span class="o">.</span><span class="n">discrete</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span> <span class="s1">&#39;M/M/inf&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">8</span><span class="p">)</span>
-             <span class="n">array</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int64</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="rubric">Notes</p>
-<p>This function requires a compatible Nvidia graphics processing unit and
-drivers to be installed.</p>
-<p>The packages <cite>Numba</cite> and <cite>cudatoolkit</cite> also need to be installed.</p>
-<p>If you use this function for published work, then please cite [1].</p>
-<p>Sample paths are generated using a discrete-event simulation algorithm.
-See, for example, Algorithm 5.8 in [2].</p>
-<p>For a text book treatment on the theory of birth-and-death processes
-see [3].</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
-</div>
-<p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id1"><span class="brackets">1</span></dt>
-<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
-</dd>
-<dt class="label" id="id2"><span class="brackets">2</span></dt>
-<dd><p>Kroese, D.P., Taimre, T. and Botev, Z.I. (2013) Handbook of Monte
-Carlo methods. John Wiley &amp; Sons.</p>
-</dd>
-<dt class="label" id="id3"><span class="brackets">3</span></dt>
-<dd><p>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 
 
