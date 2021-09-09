@@ -24,7 +24,7 @@ To simulate a birth-and-death process at the time points :math:`t_0<t_1<\dots t_
 3. While :math:`t_j < t` set `z_{j+1}=z_j` and then :math:`j=j+1`. 
 4. With probability :math:`\lambda_{z_{j-1}}/(\lambda_{z_{j-1}}+\mu_{z_{j-1}})` set :math:`z_{j}=z_{j-1}+1`; otherwise set :math:`z_{j}=z_{j-1}-1`. 
 
-See :ref:`birdepy.simulate.discrete()` (with `method` set to 'exact') and :ref:`birdepy.gpu_functions.discrete_gpu()` for implementations of this algorithm. 
+See :ref:`birdepy.simulate.discrete()` (with `method` set to 'exact') and :ref:`birdepy.gpu_functions.discrete()` for implementations of this algorithm. 
 
 It is thought within the probability community that the exact discrete simulation algorithms just presented were first considered created by Joseph L.\ Doob and his collaborators in approximately 1945. 
 To our knowledge the first implementation on a computer is described in [Kendall1050]_, and the algorithm was popularised more widely in [Gillespie1977]_. 

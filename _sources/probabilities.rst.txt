@@ -18,7 +18,7 @@ Which returns::
    array([[0.08189476]])
 
 The method 'expm' can be replaced by one of the nine choices described on this page. 
-Note that output is an array since it is possible to input initial and final populations as lists. 
+Note that output is an array since it is possible to input initial and final population sizes as lists. 
 
 
 Matrix exponential
@@ -313,7 +313,7 @@ See :ref:`birdepy.probability(method='gwasa')` for the implementation of this me
 
 Simulation
 ^^^^^^^^^^
-Using :func:`birdepy.simulate()` it is possible to obtain :math:`k` realizations of :math:`Z(t)` conditional on :math:`Z(0)=i`. 
+Using :func:`birdepy.simulate.discrete()` or :func:`birdepy.gpu_functions.discrete()` it is possible to obtain :math:`k` realizations of :math:`Z(t)` conditional on :math:`Z(0)=i`. 
 The proportion of these realisations which equal :math:`j` can be used to approximate the transition probability. That is, 
 
 .. math::
@@ -322,7 +322,7 @@ The proportion of these realisations which equal :math:`j` can be used to approx
 
 where :math:`\hat Z_l(t)` are simulated realisations of :math:`Z(t)` and :math:`I\{A\}` evaluates to 1 when :math:`A` is true and otherwise evaluates to 0. 
 
-See :ref:`birdepy.probability(method='sim')` and :ref:`birdepy.gpu_functions.probability_gpu()` for the implementations of this method in BirDePy. 
+See :ref:`birdepy.probability(method='sim')` and :ref:`birdepy.gpu_functions.probability()` for the implementations of this method in BirDePy. 
 
 
 .. [Grassman1977] Grassman, W., 1977. Transient solutions in Markovian queues. European Journal of Operations Research, 1(6):396--402. 

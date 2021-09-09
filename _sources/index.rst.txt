@@ -9,6 +9,8 @@ You can install `BirDePy` using `pip <https://pypi.org/project/pip/>`_. To do th
 
 You may also need to install some dependencies (listed below).  
 
+`BirDePy` is developed on Github, the source code is found `here <https://github.com/birdepy/birdepy_project/tree/main/src/birdepy>`_. 
+
 Usage Example 
 -------------
 Suppose we are interested in the susceptible-infective-susceptible model. This is the Verhulst model with rate of spread given by :math:`\gamma`, recovery rate given by :math:`\nu`, population size given by :math:`1/\alpha` and :math:`\beta=0`: ::

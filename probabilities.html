@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Transition Probabilities &mdash; BirDePy 0.0.7 documentation</title>
+  <title>Transition Probabilities &mdash; BirDePy 0.0.8 documentation</title>
   
 
   
@@ -175,13 +175,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id8">0.0.1</a></li>
 </ul>
 </li>
 </ul>
@@ -267,7 +268,7 @@ This page details the nine methods to approximate this probability which are imp
 </pre></div>
 </div>
 <p>The method ‘expm’ can be replaced by one of the nine choices described on this page.
-Note that output is an array since it is possible to input initial and final populations as lists.</p>
+Note that output is an array since it is possible to input initial and final population sizes as lists.</p>
 <div class="section" id="matrix-exponential">
 <h2>Matrix exponential<a class="headerlink" href="#matrix-exponential" title="Permalink to this headline">¶</a></h2>
 <p>Consider the matrix <span class="math notranslate nohighlight">\(Q(\boldsymbol \theta)=\big(q_{i,j}(\boldsymbol \theta); i,j\in\mathcal S\big)\)</span>, with <span class="math notranslate nohighlight">\(q_{i,j}(\boldsymbol \theta)\)</span> representing the rate of transition of a process from state <span class="math notranslate nohighlight">\(i\)</span> to state <span class="math notranslate nohighlight">\(j\)</span>, for <span class="math notranslate nohighlight">\(i\ne j\)</span>, and <span class="math notranslate nohighlight">\(q_{i,i}(\boldsymbol \theta)=-q_i(\boldsymbol \theta)\)</span>, where <span class="math notranslate nohighlight">\(q_i(\boldsymbol \theta) = \sum_{i\ne j} q_{i,j}(\boldsymbol \theta)\)</span> is the total rate at which the process departs state <span class="math notranslate nohighlight">\(i\)</span>.
@@ -453,12 +454,12 @@ m &amp;= \exp\big((\lambda-\mu)t\big),\end{split}\]</div>
 </div>
 <div class="section" id="simulation">
 <h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
-<p>Using <code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate()</span></code> it is possible to obtain <span class="math notranslate nohighlight">\(k\)</span> realizations of <span class="math notranslate nohighlight">\(Z(t)\)</span> conditional on <span class="math notranslate nohighlight">\(Z(0)=i\)</span>.
+<p>Using <a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> or <a class="reference internal" href="api_cuda_simulate.html#birdepy.gpu_functions.discrete" title="birdepy.gpu_functions.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.discrete()</span></code></a> it is possible to obtain <span class="math notranslate nohighlight">\(k\)</span> realizations of <span class="math notranslate nohighlight">\(Z(t)\)</span> conditional on <span class="math notranslate nohighlight">\(Z(0)=i\)</span>.
 The proportion of these realisations which equal <span class="math notranslate nohighlight">\(j\)</span> can be used to approximate the transition probability. That is,</p>
 <div class="math notranslate nohighlight">
 \[p_{i,j}(\boldsymbol \theta) \approx \frac{ \sum_{l=1}^k I\{\hat Z_l(t)\}}{k}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat Z_l(t)\)</span> are simulated realisations of <span class="math notranslate nohighlight">\(Z(t)\)</span> and <span class="math notranslate nohighlight">\(I\{A\}\)</span> evaluates to 1 when <span class="math notranslate nohighlight">\(A\)</span> is true and otherwise evaluates to 0.</p>
-<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-sim"><span class="std std-ref">birdepy.probability(method=’sim’)</span></a> and <span class="xref std std-ref">birdepy.gpu_functions.probability_gpu()</span> for the implementations of this method in BirDePy.</p>
+<p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-sim"><span class="std std-ref">birdepy.probability(method=’sim’)</span></a> and <a class="reference internal" href="api_cuda_probabilities.html#birdepy-gpu-functions-probability"><span class="std std-ref">birdepy.gpu_functions.probability()</span></a> for the implementations of this method in BirDePy.</p>
 <dl class="citation">
 <dt class="label" id="grassman1977"><span class="brackets"><a class="fn-backref" href="#id1">Grassman1977</a></span></dt>
 <dd><p>Grassman, W., 1977. Transient solutions in Markovian queues. European Journal of Operations Research, 1(6):396–402.</p>
