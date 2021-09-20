@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -13,8 +13,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
@@ -35,12 +33,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -253,77 +252,80 @@
             
   <div class="section" id="birdepy-simulate-continuous">
 <h1>birdepy.simulate.continuous()<a class="headerlink" href="#birdepy-simulate-continuous" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="birdepy.simulate.continuous">
-<span class="sig-prename descclassname"><span class="pre">birdepy.simulate.</span></span><span class="sig-name descname"><span class="pre">continuous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survival</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.simulate.continuous" title="Permalink to this definition">¶</a></dt>
+<dl class="function">
+<dt id="birdepy.simulate.continuous">
+<code class="descclassname">birdepy.simulate.</code><code class="descname">continuous</code><span class="sig-paren">(</span><em>param</em>, <em>model</em>, <em>z0</em>, <em>t_max</em>, <em>k=1</em>, <em>survival=False</em>, <em>seed=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.simulate.continuous" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulation of continuous-time birth-and-death processes at birth and
 death event times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
 process to be simulated.
 Array of real elements of size (n,), where ‘n’ is the number of
-param.</p></li>
-<li><p><strong>model</strong> (<em>string</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
+param.</li>
+<li><strong>model</strong> (<em>string</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
 <blockquote>
 <div><blockquote>
 <div><ul>
-<li><p>’Verhulst’</p></li>
-<li><p>’Ricker’</p></li>
-<li><p>’Beverton-Holt’</p></li>
-<li><p>’Hassell’</p></li>
-<li><p>’MS-S’</p></li>
-<li><p>’pure-birth’</p></li>
-<li><p>’pure-death’</p></li>
-<li><p>’Poisson’</p></li>
-<li><p>’linear’</p></li>
-<li><p>’linear-migration’</p></li>
-<li><p>’M/M/1’</p></li>
-<li><p>’M/M/inf’</p></li>
-<li><p>’loss-system’</p></li>
-<li><p>’custom’</p></li>
+<li>’Verhulst’</li>
+<li>’Ricker’</li>
+<li>’Beverton-Holt’</li>
+<li>’Hassell’</li>
+<li>’MS-S’</li>
+<li>’pure-birth’</li>
+<li>’pure-death’</li>
+<li>’Poisson’</li>
+<li>’linear’</li>
+<li>’linear-migration’</li>
+<li>’M/M/1’</li>
+<li>’M/M/inf’</li>
+<li>’loss-system’</li>
+<li>’custom’</li>
 </ul>
 </div></blockquote>
 <p>If set to ‘custom’, then kwargs <cite>b_rate</cite> and <cite>d_rate</cite> must also be
 specified. See <a class="reference internal" href="processes.html#custom-models"><span class="std std-ref">here</span></a> for more information.</p>
 </div></blockquote>
-</p></li>
-<li><p><strong>z0</strong> (<em>int</em><em> or </em><em>callable</em>) – <p>The initial population size for each sample path.
+</li>
+<li><strong>z0</strong> (<em>int</em><em> or </em><em>callable</em>) – <p>The initial population size for each sample path.
 If it is a callable it should be a function that has no arguments and
 returns an int:</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">z0()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></p>
-</div></blockquote>
-</p></li>
-<li><p><strong>t_max</strong> (<em>scalar</em>) – The simulation horizon. All events up to and including this time are
-included in the output.</p></li>
-<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of sample paths to be simulated.</p></li>
-<li><p><strong>survival</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True, then the simulated sample paths are conditioned to
+<div><code class="docutils literal notranslate"><span class="pre">z0()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></div></blockquote>
+</li>
+<li><strong>t_max</strong> (<em>scalar</em>) – The simulation horizon. All events up to and including this time are
+included in the output.</li>
+<li><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of sample paths to be simulated.</li>
+<li><strong>survival</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True, then the simulated sample paths are conditioned to
 have a positive population size at the final observation time. This
-can greatly increase computation time.</p></li>
-<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>numpy.random._generator.Generator</em><em>, </em><em>optional</em>) – If <em>seed</em> is not specified the random numbers are generated according
+can greatly increase computation time.</li>
+<li><strong>seed</strong> (<em>int</em><em>, </em><em>numpy.random._generator.Generator</em><em>, </em><em>optional</em>) – If <em>seed</em> is not specified the random numbers are generated according
 to <em>np.random.default_rng()</em>. If <em>seed</em> is an <em>int</em>, random numbers are
 generated according to <em>np.random.default_rng(seed)</em>. If seed is a
 <em>Generator</em>, then that object is used. See
-<a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</p></li>
+<a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>jump_times</strong> (<em>list</em>) – If n=1 a list containing jump times, generated according to <cite>model</cite>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>jump_times</strong> (<em>list</em>) – If n=1 a list containing jump times, generated according to <cite>model</cite>
 or according to a birth-and-death process evolving according to
 <cite>b_rate</cite> and <cite>d_rate</cite>.
 Or if n&gt;= 1, a list of lists where each list corresponds to the jump
-times from one sample path.</p></li>
-<li><p><strong>pop_sizes</strong> (<em>list</em>) – If k=1 a list containing population sizes at the corresponding jump
+times from one sample path.</li>
+<li><strong>pop_sizes</strong> (<em>list</em>) – If k=1 a list containing population sizes at the corresponding jump
 times, generated according to <cite>model</cite>.
 Or if k&gt;1, a list of lists where each list corresponds to the
-population sizes corresponding to jump times from one sample path.</p></li>
+population sizes corresponding to jump times from one sample path.</li>
 </ul>
 </p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
 <p>Simulating a unit rate Poisson process up to a t_max of 5:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
@@ -344,25 +346,32 @@ See, for example, Algorithm 5.8 in [2].</p>
 <p>For a text book treatment on the theory of birth-and-death processes
 see [3].</p>
 <div class="admonition seealso">
-<p class="admonition-title">See also</p>
+<p class="first admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id1"><span class="brackets">1</span></dt>
-<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
-</dd>
-<dt class="label" id="id2"><span class="brackets">2</span></dt>
-<dd><p>Kroese, D.P., Taimre, T. and Botev, Z.I. (2013) Handbook of Monte
-Carlo methods. John Wiley &amp; Sons.</p>
-</dd>
-<dt class="label" id="id3"><span class="brackets">3</span></dt>
-<dd><p>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>Kroese, D.P., Taimre, T. and Botev, Z.I. (2013) Handbook of Monte
+Carlo methods. John Wiley &amp; Sons.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/simulate.py">[View birdepy.simulate.continuous() source code]</a></p>
