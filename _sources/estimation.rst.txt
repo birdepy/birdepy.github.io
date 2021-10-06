@@ -208,19 +208,6 @@ In :func:`birdepy.estimate()` the default distance :math:`d` between observed da
 See below for instructions on how to use a customized distance function. 
 The prior :math:`\pi(\cdot)` is taken to be a uniform distribution on the set of parameters satisfying the arguments of `p_bounds` and `con`.  
 
-The choice of :math:`\epsilon` in Step 3 above has a strong influence on the probability of a parameter proposal being accepted. 
-Larger choices of :math:`\epsilon` may allow `k` parameter proposals to be found more quickly, but this could be at the expense of accuracy. 
-Similarly, the choice of the prior :math:`\pi(\cdot)` has a major impact on performance. 
-Using methods from [BeaumontEtAl2009]_ and [MoralEtAl2012]_ in :func:`birdepy.estimate()` the standard ABC method can be applied multiple times (as determined by the argument of `its`), with dynamically determined :math:`\epsilon` and  :math:`\pi(\cdot)`. 
-At the end of each iteration a new :math:`\epsilon'` is determined from the current iterations accepted samples :math:`(\boldsymbol\theta)_{j=1}^k` such that 
-
-.. math:: 
-
-	\left\lceil\left(\sum_{j=1}^k \frac{\pi(\boldsymbol\theta_{j})}{\hat\pi_{\epsilon}(\boldsymbol\theta_{j} \mid \boldsymbol z)}I\{d(\boldsymbol z, \hat{\boldsymbol z})<\epsilon'\} \right)^{-1}\right\rceil = \frac{k}{2}, 
-
-where :math:`\epsilon` and :math:`\pi(\cdot\mid \boldsymbol z)` were the tolerance and prior used in the current iteration. 
-The prior is then updated for the next iteration to be a mixture of `c` multivariate normals truncated to satisfy the arguments of `p_bounds` and `con`.  
-
 
 Customized Distance
 -------------------

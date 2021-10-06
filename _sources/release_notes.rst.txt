@@ -2,6 +2,17 @@
 Release Notes
 =============
 
+0.0.9
+^^^^^
+Date: October 6 2021
+
+Contributors: Sophie Hautphenne and Brendan Patch 
+
+Notes: 
+
+1. Substantial revision to the ABC algorithm in :func:`bd.estimate()`. 
+2. Minor changes to examples throughout. 
+
 0.0.8
 ^^^^^
 Date: August 29 2021

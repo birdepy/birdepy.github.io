@@ -44,7 +44,7 @@ It looks like this:
 
 .. image:: example_fig_1.png
 
-If we assume :math:`\beta=0` is known BirDePy's function :func:`birdepy.estimate()` can be used to estimate the other parameter values: ::
+If we assume :math:`\beta=0` is known, BirDePy's function :func:`birdepy.estimate()` can be used to estimate the other parameter values: ::
 
    initial_guess = [0.5]*3
    p_bounds = [[1e-6, 1]]*3
