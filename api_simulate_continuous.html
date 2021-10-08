@@ -262,56 +262,68 @@ death event times.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
 process to be simulated.
 Array of real elements of size (n,), where ‘n’ is the number of
-param.</li>
-<li><strong>model</strong> (<em>string</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
-<blockquote>
+param.
+These must be in the order given <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>).</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>model <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
+<blockquote class="last">
 <div><blockquote>
-<div><ul>
-<li>’Verhulst’</li>
-<li>’Ricker’</li>
-<li>’Beverton-Holt’</li>
-<li>’Hassell’</li>
-<li>’MS-S’</li>
-<li>’pure-birth’</li>
-<li>’pure-death’</li>
-<li>’Poisson’</li>
-<li>’linear’</li>
-<li>’linear-migration’</li>
-<li>’M/M/1’</li>
-<li>’M/M/inf’</li>
-<li>’loss-system’</li>
-<li>’custom’</li>
+<div><ul class="simple">
+<li>‘Verhulst’</li>
+<li>‘Ricker’</li>
+<li>‘Beverton-Holt’</li>
+<li>‘Hassell’</li>
+<li>‘MS-S’</li>
+<li>‘pure-birth’</li>
+<li>‘pure-death’</li>
+<li>‘Poisson’</li>
+<li>‘linear’</li>
+<li>‘linear-migration’</li>
+<li>‘M/M/1’</li>
+<li>‘M/M/inf’</li>
+<li>‘loss-system’</li>
+<li>‘custom’</li>
 </ul>
 </div></blockquote>
 <p>If set to ‘custom’, then kwargs <cite>b_rate</cite> and <cite>d_rate</cite> must also be
 specified. See <a class="reference internal" href="processes.html#custom-models"><span class="std std-ref">here</span></a> for more information.</p>
 </div></blockquote>
-</li>
-<li><strong>z0</strong> (<em>int</em><em> or </em><em>callable</em>) – <p>The initial population size for each sample path.
+</dd>
+<dt>z0: int or callable</dt>
+<dd><p class="first">The initial population size for each sample path.
 If it is a callable it should be a function that has no arguments and
 returns an int:</p>
-<blockquote>
+<blockquote class="last">
 <div><code class="docutils literal notranslate"><span class="pre">z0()</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code></div></blockquote>
-</li>
-<li><strong>t_max</strong> (<em>scalar</em>) – The simulation horizon. All events up to and including this time are
-included in the output.</li>
-<li><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of sample paths to be simulated.</li>
-<li><strong>survival</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True, then the simulated sample paths are conditioned to
+</dd>
+<dt>t_max <span class="classifier-delimiter">:</span> <span class="classifier">scalar</span></dt>
+<dd>The simulation horizon. All events up to and including this time are
+included in the output.</dd>
+<dt>k <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd>The number of sample paths to be simulated.</dd>
+<dt>survival <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd>If set to True, then the simulated sample paths are conditioned to
 have a positive population size at the final observation time. This
-can greatly increase computation time.</li>
-<li><strong>seed</strong> (<em>int</em><em>, </em><em>numpy.random._generator.Generator</em><em>, </em><em>optional</em>) – If <em>seed</em> is not specified the random numbers are generated according
+can greatly increase computation time.</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int, numpy.random._generator.Generator, optional</span></dt>
+<dd>If <em>seed</em> is not specified the random numbers are generated according
 to <em>np.random.default_rng()</em>. If <em>seed</em> is an <em>int</em>, random numbers are
 generated according to <em>np.random.default_rng(seed)</em>. If seed is a
 <em>Generator</em>, then that object is used. See
-<a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
 <li><strong>jump_times</strong> (<em>list</em>) – If n=1 a list containing jump times, generated according to <cite>model</cite>
 or according to a birth-and-death process evolving according to
 <cite>b_rate</cite> and <cite>d_rate</cite>.
@@ -322,7 +334,6 @@ times, generated according to <cite>model</cite>.
 Or if k&gt;1, a list of lists where each list corresponds to the
 population sizes corresponding to jump times from one sample path.</li>
 </ul>
-</p>
 </td>
 </tr>
 </tbody>

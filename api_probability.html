@@ -268,7 +268,8 @@
 <li><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
 process.
 Array of real elements of size (n,), where ‘n’ is the number of
-parameters.</li>
+parameters.
+These must be in the order given <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>).</li>
 <li><strong>model</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
 <blockquote>
 <div><ul>
@@ -903,14 +904,10 @@ generated according to <em>np.random.default_rng(seed)</em>. If seed is a
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<p>Approximate transition probability for a Verhulst model using simulation:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
-<span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;sim&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
-               <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Outputs:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.00294</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;sim&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
+<span class="gp">... </span>               <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">0.00294</span>
 </pre></div>
 </div>
 <p class="rubric">Notes</p>
