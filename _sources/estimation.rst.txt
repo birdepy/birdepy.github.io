@@ -203,7 +203,7 @@ In :func:`birdepy.estimate()` the default distance :math:`d` between observed da
 
 .. math::
 
-	d(\boldsymbol z, \hat{\boldsymbol z}) = \sqrt{\frac{1}{|\boldsymbol z|}\sum_{j=1}^m\sum_{i=1}^{n_j} \big(z_{i,j}-\hat{z_{i,j}}(\boldsymbol \theta))\big)^2}. 
+	d(\boldsymbol z, \hat{\boldsymbol z}) = \sqrt{\sum_{j=1}^m\sum_{i=1}^{n_j} \big(z_{i,j}-\hat{z_{i,j}}(\boldsymbol \theta))\big)^2}. 
 
 See below for instructions on how to use a customized distance function. 
 The prior :math:`\pi(\cdot)` is taken to be a uniform distribution on the set of parameters satisfying the arguments of `p_bounds` and `con`.  

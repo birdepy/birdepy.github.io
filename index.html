@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -13,8 +13,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
@@ -35,13 +33,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="_static/copybutton.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -329,17 +327,17 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 <h2>Dependency List<a class="headerlink" href="#dependency-list" title="Permalink to this headline">¶</a></h2>
 <p>Required:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mpmath</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">scipy</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gwr_inversion</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code></p></li>
+<li><code class="docutils literal notranslate"><span class="pre">numpy</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mpmath</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">scipy</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">gwr_inversion</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code></li>
 </ul>
 <p>Optional:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">numba</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cudatoolkit</span></code></p></li>
+<li><code class="docutils literal notranslate"><span class="pre">numba</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cudatoolkit</span></code></li>
 </ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Theoretical Background</span></p>
@@ -442,12 +440,13 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 </div>
 <div class="section" id="further-reading">
 <h2>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
-<p>The package is also described in detail in <a class="reference internal" href="#hautphennepatch2021" id="id1"><span>[HautphennePatch2021]</span></a> . If you use BirDePy for published research, then please cite this paper.</p>
-<dl class="citation">
-<dt class="label" id="hautphennepatch2021"><span class="brackets"><a class="fn-backref" href="#id1">HautphennePatch2021</a></span></dt>
-<dd><p>Hautphenne, S. and Patch, B., 2021. BirDePy: Parameter estimation for population-size-dependent birth-and-death processes in Python.</p>
-</dd>
-</dl>
+<p>The package is also described in detail in <a class="reference internal" href="#hautphennepatch2021" id="id1">[HautphennePatch2021]</a> . If you use BirDePy for published research, then please cite this paper.</p>
+<table class="docutils citation" frame="void" id="hautphennepatch2021" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[HautphennePatch2021]</a></td><td>Hautphenne, S. and Patch, B., 2021. BirDePy: Parameter estimation for population-size-dependent birth-and-death processes in Python.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
