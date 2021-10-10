@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
@@ -33,13 +35,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="_static/copybutton.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -100,6 +102,15 @@
 <li class="toctree-l2"><a class="reference internal" href="processes.html#custom-models">Custom Models</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact">Exact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping"><span class="math notranslate nohighlight">\(\tau\)</span> leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#midpoint-approximation">Midpoint approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="probabilities.html">Transition Probabilities</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#matrix-exponential">Matrix exponential</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#uniformization">Uniformization</a></li>
@@ -108,8 +119,8 @@
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#diffusion-approximation">Diffusion approximation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#ornstein-uhlenbeck-approximation">Ornstein–Uhlenbeck approximation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#galton-watson-approximation">Galton–Watson approximation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="probabilities.html#saddle-point-approximation">Saddle-point approximation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#summary">Summary</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="estimation.html">Parameter Estimation</a><ul>
@@ -129,10 +140,6 @@
 <li class="toctree-l2"><a class="reference internal" href="estimation.html#confidence-regions">Confidence Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="estimation.html#continuously-observed-data">Continuously Observed Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="estimation.html#optimization-options">Optimization Options</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
@@ -259,6 +266,8 @@
 </div>
 <p>You may also need to install some dependencies (listed below).</p>
 <p><cite>BirDePy</cite> is developed on Github, the source code is found <a class="reference external" href="https://github.com/birdepy/birdepy_project/tree/main/src/birdepy">here</a>.</p>
+<p>The package is also described in detail in <a class="reference internal" href="simulation.html#hautphennepatch2021a" id="id1"><span>[HautphennePatch2021a]</span></a>, which can be downloaded <a class="reference external" href="https://github.com/birdepy/paper/blob/main/birdepy.pdf">here</a>. If you use BirDePy for published research, then please cite this paper.</p>
+<p>If you use our new piecewise approximation simulation algorithm, then please also cite our paper <a class="reference internal" href="simulation.html#hautphennepatch2021b" id="id3"><span>[HautphennePatch2021b]</span></a>, which can be downloaded <a class="reference external" href="https://github.com/birdepy/paper/blob/main/psdbdp_simulation.pdf">here</a>.</p>
 <div class="section" id="usage-example">
 <h2>Usage Example<a class="headerlink" href="#usage-example" title="Permalink to this headline">¶</a></h2>
 <p>Suppose we are interested in the susceptible-infective-susceptible model. This is the Verhulst model with rate of spread given by <span class="math notranslate nohighlight">\(\gamma\)</span>, recovery rate given by <span class="math notranslate nohighlight">\(\nu\)</span>, population size given by <span class="math notranslate nohighlight">\(1/\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta=0\)</span>:</p>
@@ -327,23 +336,31 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 <h2>Dependency List<a class="headerlink" href="#dependency-list" title="Permalink to this headline">¶</a></h2>
 <p>Required:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">numpy</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">mpmath</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">scipy</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">gwr_inversion</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mpmath</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scipy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gwr_inversion</span></code></p></li>
 </ul>
 <p>Optional:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">numba</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">cudatoolkit</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numba</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cudatoolkit</span></code></p></li>
 </ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Theoretical Background</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="processes.html">Birth-and-death Processes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="processes.html#custom-models">Custom Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact">Exact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping"><span class="math notranslate nohighlight">\(\tau\)</span> leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#midpoint-approximation">Midpoint approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="probabilities.html">Transition Probabilities</a><ul>
@@ -354,8 +371,8 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#diffusion-approximation">Diffusion approximation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#ornstein-uhlenbeck-approximation">Ornstein–Uhlenbeck approximation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#galton-watson-approximation">Galton–Watson approximation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="probabilities.html#saddle-point-approximation">Saddle-point approximation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="probabilities.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#summary">Summary</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="estimation.html">Parameter Estimation</a><ul>
@@ -375,10 +392,6 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 <li class="toctree-l2"><a class="reference internal" href="estimation.html#confidence-regions">Confidence Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="estimation.html#continuously-observed-data">Continuously Observed Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="estimation.html#optimization-options">Optimization Options</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
@@ -437,16 +450,14 @@ The argument of <cite>likelihood</cite> is set to ‘da’ so a <a class="refere
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="further-reading">
-<h2>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
-<p>The package is also described in detail in <a class="reference internal" href="#hautphennepatch2021" id="id1">[HautphennePatch2021]</a> . If you use BirDePy for published research, then please cite this paper.</p>
-<table class="docutils citation" frame="void" id="hautphennepatch2021" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[HautphennePatch2021]</a></td><td>Hautphenne, S. and Patch, B., 2021. BirDePy: Parameter estimation for population-size-dependent birth-and-death processes in Python.</td></tr>
-</tbody>
-</table>
+<dl class="citation">
+<dt class="label" id="hautphennepatch2021a"><span class="brackets"><a class="fn-backref" href="#id1">HautphennePatch2021a</a></span></dt>
+<dd><p>Hautphenne, S., and Patch, B., (2021). Birth-and-death Processes in Python: The BirDePy Package.</p>
+</dd>
+<dt class="label" id="hautphennepatch2021b"><span class="brackets"><a class="fn-backref" href="#id3">HautphennePatch2021b</a></span></dt>
+<dd><p>Hautphenne, S. and Patch, B., 2021. Simulating population-size-dependent birth-and-death processes using CUDA and piecewise approximations. In <em>Proceedings of the International Congress on Modelling and Simulation 2021</em>. (to appear)</p>
+</dd>
+</dl>
 </div>
 </div>
 

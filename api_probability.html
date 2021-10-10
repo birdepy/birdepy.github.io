@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
@@ -33,13 +35,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="_static/copybutton.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -253,67 +254,65 @@
             
   <div class="section" id="birdepy-probability">
 <h1>birdepy.probability()<a class="headerlink" href="#birdepy-probability" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="birdepy.probability">
-<code class="descclassname">birdepy.</code><code class="descname">probability</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>model='Verhulst 1'</em>, <em>method='expm'</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability">
+<span class="sig-prename descclassname"><span class="pre">birdepy.</span></span><span class="sig-name descname"><span class="pre">probability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Verhulst</span> <span class="pre">1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'expm'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>z0</strong> (<em>array_like</em>) – States of birth-and-death process at time 0.</li>
-<li><strong>zt</strong> (<em>array_like</em>) – States of birth-and-death process at time(s) <cite>t</cite>.</li>
-<li><strong>t</strong> (<em>array_like</em>) – Elapsed time(s) (if has size greater than 1, then must be increasing).</li>
-<li><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z0</strong> (<em>array_like</em>) – States of birth-and-death process at time 0.</p></li>
+<li><p><strong>zt</strong> (<em>array_like</em>) – States of birth-and-death process at time(s) <cite>t</cite>.</p></li>
+<li><p><strong>t</strong> (<em>array_like</em>) – Elapsed time(s) (if has size greater than 1, then must be increasing).</p></li>
+<li><p><strong>param</strong> (<em>array_like</em>) – The parameters governing the evolution of the birth-and-death
 process.
 Array of real elements of size (n,), where ‘n’ is the number of
 parameters.
-These must be in the order given <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>).</li>
-<li><strong>model</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
+These must be in the order given <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>).</p></li>
+<li><p><strong>model</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Model specifying birth and death rates of process (see <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>). Should be one of:</p>
 <blockquote>
 <div><ul>
-<li>’Verhulst’ (default)</li>
-<li>’Ricker’</li>
-<li>’Beverton-Holt’</li>
-<li>’Hassell’</li>
-<li>’MS-S’</li>
-<li>’Moran’</li>
-<li>’pure-birth’</li>
-<li>’pure-death’</li>
-<li>’Poisson’</li>
-<li>’linear’</li>
-<li>’linear-migration’</li>
-<li>’MS-S’</li>
-<li>’M/M/inf’</li>
-<li>’loss-system’</li>
-<li>’custom’</li>
+<li><p>’Verhulst’ (default)</p></li>
+<li><p>’Ricker’</p></li>
+<li><p>’Beverton-Holt’</p></li>
+<li><p>’Hassell’</p></li>
+<li><p>’MS-S’</p></li>
+<li><p>’Moran’</p></li>
+<li><p>’pure-birth’</p></li>
+<li><p>’pure-death’</p></li>
+<li><p>’Poisson’</p></li>
+<li><p>’linear’</p></li>
+<li><p>’linear-migration’</p></li>
+<li><p>’MS-S’</p></li>
+<li><p>’M/M/inf’</p></li>
+<li><p>’loss-system’</p></li>
+<li><p>’custom’</p></li>
 </ul>
 </div></blockquote>
 <p>If set to ‘custom’, then arguments <cite>b_rate</cite> and <cite>d_rate</cite> must also be
 specified. See <a class="reference internal" href="processes.html#custom-models"><span class="std std-ref">here</span></a> for more information.</p>
-</li>
-<li><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Transition probability approximation method. Should be one of
+</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Transition probability approximation method. Should be one of
 (alphabetical ordering):</p>
 <blockquote>
 <div><ul>
-<li>’da’ (see <a class="reference internal" href="#birdepy-probability-method-da"><span class="std std-ref">here</span></a>)</li>
-<li>’Erlang’(see <a class="reference internal" href="#birdepy-probability-method-erlang"><span class="std std-ref">here</span></a>)</li>
-<li>’expm’  (default) (see <a class="reference internal" href="#birdepy-probability-method-expm"><span class="std std-ref">here</span></a>)</li>
-<li>’gwa’ (see <a class="reference internal" href="#birdepy-probability-method-gwa"><span class="std std-ref">here</span></a>)</li>
-<li>’gwasa’ (see <a class="reference internal" href="#birdepy-probability-method-gwasa"><span class="std std-ref">here</span></a>)</li>
-<li>’ilt’ (see <a class="reference internal" href="#birdepy-probability-method-ilt"><span class="std std-ref">here</span></a>)</li>
-<li>’oua’ (see <a class="reference internal" href="#birdepy-probability-method-oua"><span class="std std-ref">here</span></a>)</li>
-<li>’sim’ (see  <a class="reference internal" href="#birdepy-probability-method-sim"><span class="std std-ref">here</span></a>)</li>
-<li>’uniform’ (see <a class="reference internal" href="#birdepy-probability-method-uniform"><span class="std std-ref">here</span></a>)</li>
+<li><p>’da’ (see <a class="reference internal" href="#birdepy-probability-method-da"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’Erlang’(see <a class="reference internal" href="#birdepy-probability-method-erlang"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’expm’  (default) (see <a class="reference internal" href="#birdepy-probability-method-expm"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’gwa’ (see <a class="reference internal" href="#birdepy-probability-method-gwa"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’gwasa’ (see <a class="reference internal" href="#birdepy-probability-method-gwasa"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’ilt’ (see <a class="reference internal" href="#birdepy-probability-method-ilt"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’oua’ (see <a class="reference internal" href="#birdepy-probability-method-oua"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’sim’ (see  <a class="reference internal" href="#birdepy-probability-method-sim"><span class="std std-ref">here</span></a>)</p></li>
+<li><p>’uniform’ (see <a class="reference internal" href="#birdepy-probability-method-uniform"><span class="std std-ref">here</span></a>)</p></li>
 </ul>
 </div></blockquote>
-</li>
-<li><strong>options</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary of method specific options.</li>
+</p></li>
+<li><p><strong>options</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary of method specific options.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>transition_probability</strong> – An array of transition probabilities. If t has size bigger than 1,
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>transition_probability</strong> – An array of transition probabilities. If t has size bigger than 1,
 then the first coordinate corresponds to <cite>t</cite>, the second coordinate
 corresponds to <cite>z0</cite> and the third coordinate corresponds to <cite>zt</cite>;
 for example if <cite>z0=[1,3,5,10]</cite>, <cite>zt=[5,8]</cite> and <cite>t=[1,2,3]</cite>, then
@@ -321,13 +320,11 @@ for example if <cite>z0=[1,3,5,10]</cite>, <cite>zt=[5,8]</cite> and <cite>t=[1,
 P(Z(3)=8 | Z(0)=1).
 If <cite>t</cite> has size 1 the first coordinate corresponds to <cite>z0</cite> and the second
 coordinate corresponds to <cite>zt</cite>.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using various methods:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;da&#39;</span><span class="p">,</span> <span class="s1">&#39;Erlang&#39;</span><span class="p">,</span> <span class="s1">&#39;expm&#39;</span><span class="p">,</span> <span class="s1">&#39;gwa&#39;</span><span class="p">,</span> <span class="s1">&#39;gwasa&#39;</span><span class="p">,</span> <span class="s1">&#39;ilt&#39;</span><span class="p">,</span> <span class="s1">&#39;oua&#39;</span><span class="p">,</span> <span class="s1">&#39;uniform&#39;</span><span class="p">]:</span>
@@ -353,34 +350,30 @@ cite this paper.</p>
 <p>For a text book treatment on the theory of birth-and-death processes
 see [2].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
 <p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_cuda_probabilities.html#birdepy.gpu_functions.probability" title="birdepy.gpu_functions.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.probability()</span></code></a>  <a class="reference internal" href="api_cuda_simulate.html#birdepy.gpu_functions.discrete" title="birdepy.gpu_functions.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.discrete()</span></code></a></p>
+<p><a class="reference internal" href="api_cuda_probabilities.html#birdepy.gpu_functions.probability" title="birdepy.gpu_functions.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.probability()</span></code></a>  <a class="reference internal" href="api_cuda_simulate.html#birdepy.gpu_functions.discrete" title="birdepy.gpu_functions.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.discrete()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id1" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="id1"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id2"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/interface_probability.py">[View birdepy.probability() source code]</a></p>
 <div class="section" id="birdepy-probability-method-da">
 <h2>birdepy.probability(method=’da’)<a class="headerlink" href="#birdepy-probability-method-da" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_da.probability_da">
-<code class="descclassname">birdepy.probability_da.</code><code class="descname">probability_da</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>h_fun</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_da.probability_da" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_da.probability_da">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_da.</span></span><span class="sig-name descname"><span class="pre">probability_da</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_da.probability_da" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>diffusion approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -391,15 +384,12 @@ using the <em>diffusion approximation</em> method.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – <code class="docutils literal notranslate"><span class="pre">2**k</span> <span class="pre">+</span> <span class="pre">1</span></code> equally spaced samples between observation times are used
-to compute integrals.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – <code class="docutils literal notranslate"><span class="pre">2**k</span> <span class="pre">+</span> <span class="pre">1</span></code> equally spaced samples between observation times are used
+to compute integrals.</p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using diffusion approximation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
@@ -417,42 +407,35 @@ function for published work, then please cite this paper.</p>
 see [2].</p>
 <p>For a method related to this one see [3].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id3" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id4" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id5" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[3]</td><td>Ross, J.V., Pagendam, D.E. and Pollett, P.K. On parameter estimation
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+<dt class="label" id="id5"><span class="brackets">3</span></dt>
+<dd><p>Ross, J.V., Pagendam, D.E. and Pollett, P.K. On parameter estimation
 in population models II: Multi-dimensional processes and transient
-dynamics. Theoretical Population Biology, 75(2-3):123-132, 2009.</td></tr>
-</tbody>
-</table>
+dynamics. Theoretical Population Biology, 75(2-3):123-132, 2009.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_da.py">[View birdepy.probability(method=”da”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-erlang">
 <h2>birdepy.probability(method=’Erlang’)<a class="headerlink" href="#birdepy-probability-method-erlang" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_Erlang.probability_Erlang">
-<code class="descclassname">birdepy.probability_Erlang.</code><code class="descname">probability_Erlang</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>z_trunc</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_Erlang.probability_Erlang" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_Erlang.probability_Erlang">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_Erlang.</span></span><span class="sig-name descname"><span class="pre">probability_Erlang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_trunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_Erlang.probability_Erlang" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Erlangization</em> method.</p>
 <p>To use this function call <code class="docutils literal notranslate"><span class="pre">birdepy.probability</span></code> with <cite>method</cite> set to
@@ -463,21 +446,17 @@ using the <em>Erlangization</em> method.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>z_trunc</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Truncation thresholds, i.e., minimum and maximum states of process
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z_trunc</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Truncation thresholds, i.e., minimum and maximum states of process
 considered. Array of real elements of size (2,) by default
 <code class="docutils literal notranslate"><span class="pre">z_trunc=[z_min,</span> <span class="pre">z_max]</span></code> where <code class="docutils literal notranslate"><span class="pre">z_min=max(0,</span> <span class="pre">min(z0,</span> <span class="pre">zt)</span> <span class="pre">-</span> <span class="pre">100)</span></code>
-and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code></li>
-<li><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability.</li>
+and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code></p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using Erlangization:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
@@ -495,42 +474,35 @@ function for published work, then please cite this paper.</p>
 see [2].</p>
 <p>For a method related to this one see [3].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[3]</td><td>Asmussen, S., Avram, F. and Usabel, M. Erlangian approximations for
+<dl class="footnote brackets">
+<dt class="label" id="id6"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets">3</span></dt>
+<dd><p>Asmussen, S., Avram, F. and Usabel, M. Erlangian approximations for
 finite-horizon ruin probabilities. ASTIN Bulletin: The Journal of the IAA,
-32(2):267-281, 2002.</td></tr>
-</tbody>
-</table>
+32(2):267-281, 2002.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_Erlang.py">[View birdepy.probability(method=”Erlang”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-expm">
 <h2>birdepy.probability(method=’expm’)<a class="headerlink" href="#birdepy-probability-method-expm" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_expm.probability_expm">
-<code class="descclassname">birdepy.probability_expm.</code><code class="descname">probability_expm</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>z_trunc</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_expm.probability_expm" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_expm.probability_expm">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_expm.</span></span><span class="sig-name descname"><span class="pre">probability_expm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_trunc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_expm.probability_expm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>matrix exponential</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -541,17 +513,14 @@ using the <em>matrix exponential</em> method.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>z_trunc</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Truncation thresholds, i.e., minimum and maximum states of process
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>z_trunc</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Truncation thresholds, i.e., minimum and maximum states of process
 considered. Array of real elements of size (2,) by default
 <code class="docutils literal notranslate"><span class="pre">z_trunc=[z_min,</span> <span class="pre">z_max]</span></code> where <code class="docutils literal notranslate"><span class="pre">z_min=max(0,</span> <span class="pre">min(z0,</span> <span class="pre">zt)</span> <span class="pre">-</span> <span class="pre">100)</span></code>
-and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code></td>
-</tr>
-</tbody>
-</table>
+and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using a matrix exponential:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
@@ -563,34 +532,30 @@ and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</
 </pre></div>
 </div>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id9" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id10" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="id9"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_expm.py">[View birdepy.probability(method=”expm”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-gwa">
 <h2>birdepy.probability(method=’gwa’)<a class="headerlink" href="#birdepy-probability-method-gwa" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_gwa.probability_gwa">
-<code class="descclassname">birdepy.probability_gwa.</code><code class="descname">probability_gwa</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>anchor</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwa.probability_gwa" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_gwa.probability_gwa">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_gwa.</span></span><span class="sig-name descname"><span class="pre">probability_gwa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anchor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwa.probability_gwa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Galton-Watson approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -601,16 +566,13 @@ using the <em>Galton-Watson approximation</em> method.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>anchor</strong> (<em>string</em><em>, </em><em>optional</em>) – Determines which state z is used to determine the linear approximation.
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>anchor</strong> (<em>string</em><em>, </em><em>optional</em>) – Determines which state z is used to determine the linear approximation.
 Should be one of: ‘initial’ (z0 is used), ‘midpoint’ (default, 0.5*(z0+zt) is used),
-‘terminal’ (zt is used), ‘max’ (max(z0, zt) is used), or ‘min’ (min(z0, zt) is used).</td>
-</tr>
-</tbody>
-</table>
+‘terminal’ (zt is used), ‘max’ (max(z0, zt) is used), or ‘min’ (min(z0, zt) is used).</p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using a linear approximation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
@@ -627,34 +589,30 @@ function for published work, then please cite this paper.</p>
 <p>For a text book treatment on the theory of birth-and-death processes
 see [2].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id11" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id12" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="id11"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_gwa.py">[View birdepy.probability(method=”gwa”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-gwasa">
 <h2>birdepy.probability(method=’gwasa’)<a class="headerlink" href="#birdepy-probability-method-gwasa" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_gwasa.probability_gwasa">
-<code class="descclassname">birdepy.probability_gwasa.</code><code class="descname">probability_gwasa</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>anchor</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwasa.probability_gwasa" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_gwasa.probability_gwasa">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_gwasa.</span></span><span class="sig-name descname"><span class="pre">probability_gwasa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anchor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_gwasa.probability_gwasa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Galton-Watson saddlepoint approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -665,16 +623,13 @@ using the <em>Galton-Watson saddlepoint approximation</em> method.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>anchor</strong> (<em>string</em><em>, </em><em>optional</em>) – Determines which state z is used to determine the linear approximation.
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>anchor</strong> (<em>string</em><em>, </em><em>optional</em>) – Determines which state z is used to determine the linear approximation.
 Should be one of: ‘initial’ (z0 is used), ‘midpoint’ (default, 0.5*(z0+zt) is used),
-‘terminal’ (zt is used), ‘max’ (max(z0, zt) is used), or ‘min’ (min(z0, zt) is used).</td>
-</tr>
-</tbody>
-</table>
+‘terminal’ (zt is used), ‘max’ (max(z0, zt) is used), or ‘min’ (min(z0, zt) is used).</p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using the saddlepoint approximation
 to a linear approximation:</p>
@@ -692,34 +647,30 @@ function for published work, then please cite this paper.</p>
 <p>For a text book treatment on the theory of birth-and-death processes
 see [2].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id13" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id14" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="id13"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id14"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_gwasa.py">[View birdepy.probability(method=”gwasa”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-ilt">
 <h2>birdepy.probability(method=’ilt’)<a class="headerlink" href="#birdepy-probability-method-ilt" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_ilt.probability_ilt">
-<code class="descclassname">birdepy.probability_ilt.</code><code class="descname">probability_ilt</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>lentz_eps</em>, <em>laplace_method</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_ilt.probability_ilt" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_ilt.probability_ilt">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_ilt.</span></span><span class="sig-name descname"><span class="pre">probability_ilt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lentz_eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">laplace_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_ilt.probability_ilt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>inverse Laplace transform</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -731,26 +682,22 @@ using the <em>inverse Laplace transform</em> method.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>lentz_eps</strong> (<em>scalar</em><em>, </em><em>optional</em>) – Termination threshold for Lentz algorithm computation of Laplace
-domain functions.</li>
-<li><strong>laplace_method</strong> (<em>string</em><em>, </em><em>optional</em>) – Numerical inverse Laplace transform algorithm to use. Should be one of:
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lentz_eps</strong> (<em>scalar</em><em>, </em><em>optional</em>) – Termination threshold for Lentz algorithm computation of Laplace
+domain functions.</p></li>
+<li><p><strong>laplace_method</strong> (<em>string</em><em>, </em><em>optional</em>) – Numerical inverse Laplace transform algorithm to use. Should be one of:
 ‘cme-talbot’ (default), ‘cme’, ‘euler’, ‘gaver’, ‘talbot’, ‘stehfest’,
-‘dehoog’, ‘cme-mp’ or ‘gwr’.</li>
-<li><strong>precision</strong> (<em>int</em><em>, </em><em>optional</em>) – Numerical precision (only used for methods that invoke mpmath).</li>
-<li><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of terms used for Laplace transform numerical inversion.
+‘dehoog’, ‘cme-mp’ or ‘gwr’.</p></li>
+<li><p><strong>precision</strong> (<em>int</em><em>, </em><em>optional</em>) – Numerical precision (only used for methods that invoke mpmath).</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of terms used for Laplace transform numerical inversion.
 Only applicable if argument ‘laplace_method’ is set to ‘cme-talbot’,
 ‘cme’, ‘euler’, ‘gaver’ or ‘cme-mp’.
-See <a class="reference external" href="https://www.inverselaplace.org/">https://www.inverselaplace.org/</a> for more information.</li>
+See <a class="reference external" href="https://www.inverselaplace.org/">https://www.inverselaplace.org/</a> for more information.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using numerical inverse Laplace transform:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
@@ -768,42 +715,35 @@ function for published work, then please cite this paper.</p>
 see [2].</p>
 <p>For more details on this method see [3].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id15" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id16" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id17" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[3]</td><td>Crawford, F.W. and Suchard, M.A., 2012. Transition probabilities
+<dl class="footnote brackets">
+<dt class="label" id="id15"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id16"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+<dt class="label" id="id17"><span class="brackets">3</span></dt>
+<dd><p>Crawford, F.W. and Suchard, M.A., 2012. Transition probabilities
 for general birth-death processes with applications in ecology, genetics,
-and evolution. Journal of Mathematical Biology, 65(3), pp.553-580.</td></tr>
-</tbody>
-</table>
+and evolution. Journal of Mathematical Biology, 65(3), pp.553-580.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_ilt.py">[View birdepy.probability(method=”ilt”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-oua">
 <h2>birdepy.probability(method=’oua’)<a class="headerlink" href="#birdepy-probability-method-oua" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_oua.probability_oua">
-<code class="descclassname">birdepy.probability_oua.</code><code class="descname">probability_oua</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>h_fun</em>, <em>zf_bld</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_oua.probability_oua" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_oua.probability_oua">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_oua.</span></span><span class="sig-name descname"><span class="pre">probability_oua</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zf_bld</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_oua.probability_oua" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>Ornstein-Uhlenbeck approximation</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -830,41 +770,34 @@ function for published work, then please cite this paper.</p>
 see [2].</p>
 <p>For a method related to this one see [3].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id18" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id19" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id20" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[3]</td><td>Ross, J.V., Taimre, T. and Pollett, P.K. On parameter estimation
-in population models. Theoretical Population Biology, 70(4):498-510, 2006.</td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="id18"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id19"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+<dt class="label" id="id20"><span class="brackets">3</span></dt>
+<dd><p>Ross, J.V., Taimre, T. and Pollett, P.K. On parameter estimation
+in population models. Theoretical Population Biology, 70(4):498-510, 2006.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_oua.py">[View birdepy.probability(method=”oua”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-sim">
 <h2>birdepy.probability(method=’sim’)<a class="headerlink" href="#birdepy-probability-method-sim" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_sim.probability_sim">
-<code class="descclassname">birdepy.probability_sim.</code><code class="descname">probability_sim</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>k</em>, <em>sim_method</em>, <em>tau</em>, <em>seed</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_sim.probability_sim" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_sim.probability_sim">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_sim.</span></span><span class="sig-name descname"><span class="pre">probability_sim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_sim.probability_sim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using crude Monte Carlo simulation.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -875,36 +808,32 @@ using crude Monte Carlo simulation.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples used to generate each probability estimate.
-The total number of samples used will be z0.size * k.</li>
-<li><strong>seed</strong> (<em>int</em><em>, </em><em>Generator</em><em>, </em><em>optional</em>) – If <em>seed</em> is not specified the random numbers are generated according
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of samples used to generate each probability estimate.
+The total number of samples used will be z0.size * k.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>Generator</em><em>, </em><em>optional</em>) – If <em>seed</em> is not specified the random numbers are generated according
 to <em>np.random.default_rng()</em>. If <em>seed</em> is an <em>int</em>, random numbers are
 generated according to <em>np.random.default_rng(seed)</em>. If seed is a
 <em>Generator</em>, then that object is used. See
-<a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</li>
-<li><strong>sim_method</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Simulation algorithm used to generate samples (see
+<a class="reference internal" href="simulation.html#reproducibility"><span class="std std-ref">here</span></a> for more information.</p></li>
+<li><p><strong>sim_method</strong> (<em>string</em><em>, </em><em>optional</em>) – <p>Simulation algorithm used to generate samples (see
 <a class="reference internal" href="simulation.html#simulation-algorithms"><span class="std std-ref">here</span></a>). Should be one of:</p>
 <blockquote>
 <div><ul>
-<li>’exact’ (default)</li>
-<li>’ea’</li>
-<li>’ma’</li>
-<li>’gwa’</li>
+<li><p>’exact’ (default)</p></li>
+<li><p>’ea’</p></li>
+<li><p>’ma’</p></li>
+<li><p>’gwa’</p></li>
 </ul>
 </div></blockquote>
-</li>
+</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bd</span><span class="o">.</span><span class="n">probability</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Verhulst&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;sim&#39;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span>
 <span class="gp">... </span>               <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="go">0.00294</span>
@@ -917,42 +846,35 @@ function for published work, then please cite this paper.</p>
 see [2].</p>
 <p>For more details on this method see [3].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id21" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id22" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id23" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[3]</td><td>Crawford, F.W. and Suchard, M.A., 2012. Transition probabilities
+<dl class="footnote brackets">
+<dt class="label" id="id21"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id22"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+<dt class="label" id="id23"><span class="brackets">3</span></dt>
+<dd><p>Crawford, F.W. and Suchard, M.A., 2012. Transition probabilities
 for general birth-death processes with applications in ecology, genetics,
-and evolution. Journal of Mathematical Biology, 65(3), pp.553-580.</td></tr>
-</tbody>
-</table>
+and evolution. Journal of Mathematical Biology, 65(3), pp.553-580.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_sim.py">[View birdepy.probability(method=”sim”) source code]</a></p>
 </div>
 <div class="section" id="birdepy-probability-method-uniform">
 <h2>birdepy.probability(method=’uniform’)<a class="headerlink" href="#birdepy-probability-method-uniform" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="birdepy.probability_uniform.probability_uniform">
-<code class="descclassname">birdepy.probability_uniform.</code><code class="descname">probability_uniform</code><span class="sig-paren">(</span><em>z0</em>, <em>zt</em>, <em>t</em>, <em>param</em>, <em>b_rate</em>, <em>d_rate</em>, <em>z_trunc</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_uniform.probability_uniform" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="birdepy.probability_uniform.probability_uniform">
+<span class="sig-prename descclassname"><span class="pre">birdepy.probability_uniform.</span></span><span class="sig-name descname"><span class="pre">probability_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_trunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#birdepy.probability_uniform.probability_uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transition probabilities for continuous-time birth-and-death processes
 using the <em>uniformization</em> method.</p>
 <p>To use this function call <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> with <cite>method</cite> set to
@@ -963,21 +885,17 @@ using the <em>uniformization</em> method.</p>
 <p>The parameters associated with this method (listed below) can be
 accessed using kwargs in <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>. See documentation
 of <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> for the main arguments.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>z_trunc</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Truncation thresholds, i.e., minimum and maximum states of process
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z_trunc</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Truncation thresholds, i.e., minimum and maximum states of process
 considered. Array of real elements of size (2,) by default
 <code class="docutils literal notranslate"><span class="pre">z_trunc=[z_min,</span> <span class="pre">z_max]</span></code> where <code class="docutils literal notranslate"><span class="pre">z_min=max(0,</span> <span class="pre">min(z0,</span> <span class="pre">zt)</span> <span class="pre">-</span> <span class="pre">100)</span></code>
-and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code>.</li>
-<li><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability.</li>
+and <code class="docutils literal notranslate"><span class="pre">z_max=max(z0,</span> <span class="pre">zt)</span> <span class="pre">+</span> <span class="pre">100</span></code>.</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of terms to include in approximation to probability.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Approximate transition probability for a Verhulst model using uniformization:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
@@ -995,40 +913,30 @@ function for published work, then please cite this paper.</p>
 see [2].</p>
 <p>For more information on this method see [3] and [4].</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
+<p class="admonition-title">See also</p>
 <p><a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> <a class="reference internal" href="#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> <a class="reference internal" href="api_forecast.html#birdepy.forecast" title="birdepy.forecast"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.forecast()</span></code></a></p>
-<p class="last"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
+<p><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> <a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous" title="birdepy.simulate.continuous"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.continuous()</span></code></a></p>
 </div>
 <p class="rubric">References</p>
-<table class="docutils footnote" frame="void" id="id24" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[1]</td><td>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
-population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id25" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[2]</td><td>Feller, W. (1968) An introduction to probability theory and its
-applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id26" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[3]</td><td>Grassman, K. W. Transient solutions in Markovian queueing systems.
-Computers &amp; Operations Research, 4(1):47-53, 1977.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id27" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[4]</td><td>van Dijk N.M., van Brummelen, S.P.J and Boucherie, R.J.
+<dl class="footnote brackets">
+<dt class="label" id="id24"><span class="brackets">1</span></dt>
+<dd><p>Hautphenne, S. and Patch, B. BirDePy: Parameter estimation for
+population-size-dependent birth-and-death processes in Python. ArXiV, 2021.</p>
+</dd>
+<dt class="label" id="id25"><span class="brackets">2</span></dt>
+<dd><p>Feller, W. (1968) An introduction to probability theory and its
+applications (Volume 1) 3rd ed. John Wiley &amp; Sons.</p>
+</dd>
+<dt class="label" id="id26"><span class="brackets">3</span></dt>
+<dd><p>Grassman, K. W. Transient solutions in Markovian queueing systems.
+Computers &amp; Operations Research, 4(1):47-53, 1977.</p>
+</dd>
+<dt class="label" id="id27"><span class="brackets">4</span></dt>
+<dd><p>van Dijk N.M., van Brummelen, S.P.J and Boucherie, R.J.
 Uniformization: Basics, extensions and applications. Performance
-Evaluation, 118:8-32, 2018.</td></tr>
-</tbody>
-</table>
+Evaluation, 118:8-32, 2018.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p><a class="reference external" href="https://github.com/birdepy/birdepy_project/blob/main/src/birdepy/probability_uniform.py">[View birdepy.probability(method=”uniform”) source code]</a></p>

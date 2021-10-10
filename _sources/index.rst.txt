@@ -11,6 +11,10 @@ You may also need to install some dependencies (listed below).
 
 `BirDePy` is developed on Github, the source code is found `here <https://github.com/birdepy/birdepy_project/tree/main/src/birdepy>`_. 
 
+The package is also described in detail in [HautphennePatch2021a]_, which can be downloaded `here <https://github.com/birdepy/paper/blob/main/birdepy.pdf>`_. If you use BirDePy for published research, then please cite this paper.
+
+If you use our new piecewise approximation simulation algorithm, then please also cite our paper [HautphennePatch2021b]_, which can be downloaded `here <https://github.com/birdepy/paper/blob/main/psdbdp_simulation.pdf>`_. 
+
 Usage Example 
 -------------
 Suppose we are interested in the susceptible-infective-susceptible model. This is the Verhulst model with rate of spread given by :math:`\gamma`, recovery rate given by :math:`\nu`, population size given by :math:`1/\alpha` and :math:`\beta=0`: ::
@@ -82,6 +86,7 @@ It looks like this:
 
 The confidence intervals contain future mean behavior with high probability. 
 
+
 Dependency List
 ---------------
 Required:
@@ -91,7 +96,6 @@ Required:
 * ``scipy``
 * ``matplotlib``
 * ``gwr_inversion``
-* ``scikit-learn``
 
 Optional:
 
@@ -102,9 +106,9 @@ Optional:
    :caption: Theoretical Background
     
    processes
+   simulation
    probabilities
    estimation
-   simulation
    forecasting
 
 .. toctree::
@@ -129,10 +133,6 @@ Optional:
    release_notes
 
 
+.. [HautphennePatch2021a] Hautphenne, S., and Patch, B., (2021). Birth-and-death Processes in Python: The BirDePy Package. 
 
-Further reading
----------------
-The package is also described in detail in [HautphennePatch2021]_ . If you use BirDePy for published research, then please cite this paper.
-
-
-.. [HautphennePatch2021] Hautphenne, S. and Patch, B., 2021. BirDePy: Parameter estimation for population-size-dependent birth-and-death processes in Python. 
+.. [HautphennePatch2021b] Hautphenne, S. and Patch, B., 2021. Simulating population-size-dependent birth-and-death processes using CUDA and piecewise approximations. In *Proceedings of the International Congress on Modelling and Simulation 2021*. (to appear)

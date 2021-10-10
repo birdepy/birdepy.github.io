@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
@@ -33,13 +35,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/clipboard.min.js"></script>
-        <script type="text/javascript" src="_static/copybutton.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -258,8 +259,8 @@
 <p>Contributors: Sophie Hautphenne and Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Substantial revision to the ABC algorithm in <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code>.</li>
-<li>Minor changes to examples throughout.</li>
+<li><p>Substantial revision to the ABC algorithm in <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code>.</p></li>
+<li><p>Minor changes to examples throughout.</p></li>
 </ol>
 </div>
 <div class="section" id="id2">
@@ -268,11 +269,11 @@
 <p>Contributors: Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Provided docstrings for all functions, added more comments throughout codebase, and changed the formatting of examples inside docstrings so that they have a copy button on the website.</li>
-<li>Fixed a bug in <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.discrete()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.probability()</span></code> where the default seed was set to 1 instead of chosen randomly.</li>
-<li>Model ‘Poisson’ is now treated the same as other models in all functions.</li>
-<li>Fixed a bug where models with exactly 1 unknown parameter had standard error reported as an array inside of a list instead of as a list.</li>
-<li>Fixed a bug where attempting to compute the carrying capacity for models where this does not exist would throw an exception. Instead a nan is returned for this attribute in the output.</li>
+<li><p>Provided docstrings for all functions, added more comments throughout codebase, and changed the formatting of examples inside docstrings so that they have a copy button on the website.</p></li>
+<li><p>Fixed a bug in <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.discrete()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.probability()</span></code> where the default seed was set to 1 instead of chosen randomly.</p></li>
+<li><p>Model ‘Poisson’ is now treated the same as other models in all functions.</p></li>
+<li><p>Fixed a bug where models with exactly 1 unknown parameter had standard error reported as an array inside of a list instead of as a list.</p></li>
+<li><p>Fixed a bug where attempting to compute the carrying capacity for models where this does not exist would throw an exception. Instead a nan is returned for this attribute in the output.</p></li>
 </ol>
 </div>
 <div class="section" id="id3">
@@ -281,7 +282,7 @@
 <p>Contributors: Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Added parameter <cite>tau</cite> as a kwarg for <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> when <cite>method</cite> is set to ‘sim’.</li>
+<li><p>Added parameter <cite>tau</cite> as a kwarg for <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a> when <cite>method</cite> is set to ‘sim’.</p></li>
 </ol>
 </div>
 <div class="section" id="id4">
@@ -290,7 +291,7 @@
 <p>Contributors: Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Added scikit-learn&gt;=0.24.2 to requirements.txt.</li>
+<li><p>Added scikit-learn&gt;=0.24.2 to requirements.txt.</p></li>
 </ol>
 </div>
 <div class="section" id="id5">
@@ -299,26 +300,26 @@
 <p>Contributors: Sophie Hautphenne and Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Added gwr-inversion to requirements.txt.</li>
-<li>Changed where gwr-inversion is imported.</li>
-<li>Ensured that <code class="xref py py-func docutils literal notranslate"><span class="pre">np.ix_()</span></code> receives arrays containing np.int32 objects.</li>
-<li>Fixed a bug in the GPU version of the Verhulst model.</li>
-<li>Attribute se of the output of <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code> is now a list instead of an array.</li>
-<li>Simulation based standard errors and confidence intervals now use the estimated parameter as the initial condition for the optimisation procedure.</li>
-<li>Improved how having a terminal state equal to 0 is handled by <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.probability(method='gwasa')()</span></code>.</li>
-<li>Made it so an a value equal to 0 raises an exception in probability.gwasa.w_fun so that the high precision version of the function is invoked.</li>
-<li>Updated how constraints are handled when differential evolution is used as an optimizer. Constraints are now always specified as dictionaries.</li>
-<li>When polishing is used to enhance the output of differential evolution (which is the default action) it is done using method ‘SLSQP’ of <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.minimize()</span></code> instead of method ‘trust-constr’ (which causes problems in other parts of the package).</li>
-<li>Added the parameter ‘stat’ to the ABC algorithm so that ‘mean’ or ‘median’ can be used as a summary statistics for the posterior distribution.</li>
-<li>Transition probability approximation methods ‘gwa’ and ‘gwasa’ now use a midpoint to anchor the linear approximation underlying their output.</li>
-<li>Fixed a bug in <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.forecast()</span></code> related to displaying xticks.</li>
-<li>Changed the default labels of x and y axis in bd.forecast().</li>
-<li>Added the ‘export’ parameter to <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.forecast()</span></code> which allows plots to be exported as tex files.</li>
-<li>Removed a constant from the distance function in <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate(framework='abc')()</span></code>.</li>
-<li>Renamed <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.discrete_gpu()</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.discrete()</span></code>.</li>
-<li>Renamed <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.probability_gpu()</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.probability()</span></code>.</li>
-<li>Renamed attribute ‘err’ of <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code>’s output to ‘val’.</li>
-<li>Renamed argument ‘num_bs_samples’ of <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code> to ‘num_samples’.</li>
+<li><p>Added gwr-inversion to requirements.txt.</p></li>
+<li><p>Changed where gwr-inversion is imported.</p></li>
+<li><p>Ensured that <code class="xref py py-func docutils literal notranslate"><span class="pre">np.ix_()</span></code> receives arrays containing np.int32 objects.</p></li>
+<li><p>Fixed a bug in the GPU version of the Verhulst model.</p></li>
+<li><p>Attribute se of the output of <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code> is now a list instead of an array.</p></li>
+<li><p>Simulation based standard errors and confidence intervals now use the estimated parameter as the initial condition for the optimisation procedure.</p></li>
+<li><p>Improved how having a terminal state equal to 0 is handled by <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.probability(method='gwasa')()</span></code>.</p></li>
+<li><p>Made it so an a value equal to 0 raises an exception in probability.gwasa.w_fun so that the high precision version of the function is invoked.</p></li>
+<li><p>Updated how constraints are handled when differential evolution is used as an optimizer. Constraints are now always specified as dictionaries.</p></li>
+<li><p>When polishing is used to enhance the output of differential evolution (which is the default action) it is done using method ‘SLSQP’ of <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.minimize()</span></code> instead of method ‘trust-constr’ (which causes problems in other parts of the package).</p></li>
+<li><p>Added the parameter ‘stat’ to the ABC algorithm so that ‘mean’ or ‘median’ can be used as a summary statistics for the posterior distribution.</p></li>
+<li><p>Transition probability approximation methods ‘gwa’ and ‘gwasa’ now use a midpoint to anchor the linear approximation underlying their output.</p></li>
+<li><p>Fixed a bug in <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.forecast()</span></code> related to displaying xticks.</p></li>
+<li><p>Changed the default labels of x and y axis in bd.forecast().</p></li>
+<li><p>Added the ‘export’ parameter to <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.forecast()</span></code> which allows plots to be exported as tex files.</p></li>
+<li><p>Removed a constant from the distance function in <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate(framework='abc')()</span></code>.</p></li>
+<li><p>Renamed <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.discrete_gpu()</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.discrete()</span></code>.</p></li>
+<li><p>Renamed <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.probability_gpu()</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">bdg.probability()</span></code>.</p></li>
+<li><p>Renamed attribute ‘err’ of <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code>’s output to ‘val’.</p></li>
+<li><p>Renamed argument ‘num_bs_samples’ of <code class="xref py py-func docutils literal notranslate"><span class="pre">bd.estimate()</span></code> to ‘num_samples’.</p></li>
 </ol>
 </div>
 <div class="section" id="id6">
@@ -327,7 +328,7 @@
 <p>Contributors: Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Replaced iltcme.json with iltcme.py to fix a bug where iltcme.json would not load properly</li>
+<li><p>Replaced iltcme.json with iltcme.py to fix a bug where iltcme.json would not load properly</p></li>
 </ol>
 </div>
 <div class="section" id="id7">
@@ -336,9 +337,9 @@
 <p>Contributors: Sophie Hautphenne and Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Many bug fixes.</li>
-<li>Added basic readme.</li>
-<li>Substantial revision of bd.forecast() function.</li>
+<li><p>Many bug fixes.</p></li>
+<li><p>Added basic readme.</p></li>
+<li><p>Substantial revision of bd.forecast() function.</p></li>
 </ol>
 </div>
 <div class="section" id="id8">
@@ -347,8 +348,8 @@
 <p>Contributors: Sophie Hautphenne and Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Many bug fixes.</li>
-<li>This version was not uploaded to PyPI.</li>
+<li><p>Many bug fixes.</p></li>
+<li><p>This version was not uploaded to PyPI.</p></li>
 </ol>
 </div>
 <div class="section" id="id9">
@@ -357,7 +358,7 @@
 <p>Contributors: Sophie Hautphenne and Brendan Patch</p>
 <p>Notes:</p>
 <ol class="arabic simple">
-<li>Initial release for testing</li>
+<li><p>Initial release for testing</p></li>
 </ol>
 </div>
 </div>

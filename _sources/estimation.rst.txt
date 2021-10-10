@@ -17,7 +17,7 @@ Let :math:`p_{i,j}(t;\boldsymbol\theta) = \mathbb P(Z(t)=j \mid Z(0)=i)`.
 To obtain parameter estimates in BirDePy simply call :ref:`birdepy.estimate()` (after importing BirDePy). For example, to estimate the parameters of the 'Ricker' model from yearly population census data corresponding to black robin females on the Chatham Islands who survived up to at least 1 year in the years 1972 to 1998: :: 
 
 	import birdepy as bd
-	t_data = [t for t in range(1972, 1999, 1)]
+	t_data = list(range(1972, 1999, 1))
 	p_data = [1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 6, 6, 9, 11, 15, 17, 27, 37, 44, 44, 
 	          44, 62, 60, 70, 75, 79, 86]
 	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10],[0,10], [0.5, 10]], 
@@ -53,120 +53,96 @@ See :ref:`birdepy.estimate(framework='dnm')` for the implementation of this meth
 
 Expectation Maximization
 ^^^^^^^^^^^^^^^^^^^^^^^^
-Let :math:`\boldsymbol y = (Z(t), [0,T])` denote the data if continuous observation of :math:`Z` is possible over an observation period of length :math:`T`. 
-Call :math:`\boldsymbol y` the 'complete data', in contrast to :math:`\boldsymbol z` which is the 'observed' or 'incomplete' data. 
-The log-likelihood of the complete data is
+Another way to find maximum likelihood estimates is to treat each unobserved path of :math:`Z` between times :math:`t_{i-1,k}` and :math:`t_{i,k}` as 'missing data', and use the EM algorithm of [Dempster1977]_. 
+The EM algorithm is an iterative procedure where each iteration consists of an 'E-step' and an 'M-step'.  
+The 'E-step' is concerned with the computation of the expected value of the log-likelihood function for continuously-observed PSDBDPs, conditional on the current iteration's parameter estimate :math:`\boldsymbol \theta` and on the discretely-observed data :math:`\boldsymbol z`.
+In the 'M-step', this expectation is then maximized to obtain a new parameter estimate. 
 
-.. math::
+The log-likelihood function for continuously observed PSDBDPs depends only on the sufficient statistics :math:`U_z`, :math:`D_z` and :math:`H_z`, which respectively represent the number of births and deaths whilst in state :math:`z` and the total cumulative time spent in state :math:`z`.  
+Given a pair of observations :math:`Z(0)=i` and :math:`Z(t)=j` of a birth-and-death process, it is well known that 
 
-	\tilde\ell(\boldsymbol y ; \boldsymbol \theta) = \sum_{z=0}^\infty U_z(T)\log(\lambda_z(\boldsymbol\theta))+D_z(T)\log(\mu_z(\boldsymbol\theta)) - (\lambda_z(\boldsymbol\theta) + \mu_z(\boldsymbol\theta))H_z(T),
+	.. math::
 
-where :math:`U_z(T)` and :math:`D_z(T)` are respectively the number of births and deaths whilst in state :math:`z` and :math:`H_z(T)` is the total time spent (holding) in state :math:`z`. 
-BirDePy is primarily focused on the setting where :math:`\boldsymbol y` is not observed, only :math:`{\boldsymbol z}` is accessible, so :math:`U_z(T)`, :math:`D_z(T)` and :math:`H_z(T)` are unknown. 
-Given a pair of observations :math:`Z(0) = z_{i-1, j}` and :math:`Z(\Delta_{i,j})=z_{i,j}`, if the parameters have values :math:`\boldsymbol\theta`, then
+		u_{z;i;j}(t; \boldsymbol\theta) &:= \mathbb E[U_z \mid Z(0) = i, Z(t) = j] = \frac{\int_0^t~p_{i,z}(s)~\lambda_z~p_{z+1,j}(t-s) d s}{p_{i,j}(t)},\\
+		%%
+		d_{z;i;j}(t; \boldsymbol\theta) &:= \mathbb E[D_z \mid Z(0) = i, Z(t) = j] = \frac{\int_0^{t}~p_{i,z}(s)~\mu_z~p_{z-1,j}(t-s)d s}{p_{i,j}(t)},\\
+		%%
+		h_{z;i;j}(t; \boldsymbol\theta) &:= \mathbb E[H_z \mid Z(0) = i, Z(t) = j]  = \frac{\int_0^{t}~p_{i,z}(s)~p_{z,j}(t-s)d s}{p_{i,j}(t)},
 
-.. math::
+where :math:`\lambda_z`, :math:`\mu_z` and :math:`p_{i,j}(t)` implicitly depend on :math:`\boldsymbol\theta`. 
+The conditional expected value of the log-likelihood function for continuously-observed PSDBDPs is 
 
-	u_{z,i,j}(\boldsymbol\theta) &= \mathbb E[U_z(\Delta_{i,j})\mid Z(0) = z_{i,j}, Z(\Delta_{i,j}) = z_{i-1,j}] = \frac{\int_0^{\Delta_{i,j}}~p_{z_{i-1,j},z}(t;\boldsymbol\theta)~\lambda_z(\boldsymbol\theta)~p_{z+1,z_{i,j}}(\Delta_{i,j}-t;\boldsymbol\theta) d t}{p_{z_{i-1,j},z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)},\\
-	%%
-	d_{z,i,j}(\boldsymbol\theta) &= \mathbb E[D_z(\Delta_{i,j})\mid Z(0) = z_{i-1,j}, Z(\Delta_{i,j}) = z_{i,j}] = \frac{\int_0^{\Delta_{i,j}}~p_{z_{i-1,j},z}(t;\boldsymbol\theta)~\mu_z(\boldsymbol\theta)~p_{z-1,z_{i,j}}(\Delta_{i,j}-t;\boldsymbol\theta)d t}{p_{z_{i-1,j},z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)},\\
-	%%
-	h_{z,i,j}(\boldsymbol\theta) &= \mathbb E[H_z(\Delta_{i,j})\mid Z(0) = z_{i-1,j}, Z(\Delta_{i,j}) = z_{i,j}]  = \frac{\int_0^{\Delta_{i,j}}~p_{z_{i-1,j},z}(t;\boldsymbol\theta)~p_{z,z_{i,j}}(\Delta_{i,j}-t;\boldsymbol\theta)d t}{p_{z_{i-1,j},z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)}.
+	.. math::
+
+		f(\boldsymbol \theta',~\boldsymbol \theta) &= \mathbb E[\tilde\ell(\boldsymbol y;\boldsymbol \theta')\mid\boldsymbol z, \boldsymbol \theta]\\
+		&= \sum_{k=1}^m\sum_{i=1}^{n_k}\sum_{z=0}^\infty \Big\{u_{z;z_{i-1,k};z_{i,k}}(\Delta_{i,k}; \boldsymbol\theta)\log(\lambda_z(\boldsymbol\theta'))+ d_{z;z_{i-1,k};z_{i,k}}(\Delta_{i,k};\boldsymbol\theta)\log(\mu_z(\boldsymbol\theta')) -\big(\lambda_z(\boldsymbol\theta')+\mu_z(\boldsymbol\theta')\big)h_{z;z_{i-1,k};z_{i,k}}(\Delta_{i,k};\boldsymbol\theta) \Big\}.
 
 
-With this in hand the 'surrogate likelihood function' for parameter values :math:`\boldsymbol \theta'` conditional on parameter values :math:`\boldsymbol \theta` and data :math:`\boldsymbol z` can be defined as
-
-.. math::
-
-	f(\boldsymbol \theta', \boldsymbol \theta) &= \mathbb E[\tilde\ell(\boldsymbol y;\boldsymbol \theta' )\mid\boldsymbol z, \boldsymbol \theta]\\
-	 &= \sum_{j=1}^{m}\sum_{i=1}^{n_j}\sum_{z=0}^\infty \Big\{u_{z,i,j}(\boldsymbol\theta)\log(\lambda_z(\boldsymbol\theta'))+ d_{z,i,j}(\boldsymbol\theta)\log(\mu_z(\boldsymbol\theta')) - \big(\lambda_z(\boldsymbol\theta') + \mu_z(\boldsymbol\theta')\big)h_{z,i,j}(\boldsymbol\theta) \Big\},
-
-where :math:`u_{z,i,j}(\boldsymbol\theta) = u(z,z_{i-1,j},z_{i,j},\Delta_{i,j},\boldsymbol\theta^{(k)})`, :math:`d_{z,i,j}(\boldsymbol\theta) = d(z,z_{i-1,j},z_{i,j},\Delta_{i,j},\boldsymbol\theta^{(k)})` and :math:`h_{z,i,j}(\boldsymbol\theta) = h(z,z_{i-1,j},z_{i,j},\Delta_{i,j},\boldsymbol\theta^{(k)})`.
-
-Formulating this function constitutes the 'E' step of the EM algorithm. 
-Below we detail three `techniques` for performing this task (i.e., computing the integrals above) which are implemented in :func:`birdepy.estimate()`. 
-The 'M' step of the EM algorithm consists of finding 
-
-.. math::
-
-	\boldsymbol \theta^{(k+1)} = \text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta', \boldsymbol \theta^{(k)}).
-	
-Beginning with arbitrary :math:`\boldsymbol \theta^{(0)}` the estimate follows from repeating this mapping until :math:`|\boldsymbol \theta^{(k+1)}-\boldsymbol \theta^{(k)}|` is small or a maximum number of iterations has taken place. 
+Starting with an arbitrary vector :math:`\boldsymbol \theta^{(0)}`, an EM algorithm estimate follows from repeating :math:`\boldsymbol \theta^{(k+1)} = \text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta',~\boldsymbol \theta^{(k)})`, until :math:`|\boldsymbol \theta^{(k+1)}-\boldsymbol \theta^{(k)}|` is small or a maximum number of iterations has taken place. 
 
 See :ref:`birdepy.estimate(framework='em')` for the implementation of this method in :func:`birdepy.estimate()`. 
 The implementation has two important options `technique` and `accelerator`. 
 
 Expectation Step Techniques
 ---------------------------
-As discussed on the transition probability page, it is possible to compute probability transitions in terms of :ref:`matrix exponentials <Matrix exponential>`. 
-This provides :math:`P(t; \boldsymbol \theta) = \big(p_{i,j}(t;\boldsymbol\theta); i,j\in\mathcal S\big)= \exp\big(Q(\boldsymbol \theta)t\big)`. 
-Let :math:`\boldsymbol e_i` be the :math:`i`-th basis vector, then
 
-.. math::
+The integrals displayed above need to be computed in order to use the EM algorithm just described. 
+A first possible way to do this is to simply use any of the methods from the :ref:`Transition Probabilities` page to evaluate the transition probability functions :math:`p_{i,j}(t)`, and then compute the integrals numerically using, for example, the trapezoidal rule. 
+Upon choosing to compute :math:`p_{i,j}(t)` using the matrix exponential method or the inverse Laplace transform method, more sophisticated approaches are available, as we briefly describe in the next two paragraphs.
 
-	\int_0^t p_{b,j}(t-s;\boldsymbol\theta) p_{i,a}(s;\boldsymbol\theta) d s = \boldsymbol e_{b+1} \int_0^t \exp\big(Q(\boldsymbol \theta)(t-s)\big) \boldsymbol e_{j+1}^\top\boldsymbol e_{i+1} \exp\big(Q(\boldsymbol \theta)s\big) d s \boldsymbol e_{a+1}^\top.
+Recalling :math:`P(t)= \exp(Qt)` (which requires numerical approximation), upon defining :math:`\boldsymbol e_i` as the :math:`i`-th basis vector in :math:`(|\mathcal S|+1)`-dimensional euclidean space, for any :math:`a,b,i,j\in\mathcal S`, we can write
 
-Let :math:`G(t) = \int_0^t \exp\big(Q(\boldsymbol \theta)(t-s)\big) \boldsymbol e_{j+1}\boldsymbol e_{i+1} \exp\big(Q(\boldsymbol \theta)s\big) d s`. 
-According to [vanLoan1978]_ if 
+	.. math ::
 
-.. math::
+		\int_0^t p_{i,a}(s) ~p_{b,j}(t-s) d s = \boldsymbol e_{i} \int_0^t \exp(Qs) ~\boldsymbol e_{a}^\top\boldsymbol e_{b}~ \exp(Q(t-s)) d s\, \boldsymbol e_{j}^\top.
 
-	C = \begin{bmatrix}
-			Q(\boldsymbol \theta) & \boldsymbol e_{j+1}^\top\boldsymbol e_{i+1}\\
-			0 & Q(\boldsymbol \theta)
+Let :math:`G(t) = \int_0^t \exp(Qs) ~\boldsymbol e_{a}^\top\boldsymbol e_{b}~ \exp(Q(t-s)) d s`. 
+According to [vanLoan1978]_, if 
+
+	.. math ::
+
+		C := \begin{bmatrix}
+		Q & \boldsymbol e_{a}^\top \boldsymbol e_{b}\\
+		0 & Q
 		\end{bmatrix},
 
-then
+then 
 
-.. math:: 
+    .. math ::
 
-	\exp(Ct) = \begin{bmatrix}
-					\cdot & G(t)\\
-					\cdot & \cdot
-				\end{bmatrix},
+  		\exp(Ct) = \begin{bmatrix}
+        \cdot & G(t)\\
+        \cdot & \cdot
+        \end{bmatrix},
 
-where :math:`\cdot` denotes parts of the matrix that can be discarded. 
-Hence the relevant integrals can be computed by extracting the relevant parts of the matrix exponential :math:`\exp(Ct)`.
-This technique relies on :math:`Q(\boldsymbol \theta)` being truncated according to the argument of `z_trunc`. 
-To do this set the argument of `technique` to 'expm'. 
+where ':math:`\cdot`' denotes parts of the matrix that can be discarded.  
+Hence the integrals can be computed by extracting the relevant parts of the matrix exponential :math:`\exp(Ct)`.
 
-Let :math:`\mathcal L(f)` be the Laplace transform of the function :math:`f`, and :math:`\mathcal L^{-1}` be the inverse transform. 
-Let 
+On the other hand, if :math:`\mathcal L^{-1}` denotes the inverse of a Laplace transform :math:`\mathcal L`, then we also have
 
-.. math::
+	.. math ::
 
-	f_{i,j}(s; \boldsymbol\theta) = \mathcal L\left[p_{i,j}(t;\boldsymbol\theta)\right] = \int_0^\infty p_{i,j}(t;\boldsymbol\theta)e^{-st} d t
+		\int_0^{t}~p_{i,a}(s)~p_{b,j}(t-s) d s = \mathcal L^{-1}[f_{i,a}(s)~f_{b,j}(s)](t)
 
-be the Laplace transform of :math:`p_{i,j}(t;\boldsymbol\theta)`. 
-As discussed at length in [CrawfordEtAl2014]_, it follows from the properties of Laplace transforms that 
+by the properties of Laplace transforms. 
+Numerical Laplace transform inversion therefore provides a third technique for evaluating the integrals. 
+This approach is discussed by [CrawfordEtAl2014]_. 
 
-.. math::
+The `technique` option of :ref:`birdepy.estimate(framework='em')` can be used to switch between these alternative methods. 
 
-	\int_0^{t}~p_{i,a}(s;\boldsymbol\theta)~p_{b,j}(t-s;\boldsymbol\theta) d s &= \mathcal L^{-1}[f_{i,a}(s; \boldsymbol\theta)~f_{b,j}(s; \boldsymbol\theta)](t),\\
-
-The integrals can therefore be computed using numerical Laplace transform techniques (see `this website <https://www.inverselaplace.org/>`_ or the `mpmath package <https://mpmath.org/doc/current/calculus/inverselaplace.html>`_ or `this package <https://pypi.org/project/gwr-inversion/>`_). 
-To do this set the argument of `technique` to 'ilt'. 
-The function :func:`birdepy.estimate()` includes options for numerical Laplace inversion, as controlled by the argument to `laplace_method`. 
-
-Finally, the integrals can be approximated using numerical integration. To do this set the argument of `technique` to 'num'. 
 
 Acceleration
 ------------
-The EM algorithm can exhibit slow convergence, requiring many iterations before a suitably accurate estimate is provided.  
-Each iteration may itself require substantial computational time and effort due to requiring many matrix exponential, Laplace transform inversion or integration computations. 
+The EM algorithm can exhibit slow convergence, calling for many iterations before a suitably accurate estimate is provided.  
+Each iteration may itself use substantial computational time and effort due to requiring many matrix exponential computations, Laplace transform inversions, or numerical integration computations. 
 To mitigate this, several schemes have been developed to accelerate the convergence rate of EM algorithms. 
-Four such accelerators are currently availabe in :func:`birdepy.estimate()`, which are discussed in a general context in [JamshidianJennrich1997]_. 
-Using optimization based ideas, these accelerators can yield substantial improvements in computation speed. 
-Recalling :math:`f` from earlier, let 
+In [JamshidianJennrich1997]_, four such schemes are described in detail. 
+Using optimization-based ideas, these accelerators can yield substantial improvements in computational speed. 
+Recall :math:`f`, the surrogate likelihood function, and let :math:`\tilde {\boldsymbol g}(\boldsymbol\theta) = \big[\text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta', \boldsymbol \theta)\big] - \boldsymbol \theta`, which is the change in parameter values when a non-accelerated EM iteration is performed. 
+Loosely speaking, EM acceleration techniques treat :math:`\tilde {\boldsymbol g}` as a generalized derivative of the likelihood function and aim to find :math:`\boldsymbol \theta^\star` such that :math:`\tilde {\boldsymbol g}(\boldsymbol\theta^\star) = \boldsymbol 0`.
 
-.. math:: 
 
-	\tilde {\boldsymbol g}(\boldsymbol\theta) = \big[\text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta', \boldsymbol \theta)\big] - \boldsymbol \theta.
-
-This is the change in parameter values when a non-accelerated EM iteration is performed. 
-Loosely speaking, EM acceleration techniques treat :math:`\tilde g` as a generalized derivative of the likelihood function and aim to find :math:`\boldsymbol \theta^\star` such that :math:`\tilde {\boldsymbol g}(\boldsymbol\theta) = 0`. 
-In :func:`birdepy.estimate()` the argument of the kwarg `accelerator` determines which approach is used.  
-
+The `accelerator` option of :ref:`birdepy.estimate(framework='em')` can be used to switch between these alternative methods. 
 
 Least Squares Estimation
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -186,24 +162,29 @@ See :ref:`birdepy.estimate(framework='lse')` for the implementation of this meth
 
 Approximate Bayesian Computation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The frameworks dicussed so far have relied on using approximations to unknown model properties (specifically the likelihood and expectation). 
-Approximate Bayesian computation (ABC) bypasses the need to use these model properties in the first place. 
-This framework instead repeatedly compares simulated data with the observed data to find an approximation to the likelihood function. 
-Simulations are performed according to parameters :math:`\boldsymbol \theta` sampled from a prior distribution :math:`\pi(\cdot)`. 
-Simulated data :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` consists of points :math:`\hat{z}_{i,j}(\boldsymbol \theta)` generated using :func:`birdepy.simulate.discrete()` with the arguments of `param`, `z0` and `times` set respectively to :math:`\boldsymbol\theta`, :math:`z_{i-1,j}` and :math:`\Delta_{i,j}`. 
-Given a distance measure :math:`d`, the standard ABC method (as proposed in [PritchardEtAl1999]_) consists of repeating the steps:
+The methods discussed so far have relied on using approximations to model properties which have no explicit expression (specifically, the likelihood of the observed data, and the expectation of the population size). 
+ABC bypasses the need to use these model properties in the first place. 
+This method works by repeatedly comparing simulated data with the observed data to find an approximation to a distribution that characterizes uncertainty about the value of :math:`\boldsymbol\theta` (called the posterior distribution). 
+Given a distance measure :math:`d`, the standard ABC method (as proposed in [PritchardEtAl1999]_) consists of repeating the following steps:
 
-1. Generate a parameter proposal :math:`\boldsymbol \theta` from the prior :math:`\pi(\cdot)`.
-2. Simulate observations :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` according to :math:`\boldsymbol \theta`.
-3. Accept :math:`\boldsymbol \theta` as an approximate observation from the posterior if :math:`d(\boldsymbol z, \hat{\boldsymbol z}(\boldsymbol \theta)) < \epsilon`. 
+#. Generate a parameter proposal :math:`\boldsymbol \theta` from the prior distribution :math:`\pi`.
+#. Simulate observations :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` consisting of points :math:`\hat{z}_{i,k}` generated using :math:`\boldsymbol\theta` with initial conditions :math:`z_{i-1,k}` and elapsed times :math:`\Delta_{i,k}` (for :math:`k=1,\ldots,m`, :math:`i=1,\ldots,n_k`).
+#. Accept :math:`\boldsymbol \theta` as an approximate observation from the posterior distribution if :math:`d\big(\boldsymbol z, \hat{\boldsymbol z}(\boldsymbol \theta)\big) < \epsilon`, where :math:`\boldsymbol z` is the observed data and :math:`\epsilon` is a predetermined error tolerance threshold.
 
-The steps are repeated until `k` parameter proposals are accepted. 
-The parameter estimate is then the mean of the accepted parameter proposals. 
-In :func:`birdepy.estimate()` the default distance :math:`d` between observed data :math:`\boldsymbol z` and simulated data :math:`\hat{\boldsymbol z}(\boldsymbol \theta)` is computed as 
+These steps are repeated until an arbitrarily large number of parameter proposals are accepted. 
+A potentially suitable choice of :math:`d` is:
 
-.. math::
+	.. math ::
 
-	d(\boldsymbol z, \hat{\boldsymbol z}) = \sqrt{\sum_{j=1}^m\sum_{i=1}^{n_j} \big(z_{i,j}-\hat{z_{i,j}}(\boldsymbol \theta))\big)^2}. 
+		d(\boldsymbol z, \hat{\boldsymbol z}) = \sqrt{\sum_{k=1}^m\sum_{i=1}^{n_k} \big(z_{i,k}-\hat{z}_{i,k}(\boldsymbol \theta)\big)^2}. 
+
+The prior :math:`\pi` can simply be taken as a uniform distribution on the set of allowed parameters.  
+
+The choice of threshold :math:`\epsilon` in Step~3 above has a strong influence on the probability of a parameter proposal being accepted. 
+Larger choices of :math:`\epsilon` may allow the desired number of accepted parameter proposals to be found more quickly, but this could be at the expense of accuracy. 
+Similarly, the choice of the prior distribution :math:`\pi` has a major impact on performance. 
+To address these concerns, the standard ABC method can be applied iteratively with dynamically determined :math:`\epsilon` and :math:`\pi`. 
+In [SimolaEtAl2021]_ a method for adaptively selecting a threshold at each iteration by comparing the estimated posterior from the two previous iterations and the distances between the sampled data and the accepted parameter proposals in the previous iteration is proposed. 
 
 See below for instructions on how to use a customized distance function. 
 The prior :math:`\pi(\cdot)` is taken to be a uniform distribution on the set of parameters satisfying the arguments of `p_bounds` and `con`.  
@@ -433,15 +414,16 @@ Which displays: ::
 
 Contrast this with the erroneous results given when a non-global optimization algorithm is used (in the :ref:`Parameter Constraints` section). 
 
-.. [vanLoan1978] Van Loan, C., 1978. Computing integrals involving the matrix exponential. IEEE transactions on automatic control, 23(3), pp.395-404.
 
 
-.. [CrawfordEtAl2014] Crawford, F.W., Minin, V.N. and Suchard, M.A., 2014. Estimation for general birth-death processes. Journal of the American Statistical Association, 109(506), pp.730-747.
+.. [Dempster1977] Dempster, A. P., Laird, N. M., & Rubin, D. B. (1977). Maximum likelihood from incomplete data via the EM algorithm. *Journal of the Royal Statistical Society: Series B (Methodological)*, 39(1), 1-22.
 
-.. [JamshidianJennrich1997] Jamshidian, M. and Jennrich, R.I., 1997. Acceleration of the EM algorithm by using quasi‐Newton methods. Journal of the Royal Statistical Society: Series B (Statistical Methodology), 59(3), pp.569-587.
+.. [vanLoan1978] Van Loan, C., 1978. Computing integrals involving the matrix exponential. *IEEE Transactions on Automatic Control*, 23(3), pp.395-404.
 
-.. [PritchardEtAl1999] Pritchard, J.K., Seielstad, M.T., Perez-Lezaun, A. and Feldman, M.W., 1999. Population growth of human Y chromosomes: a study of Y chromosome microsatellites. Molecular biology and evolution, 16(12), pp.1791-1798.
+.. [CrawfordEtAl2014] Crawford, F.W., Minin, V.N. and Suchard, M.A., 2014. Estimation for general birth-death processes. *Journal of the American Statistical Association*, 109(506), pp.730-747.
 
-.. [BeaumontEtAl2009] Beaumont, M.A., Cornuet, J.M., Marin, J.M. and Robert, C.P., 2009. Adaptive approximate Bayesian computation. Biometrika, 96(4), pp.983-990.
+.. [JamshidianJennrich1997] Jamshidian, M. and Jennrich, R.I., 1997. Acceleration of the EM algorithm by using quasi‐Newton methods. *Journal of the Royal Statistical Society: Series B (Statistical Methodology)*, 59(3), pp.569-587.
 
-.. [MoralEtAl2012] Del Moral, P., Doucet, A. and Jasra, A., 2012. An adaptive sequential Monte Carlo method for approximate Bayesian computation. Statistics and computing, 22(5), pp.1009-1020.
+.. [PritchardEtAl1999] Pritchard, J. K., Seielstad, M. T., Perez-Lezaun, A., & Feldman, M. W. (1999). Population growth of human Y chromosomes: a study of Y chromosome microsatellites. Molecular biology and evolution, 16(12), 1791-1798.
+
+.. [SimolaEtAl2021] Simola, U., Cisewski-Kehe, J., Gutmann, M. U., & Corander, J. (2021). Adaptive approximate Bayesian computation tolerance selection. *Bayesian Analysis*, 16(2), 397-423.

@@ -1,15 +1,17 @@
 =========================
 Birth-and-death Processes
 =========================
+BirDePy is built for analyzing general `birth-and-death processes <https://en.wikipedia.org/wiki/Birth-and-death_process>`_. 
+These `continuous-time Markov chains <https://en.wikipedia.org/wiki/Continuous-time_Markov_chain>`_ (CTMCs) are widely used to study how the number of individuals in a population changes over time.
+Let :math:`Z(t)` denote the size of a population at time :math:`t\ge0`; the process :math:`Z\equiv (Z(t),\,t\ge0)` evolves on the state space :math:`\mathcal S = (0,1,\dots,N)`, where :math:`N` may be infinite. 
+We assume that the evolution of such a process is fully described by non-negative real-valued functions :math:`\lambda_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+`  and :math:`\mu_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+` of the current state :math:`z`; these functions are known as the population 'birth-rate' and  'death-rate, respectively. 
+The model has a finite number of real parameters recorded in the vector :math:`\boldsymbol\theta`. 
+When :math:`Z(t)=z`, the time until the process transitions to another state is exponentially distributed with mean :math:`(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))^{-1}` (where we define :math:`1/0=\infty`). 
+At a transition time from state :math:`z`, the process jumps to state :math:`z+1` with probability :math:`\lambda_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))`, or to state :math:`z-1` with probability :math:`\mu_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))`. 
 
-A `birth-and-death process <https://en.wikipedia.org/wiki/Birth-and-death_process>`_ :math:`(Z(t) : t \ge 0)` is a `continuous-time Markov chain evolving on <https://en.wikipedia.org/wiki/Continuous-time_Markov_chain>`_ :math:`\mathcal S = \{0,1,\dots,N\}`, where :math:`N` may be infinite, that tracks the number of individuals in a population.  
-The state transitions up by one when an individual is added to the population and transitions down by one when an individual is removed from the population.  
-The evolution of the process is governed by non-negative real valued functions of the current population size :math:`z` denoted by :math:`\lambda_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+` and :math:`\mu_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+`, which are parametrized by a finite set of real numbers denoted :math:`\boldsymbol\theta`.  
-When the process is in state :math:`z` the time until the process transitions to another state is exponentially distributed with mean :math:`(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))^{-1}` (where :math:`1/0=\infty`).  
-At a transition time from state :math:`z` the process transitions to state :math:`z+1` with probability :math:`\lambda_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))` or to state :math:`z-1` with probability :math:`\mu_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))`. 
-Some popular models, which are included by default in BirDePy, are listed in the table below. 
+As summarized below, we consider selected birth-and-death models of three types: (i) some variants of the linear BDP, (ii) some PSDBDPs, and (iii) some queueing models.  
 
-.. list-table:: Transition rates and parameters for :math:`z \ge 0`. 
+.. list-table:: Transition rates and parameters for :math:`z \geq 0`. Any rates which take on a negative value are modified to be equal to 0, and :math:`1_{\{A\}}` is the indicator of the event :math:`A`. When parameters are used in BirDePy they should be listed in the order they are given in the last column. 
    :widths: 18 20 20 25
    :header-rows: 1
 
@@ -17,6 +19,26 @@ Some popular models, which are included by default in BirDePy, are listed in the
      - :math:`\lambda_z(\boldsymbol\theta)`
      - :math:`\mu_z(\boldsymbol\theta)`
      - :math:`\boldsymbol\theta`
+   * - :code:`'linear'`
+     - :math:`\gamma z`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`
+   * - :code:`'linear-migration'`
+     - :math:`\gamma z + \alpha`
+     - :math:`\nu z`
+     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`
+   * - :code:`'pure-birth'`
+     - :math:`\gamma z`
+     - :math:`0`
+     - :math:`\gamma`
+   * - :code:`'pure-death'`
+     - :math:`0`
+     - :math:`\nu z`
+     - :math:`\nu`
+   * - :code:`'Poisson`
+     - :math:`\gamma`
+     - :math:`0`
+     - :math:`\gamma`
    * - :code:`'Verhulst'`
      - :math:`\gamma\left(1-\alpha z\right) z`
      - :math:`\nu\left(1+\beta z\right)z`
@@ -37,29 +59,9 @@ Some popular models, which are included by default in BirDePy, are listed in the
      - :math:`\frac{N-z}{N}\left(\alpha\frac{z}{N}(1-u) + \beta\frac{N-z}{N}v\right)`
      - :math:`\frac{z}{N}\left(\beta\frac{N-z}{N}(1-v) +\alpha\frac{z}{N}u\right)`
      - :math:`\alpha`, :math:`\beta`, :math:`u`, :math:`\nu`, :math:`N`
-   * - :code:`'pure-birth'`
-     - :math:`\gamma z`
-     - :math:`0`
-     - :math:`\gamma`
-   * - :code:`'pure-death'`
-     - :math:`0`
-     - :math:`\nu z`
-     - :math:`\nu`
-   * - :code:`'Poisson`
-     - :math:`\gamma`
-     - :math:`0`
-     - :math:`\gamma`
-   * - :code:`'linear'`
-     - :math:`\gamma z`
-     - :math:`\nu z`
-     - :math:`\gamma`, :math:`\nu`
-   * - :code:`'linear-migration'`
-     - :math:`\gamma z + \alpha`
-     - :math:`\nu z`
-     - :math:`\gamma`, :math:`\nu`, :math:`\alpha`
    * - :code:`'M/M/1'`
      - :math:`\gamma`
-     - :math:`\nu I\{z > 0\}`
+     - :math:`\nu I_\{z > 0\}`
      - :math:`\gamma`, :math:`\nu`
    * - :code:`'M/M/inf'`
      - :math:`\gamma`
@@ -69,8 +71,6 @@ Some popular models, which are included by default in BirDePy, are listed in the
      - :math:`\gamma I\{z < c\}`
      - :math:`\nu z`
      - :math:`\gamma`, :math:`\nu`, :math:`c`
-
-Note: :math:`I\{A\}` evaluates to 1 when :math:`A` is true and otherwise evaluates to 0. 
 
 
 Custom Models
