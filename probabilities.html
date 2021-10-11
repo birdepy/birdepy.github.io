@@ -290,7 +290,7 @@ Note that output is an array since it is possible to input initial and final pop
 <p>with <span class="math notranslate nohighlight">\(p_{i,i}(0) = 1\)</span> and <span class="math notranslate nohighlight">\(p_{i,j}(0)=0\)</span> for <span class="math notranslate nohighlight">\(j\ne i\)</span>.
 Let <span class="math notranslate nohighlight">\(Q\)</span> be the <em>generator</em> of <span class="math notranslate nohighlight">\(Z\)</span>, that is, the square matrix with diagonal entries <span class="math notranslate nohighlight">\(q_{i,i}=-(\lambda_i+\mu_i)\)</span>, upper diagonal entries <span class="math notranslate nohighlight">\(q_{i,i+1}=\lambda_i\)</span>, and lower diagonal entries <span class="math notranslate nohighlight">\(q_{i-1,i}=\mu_i\)</span> (and zeros elsewhere).
 Also collect the transition probabilities into a matrix <span class="math notranslate nohighlight">\(P(t) = \big(p_{i,j}(t); i,j\in\mathcal S\big)\)</span>.
-Then the equation above can be written in matrix form as :math:frac{d}{d t} P(t) = P(t)Q`.
+Then the equation above can be written in matrix form as <span class="math notranslate nohighlight">\(\frac{d}{d t} P(t) = P(t)Q\)</span>.
 When <span class="math notranslate nohighlight">\(Q\)</span> is finite it immediately follows that</p>
 <blockquote>
 <div><div class="math notranslate nohighlight">
@@ -300,7 +300,7 @@ When <span class="math notranslate nohighlight">\(Q\)</span> is finite it immedi
 </div>
 <div class="section" id="uniformization">
 <h2>Uniformization<a class="headerlink" href="#uniformization" title="Permalink to this headline">¶</a></h2>
-<p>Due to the special nature of the generator <span class="math notranslate nohighlight">\(Q\)</span> (specifically that it has non-negative off-diagonal entries and row-sums equal to 0), an alternative procedure known as <em>uniformization</em>, introduced by <a class="reference internal" href="#jensen1953" id="id1"><span>[Jensen1953]</span></a>, <span class="math notranslate nohighlight">\(P(t)\)</span>.
+<p>Due to the special nature of the generator <span class="math notranslate nohighlight">\(Q\)</span> (specifically that it has non-negative off-diagonal entries and row-sums equal to 0), an alternative procedure known as <em>uniformization</em>, introduced by <a class="reference internal" href="#jensen1953" id="id1"><span>[Jensen1953]</span></a>, is available for computing <span class="math notranslate nohighlight">\(P(t)\)</span>.
 Consider a discrete-time Markov chain (DTMC) with probability transition matrix <span class="math notranslate nohighlight">\(A:=Q/a+I\)</span>, where <span class="math notranslate nohighlight">\(a:=\max_z |\lambda_z+\mu_z|\)</span> when this exists (for example when <span class="math notranslate nohighlight">\(|\mathcal S|&lt;\infty\)</span>), and where <span class="math notranslate nohighlight">\(I\)</span> denotes the identity matrix of appropriate size.
 Suppose that this DTMC transitions at the event times of a Poisson process <span class="math notranslate nohighlight">\((N(t),~t\ge0)\)</span> with rate <span class="math notranslate nohighlight">\(a\)</span>.
 Using this construction, we can show that</p>
@@ -361,8 +361,8 @@ As first reported in <a class="reference internal" href="#murphy1975" id="id7"><
 <blockquote>
 <div><div class="math notranslate nohighlight">
 \[\begin{split}f_{i,j}(s) = \left\{ \begin{array}{ll}
-\left(\mathbb Prod_{k=j+1}^i\mu_k\right)\frac{B_j(s)}{B_{i+1}(s)+}\frac{B_i(s)\,a_{i+2}}{b_{i+2}(s)+}\frac{a_{i+3}}{b_{i+3}(s)+}\cdots, &amp; \text{for } j \le i,\\[0.5em]
-\left(\mathbb Prod_{k=i}^{j-1}\lambda_k\right) \frac{B_i(s)}{B_{j+1}(s)+}\frac{B_j(s)\,a_{j+1}}{b_{j+2}(s)+}\frac{a_{j+3}}{b_{j+3}(s)+}\cdots, &amp; \text{for } j \ge i,
+\left(\prod_{k=j+1}^i\mu_k\right)\frac{B_j(s)}{B_{i+1}(s)+}\frac{B_i(s)\,a_{i+2}}{b_{i+2}(s)+}\frac{a_{i+3}}{b_{i+3}(s)+}\cdots, &amp; \text{for } j \le i,\\[0.5em]
+\left(\prod_{k=i}^{j-1}\lambda_k\right) \frac{B_i(s)}{B_{j+1}(s)+}\frac{B_j(s)\,a_{j+1}}{b_{j+2}(s)+}\frac{a_{j+3}}{b_{j+3}(s)+}\cdots, &amp; \text{for } j \ge i,
 \end{array}\right.\end{split}\]</div>
 </div></blockquote>
 <p>where</p>
@@ -549,7 +549,7 @@ The proportion of these realisations which equal <span class="math notranslate n
 <dd><p>Ross, J. V., Pagendam, D. E., &amp; Pollett, P. K. (2009). On parameter estimation in population models II: multi-dimensional processes and transient dynamics. <em>Theoretical Population Biology</em>, 75(2-3), 123-132.</p>
 </dd>
 <dt class="label" id="allen2008"><span class="brackets"><a class="fn-backref" href="#id11">Allen2008</a></span></dt>
-<dd><p>Allen, L. J. (2008). An introduction to stochastic epidemic models. In <em>Mathematical epidemiology</em> (pp. 81-130). Springer, Berlin, Heidelberg.</p>
+<dd><p>Allen, L. J. (2008). An introduction to stochastic epidemic models. In <em>Mathematical Epidemiology</em> (pp. 81-130). Springer, Berlin, Heidelberg.</p>
 </dd>
 <dt class="label" id="rossetal2006"><span class="brackets"><a class="fn-backref" href="#id12">RossEtAl2006</a></span></dt>
 <dd><p>Ross, J. V., Taimre, T., &amp; Pollett, P. K. (2006). On parameter estimation in population models. <em>Theoretical Population Biology</em>, 70(4), 498-510.</p>

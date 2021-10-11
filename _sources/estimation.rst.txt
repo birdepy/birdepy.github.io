@@ -11,10 +11,9 @@ Sample times are passed to BirDePy as a list ``t_data`` of lists where sublists 
 Similarly, population observations ``p_data`` are also passed as a list of lists with populations at the corresponding observations times.  
 If only one sample path is observed, then the outer list is not necessary. 
 On this page denote the population observed at time :math:`t_{i,j}` as :math:`z_{i,j}` and the time between observations by :math:`\Delta_{i,j} = t_{i,j} - t_{i-1,j}`. 
-The collection of all the observations and their times is written :math:`\boldsymbol z`. 
-Let :math:`p_{i,j}(t;\boldsymbol\theta) = \mathbb P(Z(t)=j \mid Z(0)=i)`. 
+The collection of all the observations and their times is written :math:`\boldsymbol z`. Throughout this page :math:`p_{i,j}(t;\boldsymbol\theta) = \mathbb P(Z(t)=j \mid Z(0)=i)`. 
 
-To obtain parameter estimates in BirDePy simply call :ref:`birdepy.estimate()` (after importing BirDePy). For example, to estimate the parameters of the 'Ricker' model from yearly population census data corresponding to black robin females on the Chatham Islands who survived up to at least 1 year in the years 1972 to 1998: :: 
+To obtain parameter estimates in BirDePy simply call :ref:`birdepy.estimate()` (after importing BirDePy). For example, to estimate the parameters of the 'Ricker' model from yearly population census data corresponding to black robin females on The Chatham Islands who survived up to at least 1 year in the years 1972 to 1998: :: 
 
 	import birdepy as bd
 	t_data = list(range(1972, 1999, 1))
@@ -22,8 +21,8 @@ To obtain parameter estimates in BirDePy simply call :ref:`birdepy.estimate()` (
 	          44, 62, 60, 70, 75, 79, 86]
 	est = bd.estimate(t_data, p_data, [2]*4, [[0,10], [0,10],[0,10], [0.5, 10]], 
 	                  model='Ricker', se_type='asymptotic')
-	print('Parameter estimates are', est.p, 
-	      '. \nThe standard errors of these estimates are', est.se,
+	print(f'Parameter estimates are {est.p}. \n'
+	      f'The standard errors of these estimates are {est.se}.\n'
 	      '. \nThe carrying capacity is estimated as ', est.capacity[1],'.')
 
 Which displays: ::
@@ -189,11 +188,12 @@ In [SimolaEtAl2021]_ a method for adaptively selecting a threshold at each itera
 See below for instructions on how to use a customized distance function. 
 The prior :math:`\pi(\cdot)` is taken to be a uniform distribution on the set of parameters satisfying the arguments of `p_bounds` and `con`.  
 
+See :ref:`birdepy.estimate(framework='abc')` for the implementation of this method in :func:`birdepy.estimate()`. 
 
 Customized Distance
 -------------------
 The kwarg `distance` can be used to specify an alternative form for the distance function :math:`d`. 
-To do this a callable must be specified that takes as input a value of `epsilon` and a list of pairs :math:`[z_{i,j}, \hat{z_{i,j}}(\boldsymbol \theta)]` and returns a scalar. 
+To do this a callable must be specified that takes as input a value of `epsilon` and two lists corresponding to collections of :math:`z_{i,j}` and :math:`\hat{z_{i,j}}` and returns a scalar. 
 For example, to specify 
 
 .. math::
@@ -202,10 +202,7 @@ For example, to specify
 
 as a custom distance, first define a callable representing the distance: ::
 
-	def custom_distance(eps, data_pairs):
-	    data_pairs = np.array(data_pairs)
-	    dist = np.sqrt(np.sum(np.abs(data_pairs[:, 0] - data_pairs[:, 1])) / data_pairs.shape[0]) - eps
-	    return dist
+	def custom_distance(u, v): return np.mean(np.abs(np.array(u) - np.array(v)))
 
 Then call :ref:`birdepy.estimate(framework='abc')` with `distance` utilizing the callable: :: 
 

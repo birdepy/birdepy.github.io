@@ -35,7 +35,7 @@ The Kolmogorov forward equation for CTMCs provides the foundational property tha
 with :math:`p_{i,i}(0) = 1` and :math:`p_{i,j}(0)=0` for :math:`j\ne i`. 
 Let :math:`Q` be the *generator* of :math:`Z`, that is, the square matrix with diagonal entries :math:`q_{i,i}=-(\lambda_i+\mu_i)`, upper diagonal entries :math:`q_{i,i+1}=\lambda_i`, and lower diagonal entries :math:`q_{i-1,i}=\mu_i` (and zeros elsewhere). 
 Also collect the transition probabilities into a matrix :math:`P(t) = \big(p_{i,j}(t); i,j\in\mathcal S\big)`. 
-Then the equation above can be written in matrix form as :math:\frac{d}{d t} P(t) = P(t)Q`. 
+Then the equation above can be written in matrix form as :math:`\frac{d}{d t} P(t) = P(t)Q`. 
 When :math:`Q` is finite it immediately follows that 
 
 	.. math::
@@ -47,7 +47,7 @@ See :ref:`birdepy.probability(method='expm')` for the implementation of this met
 
 Uniformization
 ^^^^^^^^^^^^^^
-Due to the special nature of the generator :math:`Q` (specifically that it has non-negative off-diagonal entries and row-sums equal to 0), an alternative procedure known as *uniformization*, introduced by [Jensen1953]_, :math:`P(t)`.  
+Due to the special nature of the generator :math:`Q` (specifically that it has non-negative off-diagonal entries and row-sums equal to 0), an alternative procedure known as *uniformization*, introduced by [Jensen1953]_, is available for computing :math:`P(t)`.  
 Consider a discrete-time Markov chain (DTMC) with probability transition matrix :math:`A:=Q/a+I`, where :math:`a:=\max_z |\lambda_z+\mu_z|` when this exists (for example when :math:`|\mathcal S|<\infty`), and where :math:`I` denotes the identity matrix of appropriate size.
 Suppose that this DTMC transitions at the event times of a Poisson process :math:`(N(t),~t\ge0)` with rate :math:`a`. 
 Using this construction, we can show that 
@@ -119,8 +119,8 @@ As first reported in [Murphy1975]_ and detailed in [CrawfordSuchard2012]_, the L
 	.. math::
 
 		f_{i,j}(s) = \left\{ \begin{array}{ll}
-		\left(\mathbb Prod_{k=j+1}^i\mu_k\right)\frac{B_j(s)}{B_{i+1}(s)+}\frac{B_i(s)\,a_{i+2}}{b_{i+2}(s)+}\frac{a_{i+3}}{b_{i+3}(s)+}\cdots, & \text{for } j \le i,\\[0.5em]
-		\left(\mathbb Prod_{k=i}^{j-1}\lambda_k\right) \frac{B_i(s)}{B_{j+1}(s)+}\frac{B_j(s)\,a_{j+1}}{b_{j+2}(s)+}\frac{a_{j+3}}{b_{j+3}(s)+}\cdots, & \text{for } j \ge i,
+		\left(\prod_{k=j+1}^i\mu_k\right)\frac{B_j(s)}{B_{i+1}(s)+}\frac{B_i(s)\,a_{i+2}}{b_{i+2}(s)+}\frac{a_{i+3}}{b_{i+3}(s)+}\cdots, & \text{for } j \le i,\\[0.5em]
+		\left(\prod_{k=i}^{j-1}\lambda_k\right) \frac{B_i(s)}{B_{j+1}(s)+}\frac{B_j(s)\,a_{j+1}}{b_{j+2}(s)+}\frac{a_{j+3}}{b_{j+3}(s)+}\cdots, & \text{for } j \ge i,
 		\end{array}\right.
 
 where 
@@ -305,7 +305,7 @@ These methods are also described in detail in [HautphennePatch2021a]_, which can
 
 .. [RossEtAl2009] Ross, J. V., Pagendam, D. E., & Pollett, P. K. (2009). On parameter estimation in population models II: multi-dimensional processes and transient dynamics. *Theoretical Population Biology*, 75(2-3), 123-132.
 
-.. [Allen2008] Allen, L. J. (2008). An introduction to stochastic epidemic models. In *Mathematical epidemiology* (pp. 81-130). Springer, Berlin, Heidelberg.
+.. [Allen2008] Allen, L. J. (2008). An introduction to stochastic epidemic models. In *Mathematical Epidemiology* (pp. 81-130). Springer, Berlin, Heidelberg.
 
 .. [RossEtAl2006] Ross, J. V., Taimre, T., & Pollett, P. K. (2006). On parameter estimation in population models. *Theoretical Population Biology*, 70(4), 498-510.
 

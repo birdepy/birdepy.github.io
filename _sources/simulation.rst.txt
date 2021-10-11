@@ -38,6 +38,8 @@ Observe that :math:`t_j` has a different interpretation depending on whether con
 It is thought within the probability community that this *exact* approach to simulation of CTMCs was first considered by Joseph L. Doob and his collaborators around 1945. 
 To our knowledge, the first implementation on a computer is mentioned in [Kendall1950]_, and the algorithm was then popularized more widely in [Gillespie1977]_. 
 
+See :ref:`birdepy.simulate.discrete()` (with `method` set to 'exact') for an implementation of this algorithm. 
+
 :math:`\tau` leaping
 ^^^^^^^^^^^^^^^^^^^
 A well-known drawback of exact simulation algorithms is that they may take considerable computational time to produce sample paths. 
@@ -156,7 +158,7 @@ For example: ::
 	    print(bd.simulate.discrete(1, 'Poisson', 0, times=[10], seed=rng)[0])
 
 
-.. [Kendall1950] Kendall, D.G., 1950. An artificial realization of a simple" birth-and-death" process. *Journal of the Royal Statistical Society. Series B (Methodological)*, 12(1), pp.116-119.
+.. [Kendall1950] Kendall, D.G., 1950. An artificial realization of a simple "birth-and-death" process. *Journal of the Royal Statistical Society. Series B (Methodological)*, 12(1), pp.116-119.
 
 .. [Gillespie1977] Gillespie, D.T., 1977. Exact stochastic simulation of coupled chemical reactions. *The Journal of Physical Chemistry*, 81(25), pp.2340-2361.
 

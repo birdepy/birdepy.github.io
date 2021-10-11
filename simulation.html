@@ -298,6 +298,7 @@ Given an initial population size <span class="math notranslate nohighlight">\(z_
 <p>Observe that <span class="math notranslate nohighlight">\(t_j\)</span> has a different interpretation depending on whether continuous or discrete simulation is being performed.
 It is thought within the probability community that this <em>exact</em> approach to simulation of CTMCs was first considered by Joseph L. Doob and his collaborators around 1945.
 To our knowledge, the first implementation on a computer is mentioned in <a class="reference internal" href="#kendall1950" id="id1"><span>[Kendall1950]</span></a>, and the algorithm was then popularized more widely in <a class="reference internal" href="#gillespie1977" id="id2"><span>[Gillespie1977]</span></a>.</p>
+<p>See <a class="reference internal" href="api_simulate_discrete.html#birdepy-simulate-discrete"><span class="std std-ref">birdepy.simulate.discrete()</span></a> (with <cite>method</cite> set to ‘exact’) for an implementation of this algorithm.</p>
 </div>
 <div class="section" id="tau-leaping">
 <h2><span class="math notranslate nohighlight">\(\tau\)</span> leaping<a class="headerlink" href="#tau-leaping" title="Permalink to this headline">¶</a></h2>
@@ -432,7 +433,7 @@ For example:</p>
 </div>
 <dl class="citation">
 <dt class="label" id="kendall1950"><span class="brackets"><a class="fn-backref" href="#id1">Kendall1950</a></span></dt>
-<dd><p>Kendall, D.G., 1950. An artificial realization of a simple” birth-and-death” process. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, 12(1), pp.116-119.</p>
+<dd><p>Kendall, D.G., 1950. An artificial realization of a simple “birth-and-death” process. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, 12(1), pp.116-119.</p>
 </dd>
 <dt class="label" id="gillespie1977"><span class="brackets"><a class="fn-backref" href="#id2">Gillespie1977</a></span></dt>
 <dd><p>Gillespie, D.T., 1977. Exact stochastic simulation of coupled chemical reactions. <em>The Journal of Physical Chemistry</em>, 81(25), pp.2340-2361.</p>
