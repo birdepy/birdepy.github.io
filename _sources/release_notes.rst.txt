@@ -2,6 +2,16 @@
 Release Notes
 =============
 
+0.0.10
+^^^^^^
+Date: October 20 2021
+
+Contributors: Brendan Patch 
+
+Notes: 
+
+1. Updated docstrings with arXiv reference for our paper. 
+
 0.0.9
 ^^^^^
 Date: October 6 2021
