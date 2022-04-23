@@ -2,6 +2,16 @@
 Release Notes
 =============
 
+0.0.12
+^^^^^^
+Date: April 23 2022
+
+Contributors: Brendan Patch 
+
+Notes: 
+
+1. Update requirements.txt
+
 0.0.11
 ^^^^^^
 Date: April 23 2022
