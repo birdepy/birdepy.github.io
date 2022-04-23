@@ -2,6 +2,17 @@
 Release Notes
 =============
 
+0.0.11
+^^^^^^
+Date: April 23 2022
+
+Contributors: Brendan Patch 
+
+Notes: 
+
+1. Update utility_em.py with change in bound from [] to None when function a_opt id defined  to accomodate recent changes in SciPy.
+
+
 0.0.10
 ^^^^^^
 Date: October 20 2021
