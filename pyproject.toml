@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "docs"
+version = "0.1.0"
+description = ""
+authors = ["Brendan Patch <birdepy@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "3.10.12"
+birdepy = "0.0.26"
+numba = "0.57.1"
+sphinx = "^7.1.2"
+sphinx-rtd-theme = "^1.2.2"
+sphinx-copybutton = "^0.5.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

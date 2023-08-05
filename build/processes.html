@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birth-and-death Processes &mdash; BirDePy 0.0.10 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/Birdepy_favicon_3.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=d019515e"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Simulation Algorithms" href="simulation.html" />
+    <link rel="prev" title="BirDePy: Birth-and-death Processes in Python" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/Birdepy_logo_1_resized.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Birth-and-death Processes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-models">Custom Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact">Exact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping"><span class="math notranslate nohighlight">\(\tau\)</span> leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#midpoint-approximation">Midpoint approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="probabilities.html">Transition Probabilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#matrix-exponential">Matrix exponential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#uniformization">Uniformization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#erlangization">Erlangization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#inverse-laplace-transform">Inverse Laplace transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#diffusion-approximation">Diffusion approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#ornstein-uhlenbeck-approximation">Ornstein–Uhlenbeck approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="estimation.html">Parameter Estimation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#direct-numerical-maximization">Direct Numerical Maximization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#expectation-maximization">Expectation Maximization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#expectation-step-techniques">Expectation Step Techniques</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#acceleration">Acceleration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#least-squares-estimation">Least Squares Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#approximate-bayesian-computation">Approximate Bayesian Computation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="estimation.html#customized-distance">Customized Distance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#known-parameters">Known Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#parameter-constraints">Parameter Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#confidence-regions">Confidence Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#continuously-observed-data">Continuously Observed Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html#optimization-options">Optimization Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Functions API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_probability.html">birdepy.probability()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy.probability"><code class="docutils literal notranslate"><span class="pre">probability()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-da">birdepy.probability(method=’da’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_da.probability_da"><code class="docutils literal notranslate"><span class="pre">probability_da()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-erlang">birdepy.probability(method=’Erlang’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_Erlang.probability_Erlang"><code class="docutils literal notranslate"><span class="pre">probability_Erlang()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-expm">birdepy.probability(method=’expm’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_expm.probability_expm"><code class="docutils literal notranslate"><span class="pre">probability_expm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwa">birdepy.probability(method=’gwa’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_gwa.probability_gwa"><code class="docutils literal notranslate"><span class="pre">probability_gwa()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwasa">birdepy.probability(method=’gwasa’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_gwasa.probability_gwasa"><code class="docutils literal notranslate"><span class="pre">probability_gwasa()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-ilt">birdepy.probability(method=’ilt’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_ilt.probability_ilt"><code class="docutils literal notranslate"><span class="pre">probability_ilt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-oua">birdepy.probability(method=’oua’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_oua.probability_oua"><code class="docutils literal notranslate"><span class="pre">probability_oua()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-sim">birdepy.probability(method=’sim’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_sim.probability_sim"><code class="docutils literal notranslate"><span class="pre">probability_sim()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-uniform">birdepy.probability(method=’uniform’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_uniform.probability_uniform"><code class="docutils literal notranslate"><span class="pre">probability_uniform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_estimate.html">birdepy.estimate()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy.estimate"><code class="docutils literal notranslate"><span class="pre">estimate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-abc">birdepy.estimate(framework=’abc’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_abc.discrete_est_abc"><code class="docutils literal notranslate"><span class="pre">discrete_est_abc()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-dnm">birdepy.estimate(framework=’dnm’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_dnm.discrete_est_dnm"><code class="docutils literal notranslate"><span class="pre">discrete_est_dnm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em">birdepy.estimate(framework=’em’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_em.discrete_est_em"><code class="docutils literal notranslate"><span class="pre">discrete_est_em()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-lse">birdepy.estimate(framework=’lse’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_lse.discrete_est_lse"><code class="docutils literal notranslate"><span class="pre">discrete_est_lse()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-scheme-continuous">birdepy.estimate(scheme=’continuous’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_dnm.continuous_est_dnm"><code class="docutils literal notranslate"><span class="pre">continuous_est_dnm()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_discrete.html">birdepy.simulate.discrete()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete"><code class="docutils literal notranslate"><span class="pre">discrete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_continuous.html">birdepy.simulate.continuous()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous"><code class="docutils literal notranslate"><span class="pre">continuous()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_forecast.html">birdepy.forecast()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_forecast.html#birdepy.forecast"><code class="docutils literal notranslate"><span class="pre">forecast()</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">CUDA Functions API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_simulate.html">birdepy.gpu_functions.discrete()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_cuda_simulate.html#birdepy.gpu_functions.discrete"><code class="docutils literal notranslate"><span class="pre">discrete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_probabilities.html">birdepy.gpu_functions.probability()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_cuda_probabilities.html#birdepy.gpu_functions.probability"><code class="docutils literal notranslate"><span class="pre">probability()</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id8">0.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id9">0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id10">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id11">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id12">0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BirDePy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Birth-and-death Processes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/processes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="birth-and-death-processes">
+<h1>Birth-and-death Processes<a class="headerlink" href="#birth-and-death-processes" title="Permalink to this heading"></a></h1>
+<p>BirDePy is built for analyzing general <a class="reference external" href="https://en.wikipedia.org/wiki/Birth-and-death_process">birth-and-death processes</a>.
+These <a class="reference external" href="https://en.wikipedia.org/wiki/Continuous-time_Markov_chain">continuous-time Markov chains</a> (CTMCs) are widely used to study how the number of individuals in a population changes over time.
+Let <span class="math notranslate nohighlight">\(Z(t)\)</span> denote the size of a population at time <span class="math notranslate nohighlight">\(t\ge0\)</span>; the process <span class="math notranslate nohighlight">\(Z\equiv (Z(t),\,t\ge0)\)</span> evolves on the state space <span class="math notranslate nohighlight">\(\mathcal S = (0,1,\dots,N)\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> may be infinite.
+We assume that the evolution of such a process is fully described by non-negative real-valued functions <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+\)</span>  and <span class="math notranslate nohighlight">\(\mu_z(\boldsymbol\theta) : \mathcal S \to \mathbb R_+\)</span> of the current state <span class="math notranslate nohighlight">\(z\)</span>; these functions are known as the population ‘birth-rate’ and  ‘death-rate’, respectively.
+The model has a finite number of real parameters recorded in the vector <span class="math notranslate nohighlight">\(\boldsymbol\theta\)</span>.
+When <span class="math notranslate nohighlight">\(Z(t)=z\)</span>, the time until the process transitions to another state is exponentially distributed with mean <span class="math notranslate nohighlight">\((\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))^{-1}\)</span> (where we define <span class="math notranslate nohighlight">\(1/0=\infty\)</span>).
+At a transition time from state <span class="math notranslate nohighlight">\(z\)</span>, the process jumps to state <span class="math notranslate nohighlight">\(z+1\)</span> with probability <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))\)</span>, or to state <span class="math notranslate nohighlight">\(z-1\)</span> with probability <span class="math notranslate nohighlight">\(\mu_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))\)</span>.</p>
+<p>As summarized below, we consider selected birth-and-death models of three types: (i) some variants of the linear BDP, (ii) some PSDBDPs, and (iii) some queueing models.</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Transition rates and parameters for <span class="math notranslate nohighlight">\(z \geq 0\)</span>. Any rates which take on a negative value are modified to be equal to 0, and <span class="math notranslate nohighlight">\(1_{\{A\}}\)</span> is the indicator of the event <span class="math notranslate nohighlight">\(A\)</span>. When parameters are used in BirDePy they should be listed in the order they are given in the last column.</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model label</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol\theta)\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\mu_z(\boldsymbol\theta)\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\boldsymbol\theta\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">'linear'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">'linear-migration'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma z + \alpha\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">'pure-birth'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">'pure-death'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">'Poisson</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">'Verhulst'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\left(1-\alpha z\right) z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu\left(1+\beta z\right)z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">'Ricker'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma z \exp\left(-(\alpha z)^c \right)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">'Hassell'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\gamma z}{(1+\alpha z)^c}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">'MS-S</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{\gamma z}{1+ \left(\alpha z\right)^c}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>,  <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">'Moran'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{N-z}{N}\left(\alpha\frac{z}{N}(1-u) + \beta\frac{N-z}{N}v\right)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{z}{N}\left(\beta\frac{N-z}{N}(1-v) +\alpha\frac{z}{N}u\right)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, <span class="math notranslate nohighlight">\(u\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(N\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">'M/M/1'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu I_{\{z &gt; 0\}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">'M/M/inf'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">'loss-system'</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma I_{\{z &lt; c\}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\nu z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\gamma\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>, <span class="math notranslate nohighlight">\(c\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>A <em>linear</em> BDP models the evolution of a population in which individuals give birth and die independently of each other and of the current population size.
+The birth and death rates <em>per individual</em> are given by some strictly positive constants <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\nu\)</span>, respectively, leading to linear <em>population</em> birth and death rates <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol{\theta})=\gamma z\)</span> and <span class="math notranslate nohighlight">\(\mu_z(\boldsymbol{\theta})=\nu z\)</span>.
+If, in addition, individuals immigrate at rate <span class="math notranslate nohighlight">\(\alpha\)</span> into the population, the birth rate becomes <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol{\theta})=\gamma z+\alpha\)</span>.
+A pure birth process, also called <em>Yule</em> process, is obtained by setting the death rate <span class="math notranslate nohighlight">\(\nu\)</span> to zero, and a pure death process is obtained by setting the birth rate <span class="math notranslate nohighlight">\(\gamma\)</span> to zero.
+The <em>Poisson process</em> is a particular pure birth process in which the birth rate <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol{\theta})\)</span>, also called <em>arrival</em> rate, does not depend on the current population size <span class="math notranslate nohighlight">\(z\)</span>.</p>
+<p>In contrast to linear birth-and death processes, in a PSDBDP the birth and death rates per individual depend on the current population size <span class="math notranslate nohighlight">\(z\)</span>.
+This feature allows us to model competition for resources such as food or territory. The birth (respectively death) rate per individual is typically a decreasing (respectively increasing) function of <span class="math notranslate nohighlight">\(z\)</span>; this leads to <em>logistic growth</em> of the population (S-shaped trajectories), which tend to fluctuate around a threshold value called the <em>carrying capacity</em>.
+One of the most popular logistic models is the <em>Verhulst model</em>, which has been reinvented several times since it first appeared in 1838.
+In this model, the birth and death rates per individual are linear functions of <span class="math notranslate nohighlight">\(z\)</span>.
+The <em>Susceptible-Infectious-Susceptible</em> (SIS) <em>epidemic model</em> is a particular case of the Verhulst model with <span class="math notranslate nohighlight">\(\beta=0\)</span>, implying the death (recovery) rate per individual does not depend on <span class="math notranslate nohighlight">\(z\)</span>.
+Other classical models of logistic growth include the <em>Ricker model</em>, in which the birth rate decreases exponentially in <span class="math notranslate nohighlight">\(z\)</span>, and the <em>Hassell</em> and <em>MaynardSmith-Slatkin</em> (MS-S) models, in which the birth rate decreases according to a power law (here we assume that the death rate in these models is  independent of the population size).
+Despite the apparent similarity between the Hassell and the MS-S models, the MS-S model is thought by some to be more flexible and better descriptive form than the Hassell model.
+The particular case where <span class="math notranslate nohighlight">\(c=1\)</span>, called the <em>Beverton-Holt</em> (B-H) model, is also widely used, in particular as a model for exploited fish populations. Finally, the <em>Moran process</em> models the change in the numbers of particles of two types in a finite population of size $N$, where transitions between types occur at a rate proportional to the number of potential contacts between members of each type in a population; this is an important model for genetic evolution.</p>
+<p>In classical queueing models, the population birth rate <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol{\theta})\)</span> does not depend on <span class="math notranslate nohighlight">\(z\)</span>: births (arrivals) occur according to a point process, and once in the population (system), individuals queue to be served by one or multiple servers.
+The ‘M/M/1’ and ‘M/M/<span class="math notranslate nohighlight">\(\infty\)</span>’ queues have arrivals occurring according to a Poisson process and, respectively, a single server and an infinite number of servers (acting in parallel and independently).
+In a <em>loss system</em>, arrivals can only occur when the population is below a certain threshold value <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<section id="custom-models">
+<h2>Custom Models<a class="headerlink" href="#custom-models" title="Permalink to this heading"></a></h2>
+<p>It is possible to specify custom birth and death rates for the five core BirDePy functions. This is achieved by specifying the argument of <cite>model</cite> as ‘custom’ and passing as kwargs the callables <cite>b_rate</cite> and <cite>d_rate</cite>.  Each of these callables must take as input a population size ‘z’ and a list of parameters ‘p’, and respectively return scalars <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\mu\)</span> corresponding to the birth and death rates: <code class="docutils literal notranslate"><span class="pre">b_rate(z,</span> <span class="pre">p)</span> <span class="pre">-&gt;</span> <span class="pre">\lambda</span></code>, <code class="docutils literal notranslate"><span class="pre">d_rate(z,</span> <span class="pre">p)</span> <span class="pre">-&gt;</span> <span class="pre">\mu</span></code>.</p>
+<p>As an example we will consider a process with <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol\theta) = \gamma z\)</span> and <span class="math notranslate nohighlight">\(\mu_z(\boldsymbol\theta) = \nu z^2\)</span>.</p>
+<p>If not already done, first install BirDePy (as described <a class="reference internal" href="index.html#birdepy-birth-and-death-processes-in-python"><span class="std std-ref">here</span></a>).
+Then import BirDePy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+</pre></div>
+</div>
+<p>Now specify custom birth and death rates:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">custom_b_rate</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span> <span class="k">return</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span>
+<span class="k">def</span> <span class="nf">custom_d_rate</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span> <span class="k">return</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Suppose that <span class="math notranslate nohighlight">\(\gamma = 5\)</span>, <span class="math notranslate nohighlight">\(\nu = 0.5\)</span> and <span class="math notranslate nohighlight">\(Z(0)=10\)</span>. To simulate a trajectory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">obs_times</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">)]</span>
+<span class="n">pop_sizes</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">discrete</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="n">z0</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="n">obs_times</span><span class="p">,</span>
+                                 <span class="n">b_rate</span><span class="o">=</span><span class="n">custom_b_rate</span><span class="p">,</span> <span class="n">d_rate</span><span class="o">=</span><span class="n">custom_d_rate</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The trajectory can be plotted using Matplotlib:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">pop_sizes</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:purple&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Z(t)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<img alt="_images/custom_fig_1.png" src="_images/custom_fig_1.png" />
+<p>The parameters can then be estimated from the simulated sample path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p_bounds</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">obs_times</span><span class="p">,</span> <span class="n">pop_sizes</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">p_bounds</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span>
+                  <span class="n">b_rate</span><span class="o">=</span><span class="n">custom_b_rate</span><span class="p">,</span> <span class="n">d_rate</span><span class="o">=</span><span class="n">custom_d_rate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which displays the estimate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">7.029076385718105</span><span class="p">,</span> <span class="mf">0.6961996442136139</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="BirDePy: Birth-and-death Processes in Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simulation.html" class="btn btn-neutral float-right" title="Simulation Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Sophie Hautphenne and Brendan Patch.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

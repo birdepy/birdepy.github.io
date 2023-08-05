@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameter Estimation &mdash; BirDePy 0.0.10 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/Birdepy_favicon_3.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=d019515e"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Forecasting" href="forecasting.html" />
+    <link rel="prev" title="Transition Probabilities" href="probabilities.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/Birdepy_logo_1_resized.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Theoretical Background</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="processes.html">Birth-and-death Processes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processes.html#custom-models">Custom Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#exact">Exact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#tau-leaping"><span class="math notranslate nohighlight">\(\tau\)</span> leaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#midpoint-approximation">Midpoint approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#reproducibility">Reproducibility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="probabilities.html">Transition Probabilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#matrix-exponential">Matrix exponential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#uniformization">Uniformization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#erlangization">Erlangization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#inverse-laplace-transform">Inverse Laplace transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#diffusion-approximation">Diffusion approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#ornstein-uhlenbeck-approximation">Ornstein–Uhlenbeck approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#galton-watson-approximation">Galton–Watson approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probabilities.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter Estimation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#direct-numerical-maximization">Direct Numerical Maximization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expectation-maximization">Expectation Maximization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#expectation-step-techniques">Expectation Step Techniques</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acceleration">Acceleration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#least-squares-estimation">Least Squares Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#approximate-bayesian-computation">Approximate Bayesian Computation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#customized-distance">Customized Distance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#known-parameters">Known Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-constraints">Parameter Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#confidence-regions">Confidence Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#continuously-observed-data">Continuously Observed Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimization-options">Optimization Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="forecasting.html">Forecasting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Core Functions API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_probability.html">birdepy.probability()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy.probability"><code class="docutils literal notranslate"><span class="pre">probability()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-da">birdepy.probability(method=’da’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_da.probability_da"><code class="docutils literal notranslate"><span class="pre">probability_da()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-erlang">birdepy.probability(method=’Erlang’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_Erlang.probability_Erlang"><code class="docutils literal notranslate"><span class="pre">probability_Erlang()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-expm">birdepy.probability(method=’expm’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_expm.probability_expm"><code class="docutils literal notranslate"><span class="pre">probability_expm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwa">birdepy.probability(method=’gwa’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_gwa.probability_gwa"><code class="docutils literal notranslate"><span class="pre">probability_gwa()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-gwasa">birdepy.probability(method=’gwasa’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_gwasa.probability_gwasa"><code class="docutils literal notranslate"><span class="pre">probability_gwasa()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-ilt">birdepy.probability(method=’ilt’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_ilt.probability_ilt"><code class="docutils literal notranslate"><span class="pre">probability_ilt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-oua">birdepy.probability(method=’oua’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_oua.probability_oua"><code class="docutils literal notranslate"><span class="pre">probability_oua()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-sim">birdepy.probability(method=’sim’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_sim.probability_sim"><code class="docutils literal notranslate"><span class="pre">probability_sim()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_probability.html#birdepy-probability-method-uniform">birdepy.probability(method=’uniform’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_probability.html#birdepy.probability_uniform.probability_uniform"><code class="docutils literal notranslate"><span class="pre">probability_uniform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_estimate.html">birdepy.estimate()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy.estimate"><code class="docutils literal notranslate"><span class="pre">estimate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-abc">birdepy.estimate(framework=’abc’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_abc.discrete_est_abc"><code class="docutils literal notranslate"><span class="pre">discrete_est_abc()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-dnm">birdepy.estimate(framework=’dnm’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_dnm.discrete_est_dnm"><code class="docutils literal notranslate"><span class="pre">discrete_est_dnm()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em">birdepy.estimate(framework=’em’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_em.discrete_est_em"><code class="docutils literal notranslate"><span class="pre">discrete_est_em()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-lse">birdepy.estimate(framework=’lse’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_lse.discrete_est_lse"><code class="docutils literal notranslate"><span class="pre">discrete_est_lse()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_estimate.html#birdepy-estimate-scheme-continuous">birdepy.estimate(scheme=’continuous’)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_estimate.html#birdepy.interface_dnm.continuous_est_dnm"><code class="docutils literal notranslate"><span class="pre">continuous_est_dnm()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_discrete.html">birdepy.simulate.discrete()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete"><code class="docutils literal notranslate"><span class="pre">discrete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_simulate_continuous.html">birdepy.simulate.continuous()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_simulate_continuous.html#birdepy.simulate.continuous"><code class="docutils literal notranslate"><span class="pre">continuous()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_forecast.html">birdepy.forecast()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_forecast.html#birdepy.forecast"><code class="docutils literal notranslate"><span class="pre">forecast()</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">CUDA Functions API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_simulate.html">birdepy.gpu_functions.discrete()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_cuda_simulate.html#birdepy.gpu_functions.discrete"><code class="docutils literal notranslate"><span class="pre">discrete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_cuda_probabilities.html">birdepy.gpu_functions.probability()</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_cuda_probabilities.html#birdepy.gpu_functions.probability"><code class="docutils literal notranslate"><span class="pre">probability()</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Bug Reports and Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id1">0.0.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id2">0.0.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id3">0.0.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id4">0.0.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id5">0.0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id6">0.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id7">0.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id8">0.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id9">0.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id10">0.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id11">0.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#id12">0.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BirDePy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parameter Estimation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/estimation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameter-estimation">
+<h1>Parameter Estimation<a class="headerlink" href="#parameter-estimation" title="Permalink to this heading"></a></h1>
+<p>The BirDePy function <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> contains implementations of four popular parameter estimation frameworks.
+Two of these are based on maximising the likelihood of observed data either directly (<a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-dnm"><span class="std std-ref">birdepy.estimate(framework=’dnm’)</span></a>) or using an expectation-maximisation algorithm (<a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em"><span class="std std-ref">birdepy.estimate(framework=’em’)</span></a>).
+The package also includes implementations of least squares estimation (<a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-lse"><span class="std std-ref">birdepy.estimate(framework=’lse’)</span></a>) and approximate Bayesian computation (<a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-abc"><span class="std std-ref">birdepy.estimate(framework=’abc’)</span></a>).
+The frameworks are briefly described on this page.</p>
+<p>It is assumed that the data consists of <span class="math notranslate nohighlight">\(m\)</span> sample paths of <span class="math notranslate nohighlight">\(Z\)</span> each with observations at specified times <span class="math notranslate nohighlight">\(t_{0,k} &lt; t_{1,k} &lt; \dots &lt; t_{n_k,k}\)</span> for <span class="math notranslate nohighlight">\(k\in(1,\dots, m)\)</span>.
+Sample times are passed to BirDePy as a list <code class="docutils literal notranslate"><span class="pre">t_data</span></code> of lists where sublists <span class="math notranslate nohighlight">\(k\in(1,2,\dots, m)\)</span> corresponds to observations times for list <span class="math notranslate nohighlight">\(k\)</span>.
+Similarly, population observations <code class="docutils literal notranslate"><span class="pre">p_data</span></code> are also passed as a list of lists with populations at the corresponding observations times.
+If only one sample path is observed, then the outer list is not necessary.
+On this page denote the population observed at time <span class="math notranslate nohighlight">\(t_{i,j}\)</span> as <span class="math notranslate nohighlight">\(z_{i,j}\)</span> and the time between observations by <span class="math notranslate nohighlight">\(\Delta_{i,j} = t_{i,j} - t_{i-1,j}\)</span>.
+The collection of all the observations and their times is written <span class="math notranslate nohighlight">\(\boldsymbol z\)</span>. Throughout this page <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta) = \mathbb P(Z(t)=j \mid Z(0)=i)\)</span>.</p>
+<p>To obtain parameter estimates in BirDePy simply call <a class="reference internal" href="api_estimate.html#birdepy-estimate"><span class="std std-ref">birdepy.estimate()</span></a> (after importing BirDePy). For example, to estimate the parameters of the ‘Ricker’ model from yearly population census data corresponding to black robin females on The Chatham Islands who survived up to at least 1 year in the years 1972 to 1998:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">p_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+          <span class="mi">44</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span>
+                  <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">se_type</span><span class="o">=</span><span class="s1">&#39;asymptotic&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Parameter estimates are </span><span class="si">{</span><span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="si">}</span><span class="s1">. </span><span class="se">\n</span><span class="s1">&#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;The standard errors of these estimates are </span><span class="si">{</span><span class="n">est</span><span class="o">.</span><span class="n">se</span><span class="si">}</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span>
+      <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The carrying capacity is estimated as &#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">capacity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which displays:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.3878995609084285</span><span class="p">,</span> <span class="mf">0.12357106533023712</span><span class="p">,</span> <span class="mf">0.010995524807027462</span><span class="p">,</span> <span class="mf">1.7121790781632777</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">standard</span> <span class="n">errors</span> <span class="n">of</span> <span class="n">these</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.09980387</span> <span class="mf">0.05682818</span> <span class="mf">0.00267044</span> <span class="mf">1.26765449</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">carrying</span> <span class="n">capacity</span> <span class="ow">is</span> <span class="n">estimated</span> <span class="k">as</span>  <span class="mf">98.37671193540476</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Note that in this analysis we put <code class="docutils literal notranslate"><span class="pre">p0=[2]*4</span></code> as an initial guess for the parameters and <code class="docutils literal notranslate"><span class="pre">p_bounds=[[0,10],</span> <span class="pre">[0,10],</span> <span class="pre">[0,10],</span> <span class="pre">[0.5,10]]</span></code> as a reasonable space for the parameters to be estimated from.</p>
+<section id="direct-numerical-maximization">
+<h2>Direct Numerical Maximization<a class="headerlink" href="#direct-numerical-maximization" title="Permalink to this heading"></a></h2>
+<p>A popular parameter estimation framework involves finding the parameters <span class="math notranslate nohighlight">\(\boldsymbol\theta^\star\)</span> that maximize the probability of the data <span class="math notranslate nohighlight">\(\boldsymbol z\)</span> under the assumed model.
+This approach, known as maximum-likelihood-estimation (MLE), therefore aims to find the parameters that maximize the likelihood function <span class="math notranslate nohighlight">\(\ell(\boldsymbol z;\boldsymbol \theta)\)</span>.
+That is,</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol\theta^\star := \text{argmax}_{\boldsymbol \theta}~\ell(\boldsymbol z;\boldsymbol \theta) =\text{argmax}_{\boldsymbol \theta}~\sum_{j=1}^{m}\sum_{i=1}^{n_j} \log\left(p_{z_{i-1,j}, z_{i,j}}(\Delta_{i,j};\boldsymbol\theta)\right).\]</div>
+<p>In BirDePy approximations to <span class="math notranslate nohighlight">\(\ell(\boldsymbol z;\boldsymbol \theta)\)</span> can be found using the approximations to <span class="math notranslate nohighlight">\(p_{i,j}(t;\boldsymbol\theta)\)</span> discussed on the <a class="reference internal" href="probabilities.html#transition-probabilities"><span class="std std-ref">Transition Probabilities</span></a> page.
+These approximations are then numerically maximised to obtain estimates.</p>
+<p>See <a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-dnm"><span class="std std-ref">birdepy.estimate(framework=’dnm’)</span></a> for the implementation of this method in BirDePy.</p>
+</section>
+<section id="expectation-maximization">
+<h2>Expectation Maximization<a class="headerlink" href="#expectation-maximization" title="Permalink to this heading"></a></h2>
+<p>Another way to find maximum likelihood estimates is to treat each unobserved path of <span class="math notranslate nohighlight">\(Z\)</span> between times <span class="math notranslate nohighlight">\(t_{i-1,k}\)</span> and <span class="math notranslate nohighlight">\(t_{i,k}\)</span> as ‘missing data’, and use the EM algorithm of <a class="reference internal" href="#dempster1977" id="id1"><span>[Dempster1977]</span></a>.
+The EM algorithm is an iterative procedure where each iteration consists of an ‘E-step’ and an ‘M-step’.
+The ‘E-step’ is concerned with the computation of the expected value of the log-likelihood function for continuously-observed PSDBDPs, conditional on the current iteration’s parameter estimate <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span> and on the discretely-observed data <span class="math notranslate nohighlight">\(\boldsymbol z\)</span>.
+In the ‘M-step’, this expectation is then maximized to obtain a new parameter estimate.</p>
+<p>The log-likelihood function for continuously observed PSDBDPs depends only on the sufficient statistics <span class="math notranslate nohighlight">\(U_z\)</span>, <span class="math notranslate nohighlight">\(D_z\)</span> and <span class="math notranslate nohighlight">\(H_z\)</span>, which respectively represent the number of births and deaths whilst in state <span class="math notranslate nohighlight">\(z\)</span> and the total cumulative time spent in state <span class="math notranslate nohighlight">\(z\)</span>.
+Given a pair of observations <span class="math notranslate nohighlight">\(Z(0)=i\)</span> and <span class="math notranslate nohighlight">\(Z(t)=j\)</span> of a birth-and-death process, it is well known that</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}u_{z;i;j}(t; \boldsymbol\theta) &amp;:= \mathbb E[U_z \mid Z(0) = i, Z(t) = j] = \frac{\int_0^t~p_{i,z}(s)~\lambda_z~p_{z+1,j}(t-s) d s}{p_{i,j}(t)},\\
+%%
+d_{z;i;j}(t; \boldsymbol\theta) &amp;:= \mathbb E[D_z \mid Z(0) = i, Z(t) = j] = \frac{\int_0^{t}~p_{i,z}(s)~\mu_z~p_{z-1,j}(t-s)d s}{p_{i,j}(t)},\\
+%%
+h_{z;i;j}(t; \boldsymbol\theta) &amp;:= \mathbb E[H_z \mid Z(0) = i, Z(t) = j]  = \frac{\int_0^{t}~p_{i,z}(s)~p_{z,j}(t-s)d s}{p_{i,j}(t)},\end{split}\]</div>
+</div></blockquote>
+<p>where <span class="math notranslate nohighlight">\(\lambda_z\)</span>, <span class="math notranslate nohighlight">\(\mu_z\)</span> and <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span> implicitly depend on <span class="math notranslate nohighlight">\(\boldsymbol\theta\)</span>.
+The conditional expected value of the log-likelihood function for continuously-observed PSDBDPs is</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}f(\boldsymbol \theta',~\boldsymbol \theta) &amp;= \mathbb E[\tilde\ell(\boldsymbol y;\boldsymbol \theta')\mid\boldsymbol z, \boldsymbol \theta]\\
+&amp;= \sum_{k=1}^m\sum_{i=1}^{n_k}\sum_{z=0}^\infty \Big\{u_{z;z_{i-1,k};z_{i,k}}(\Delta_{i,k}; \boldsymbol\theta)\log(\lambda_z(\boldsymbol\theta'))+ d_{z;z_{i-1,k};z_{i,k}}(\Delta_{i,k};\boldsymbol\theta)\log(\mu_z(\boldsymbol\theta')) -\big(\lambda_z(\boldsymbol\theta')+\mu_z(\boldsymbol\theta')\big)h_{z;z_{i-1,k};z_{i,k}}(\Delta_{i,k};\boldsymbol\theta) \Big\}.\end{split}\]</div>
+</div></blockquote>
+<p>Starting with an arbitrary vector <span class="math notranslate nohighlight">\(\boldsymbol \theta^{(0)}\)</span>, an EM algorithm estimate follows from repeating <span class="math notranslate nohighlight">\(\boldsymbol \theta^{(k+1)} = \text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta',~\boldsymbol \theta^{(k)})\)</span>, until <span class="math notranslate nohighlight">\(|\boldsymbol \theta^{(k+1)}-\boldsymbol \theta^{(k)}|\)</span> is small or a maximum number of iterations has taken place.</p>
+<p>See <a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em"><span class="std std-ref">birdepy.estimate(framework=’em’)</span></a> for the implementation of this method in <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a>.
+The implementation has two important options <cite>technique</cite> and <cite>accelerator</cite>.</p>
+<section id="expectation-step-techniques">
+<h3>Expectation Step Techniques<a class="headerlink" href="#expectation-step-techniques" title="Permalink to this heading"></a></h3>
+<p>The integrals displayed above need to be computed in order to use the EM algorithm just described.
+A first possible way to do this is to simply use any of the methods from the <a class="reference internal" href="probabilities.html#transition-probabilities"><span class="std std-ref">Transition Probabilities</span></a> page to evaluate the transition probability functions <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span>, and then compute the integrals numerically using, for example, the trapezoidal rule.
+Upon choosing to compute <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span> using the matrix exponential method or the inverse Laplace transform method, more sophisticated approaches are available, as we briefly describe in the next two paragraphs.</p>
+<p>Recalling <span class="math notranslate nohighlight">\(P(t)= \exp(Qt)\)</span> (which requires numerical approximation), upon defining <span class="math notranslate nohighlight">\(\boldsymbol e_i\)</span> as the <span class="math notranslate nohighlight">\(i\)</span>-th basis vector in <span class="math notranslate nohighlight">\((|\mathcal S|+1)\)</span>-dimensional euclidean space, for any <span class="math notranslate nohighlight">\(a,b,i,j\in\mathcal S\)</span>, we can write</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\int_0^t p_{i,a}(s) ~p_{b,j}(t-s) d s = \boldsymbol e_{i} \int_0^t \exp(Qs) ~\boldsymbol e_{a}^\top\boldsymbol e_{b}~ \exp(Q(t-s)) d s\, \boldsymbol e_{j}^\top.\]</div>
+</div></blockquote>
+<p>Let <span class="math notranslate nohighlight">\(G(t) = \int_0^t \exp(Qs) ~\boldsymbol e_{a}^\top\boldsymbol e_{b}~ \exp(Q(t-s)) d s\)</span>.
+According to <a class="reference internal" href="#vanloan1978" id="id2"><span>[vanLoan1978]</span></a>, if</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}C := \begin{bmatrix}
+Q &amp; \boldsymbol e_{a}^\top \boldsymbol e_{b}\\
+0 &amp; Q
+\end{bmatrix},\end{split}\]</div>
+</div></blockquote>
+<p>then</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\begin{split}        \exp(Ct) = \begin{bmatrix}
+\cdot &amp; G(t)\\
+\cdot &amp; \cdot
+\end{bmatrix},\end{split}\]</div>
+</div></blockquote>
+<p>where ‘<span class="math notranslate nohighlight">\(\cdot\)</span>’ denotes parts of the matrix that can be discarded.
+Hence the integrals can be computed by extracting the relevant parts of the matrix exponential <span class="math notranslate nohighlight">\(\exp(Ct)\)</span>.</p>
+<p>On the other hand, if <span class="math notranslate nohighlight">\(\mathcal L^{-1}\)</span> denotes the inverse of a Laplace transform <span class="math notranslate nohighlight">\(\mathcal L\)</span>, then we also have</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\int_0^{t}~p_{i,a}(s)~p_{b,j}(t-s) d s = \mathcal L^{-1}[f_{i,a}(s)~f_{b,j}(s)](t)\]</div>
+</div></blockquote>
+<p>by the properties of Laplace transforms.
+Numerical Laplace transform inversion therefore provides a third technique for evaluating the integrals.
+This approach is discussed by <a class="reference internal" href="#crawfordetal2014" id="id3"><span>[CrawfordEtAl2014]</span></a>.</p>
+<p>The <cite>technique</cite> option of <a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em"><span class="std std-ref">birdepy.estimate(framework=’em’)</span></a> can be used to switch between these alternative methods.</p>
+</section>
+<section id="acceleration">
+<h3>Acceleration<a class="headerlink" href="#acceleration" title="Permalink to this heading"></a></h3>
+<p>The EM algorithm can exhibit slow convergence, calling for many iterations before a suitably accurate estimate is provided.
+Each iteration may itself use substantial computational time and effort due to requiring many matrix exponential computations, Laplace transform inversions, or numerical integration computations.
+To mitigate this, several schemes have been developed to accelerate the convergence rate of EM algorithms.
+In <a class="reference internal" href="#jamshidianjennrich1997" id="id4"><span>[JamshidianJennrich1997]</span></a>, four such schemes are described in detail.
+Using optimization-based ideas, these accelerators can yield substantial improvements in computational speed.
+Recall <span class="math notranslate nohighlight">\(f\)</span>, the surrogate likelihood function, and let <span class="math notranslate nohighlight">\(\tilde {\boldsymbol g}(\boldsymbol\theta) = \big[\text{argmax}_{\boldsymbol\theta'} f(\boldsymbol \theta', \boldsymbol \theta)\big] - \boldsymbol \theta\)</span>, which is the change in parameter values when a non-accelerated EM iteration is performed.
+Loosely speaking, EM acceleration techniques treat <span class="math notranslate nohighlight">\(\tilde {\boldsymbol g}\)</span> as a generalized derivative of the likelihood function and aim to find <span class="math notranslate nohighlight">\(\boldsymbol \theta^\star\)</span> such that <span class="math notranslate nohighlight">\(\tilde {\boldsymbol g}(\boldsymbol\theta^\star) = \boldsymbol 0\)</span>.</p>
+<p>The <cite>accelerator</cite> option of <a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-em"><span class="std std-ref">birdepy.estimate(framework=’em’)</span></a> can be used to switch between these alternative methods.</p>
+</section>
+</section>
+<section id="least-squares-estimation">
+<h2>Least Squares Estimation<a class="headerlink" href="#least-squares-estimation" title="Permalink to this heading"></a></h2>
+<p>Let <span class="math notranslate nohighlight">\(m_{i}(t;\boldsymbol \theta) = \mathbb E_{\boldsymbol\theta}[Z(t) \mid Z(0) = i]\)</span> correspond to the expected movement of <span class="math notranslate nohighlight">\(Z\)</span> with parameters <span class="math notranslate nohighlight">\(\boldsymbol\theta\)</span> from state <span class="math notranslate nohighlight">\(i\)</span>  in elapsed time <span class="math notranslate nohighlight">\(t\)</span>.
+Another approach to parameter estimation follows from choosing the parameter values <span class="math notranslate nohighlight">\(\boldsymbol\theta^\dagger\)</span> that minimizes the sum of the squared differences <span class="math notranslate nohighlight">\(S(\boldsymbol z;\boldsymbol \theta)\)</span> between the expected transition from <span class="math notranslate nohighlight">\(z_{i-1,j}\)</span> in time <span class="math notranslate nohighlight">\(\Delta_{i,j}\)</span> with the observed transitions <span class="math notranslate nohighlight">\(z_{i,j}\)</span>.
+That is,</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol\theta^\dagger := \text{argmin}_{\boldsymbol\theta}~S(\boldsymbol z; \boldsymbol \theta) = \text{argmin}_{\boldsymbol \theta}~\sum_{j=1}^m\sum_{i=1}^{n_j} \big(z_{i,j}-m_{z_{i-1,j}}(\Delta_{i,j};\boldsymbol \theta)\big)^2.\]</div>
+<p>In <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> approximations to <span class="math notranslate nohighlight">\(m_{z_{i-1,j}}(\Delta_{i,j};\boldsymbol \theta)\)</span> are found using the matrix exponential, by using the mean associated with the <a class="reference internal" href="probabilities.html#diffusion-approximation"><span class="std std-ref">diffusion approximation</span></a>, and by assuming a <a class="reference internal" href="simulation.html#galton-watson-approximation"><span class="std std-ref">linear birth-and-death process approximation</span></a>.
+These approaches are specified by setting the argument of the kwarg <cite>squares</cite> respectively to ‘expm’, ‘fm’, and ‘gwa’.</p>
+<p>See <a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-lse"><span class="std std-ref">birdepy.estimate(framework=’lse’)</span></a> for the implementation of this method in BirDePy.</p>
+</section>
+<section id="approximate-bayesian-computation">
+<h2>Approximate Bayesian Computation<a class="headerlink" href="#approximate-bayesian-computation" title="Permalink to this heading"></a></h2>
+<p>The methods discussed so far have relied on using approximations to model properties which have no explicit expression (specifically, the likelihood of the observed data, and the expectation of the population size).
+ABC bypasses the need to use these model properties in the first place.
+This method works by repeatedly comparing simulated data with the observed data to find an approximation to a distribution that characterizes uncertainty about the value of <span class="math notranslate nohighlight">\(\boldsymbol\theta\)</span> (called the posterior distribution).
+Given a distance measure <span class="math notranslate nohighlight">\(d\)</span>, the standard ABC method (as proposed in <a class="reference internal" href="#pritchardetal1999" id="id5"><span>[PritchardEtAl1999]</span></a>) consists of repeating the following steps:</p>
+<ol class="arabic simple">
+<li><p>Generate a parameter proposal <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span> from the prior distribution <span class="math notranslate nohighlight">\(\pi\)</span>.</p></li>
+<li><p>Simulate observations <span class="math notranslate nohighlight">\(\hat{\boldsymbol z}(\boldsymbol \theta)\)</span> consisting of points <span class="math notranslate nohighlight">\(\hat{z}_{i,k}\)</span> generated using <span class="math notranslate nohighlight">\(\boldsymbol\theta\)</span> with initial conditions <span class="math notranslate nohighlight">\(z_{i-1,k}\)</span> and elapsed times <span class="math notranslate nohighlight">\(\Delta_{i,k}\)</span> (for <span class="math notranslate nohighlight">\(k=1,\ldots,m\)</span>, <span class="math notranslate nohighlight">\(i=1,\ldots,n_k\)</span>).</p></li>
+<li><p>Accept <span class="math notranslate nohighlight">\(\boldsymbol \theta\)</span> as an approximate observation from the posterior distribution if <span class="math notranslate nohighlight">\(d\big(\boldsymbol z, \hat{\boldsymbol z}(\boldsymbol \theta)\big) &lt; \epsilon\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol z\)</span> is the observed data and <span class="math notranslate nohighlight">\(\epsilon\)</span> is a predetermined error tolerance threshold.</p></li>
+</ol>
+<p>These steps are repeated until an arbitrarily large number of parameter proposals are accepted.
+A potentially suitable choice of <span class="math notranslate nohighlight">\(d\)</span> is:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[d(\boldsymbol z, \hat{\boldsymbol z}) = \sqrt{\sum_{k=1}^m\sum_{i=1}^{n_k} \big(z_{i,k}-\hat{z}_{i,k}(\boldsymbol \theta)\big)^2}.\]</div>
+</div></blockquote>
+<p>The prior <span class="math notranslate nohighlight">\(\pi\)</span> can simply be taken as a uniform distribution on the set of allowed parameters.</p>
+<p>The choice of threshold <span class="math notranslate nohighlight">\(\epsilon\)</span> in Step~3 above has a strong influence on the probability of a parameter proposal being accepted.
+Larger choices of <span class="math notranslate nohighlight">\(\epsilon\)</span> may allow the desired number of accepted parameter proposals to be found more quickly, but this could be at the expense of accuracy.
+Similarly, the choice of the prior distribution <span class="math notranslate nohighlight">\(\pi\)</span> has a major impact on performance.
+To address these concerns, the standard ABC method can be applied iteratively with dynamically determined <span class="math notranslate nohighlight">\(\epsilon\)</span> and <span class="math notranslate nohighlight">\(\pi\)</span>.
+In <a class="reference internal" href="#simolaetal2021" id="id6"><span>[SimolaEtAl2021]</span></a> a method for adaptively selecting a threshold at each iteration by comparing the estimated posterior from the two previous iterations and the distances between the sampled data and the accepted parameter proposals in the previous iteration is proposed.</p>
+<p>See below for instructions on how to use a customized distance function.
+The prior <span class="math notranslate nohighlight">\(\pi(\cdot)\)</span> is taken to be a uniform distribution on the set of parameters satisfying the arguments of <cite>p_bounds</cite> and <cite>con</cite>.</p>
+<p>See <a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-abc"><span class="std std-ref">birdepy.estimate(framework=’abc’)</span></a> for the implementation of this method in <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a>.</p>
+<section id="customized-distance">
+<h3>Customized Distance<a class="headerlink" href="#customized-distance" title="Permalink to this heading"></a></h3>
+<p>The kwarg <cite>distance</cite> can be used to specify an alternative form for the distance function <span class="math notranslate nohighlight">\(d\)</span>.
+To do this a callable must be specified that takes as input a value of <cite>epsilon</cite> and two lists corresponding to collections of <span class="math notranslate nohighlight">\(z_{i,j}\)</span> and <span class="math notranslate nohighlight">\(\hat{z_{i,j}}\)</span> and returns a scalar.
+For example, to specify</p>
+<div class="math notranslate nohighlight">
+\[d(\boldsymbol z, \hat{\boldsymbol z}) = \frac{1}{|\boldsymbol z|}\sum_{j=1}^m\sum_{i=1}^{n_j} \big|z_{i,j}-\hat{z_{i,j}}(\boldsymbol \theta))\big|\]</div>
+<p>as a custom distance, first define a callable representing the distance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">custom_distance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Then call <a class="reference internal" href="api_estimate.html#birdepy-estimate-framework-abc"><span class="std std-ref">birdepy.estimate(framework=’abc’)</span></a> with <cite>distance</cite> utilizing the callable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p_bounds</span><span class="p">,</span> <span class="n">framework</span><span class="o">=</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">custom_distance</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="known-parameters">
+<h2>Known Parameters<a class="headerlink" href="#known-parameters" title="Permalink to this heading"></a></h2>
+<p>It may be the case that some of the parameters of a model are already known.
+In this case the kwargs <cite>known_p</cite> and <cite>idx_known_p</cite> can be passed to <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a>.
+The kwarg <cite>known_p</cite> is an ordered list of of known parameter values and <cite>idx_known_p</cite> is an ordered list containing the indices of the known parameters as they would be in the argument to <cite>param</cite> in the function <a class="reference internal" href="api_probability.html#birdepy.probability" title="birdepy.probability"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.probability()</span></code></a>.
+For built-in models the indices of parameters corresponds to the canonical order they are given <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">here</span></a>.</p>
+<p>For example, suppose that it is already known that the death rate the analysis conducted above is 0.25.
+Then instead do this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">p_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+          <span class="mi">44</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span>
+                  <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">se_type</span><span class="o">=</span><span class="s1">&#39;asymptotic&#39;</span><span class="p">,</span> <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">],</span>
+                  <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Parameter estimates are&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span>
+      <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The standard errors of these estimates are&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">se</span><span class="p">,</span>
+      <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The carrying capacity is estimated as &#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">capacity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which displays:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.49036967662220443</span><span class="p">,</span> <span class="mf">0.009035150396231916</span><span class="p">,</span> <span class="mf">1.9785349325654842</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">standard</span> <span class="n">errors</span> <span class="n">of</span> <span class="n">these</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.09762967</span> <span class="mf">0.00296603</span> <span class="mf">1.91677105</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">carrying</span> <span class="n">capacity</span> <span class="ow">is</span> <span class="n">estimated</span> <span class="k">as</span>  <span class="mf">90.64982307689301</span> <span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-constraints">
+<h2>Parameter Constraints<a class="headerlink" href="#parameter-constraints" title="Permalink to this heading"></a></h2>
+<p>Constraints on parameters are passed to <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> through the kwarg <cite>con</cite>.
+This is in addition to the bounds that are passed as the argument to <cite>p_bounds</cite>.
+Constraints are ultimately used in <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code> or <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code>.
+For optimization methods ‘SLSQP’ and ‘COBYLA’ constraints can be specified as a dictionary with fields:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>type<span class="classifier">str</span></dt><dd><p>Constraint type: ‘eq’ for equality, ‘ineq’ for inequality.</p>
+</dd>
+<dt>fun<span class="classifier">callable</span></dt><dd><p>The function defining the constraint.</p>
+</dd>
+<dt>args<span class="classifier">sequence, optional</span></dt><dd><p>Extra arguments to be passed to the function.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Equality constraint means that the constraint function result is to be zero whereas inequality means that it is to be non-negative.
+Note that setting <cite>opt_method</cite> to ‘COBYLA’ means only inequality constraints are supported.</p>
+<p>When there is only one constraint it can be passed as a dictionary.
+Where there are multiple constraints they must be passed as a list of dictionaries.
+When constraints are specified the default optimization routine is ‘SLQSP’.</p>
+<p>For example to specify the constraint <span class="math notranslate nohighlight">\(\gamma \ge \nu\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">p_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+                  <span class="mi">44</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span>
+                  <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">se_type</span><span class="o">=</span><span class="s1">&#39;asymptotic&#39;</span><span class="p">,</span>
+                  <span class="n">con</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ineq&#39;</span><span class="p">,</span> <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Parameter estimates are&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The standard errors of these estimates are&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">se</span><span class="p">,</span><span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The carrying capacity is estimated as &#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">capacity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which displays:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">4.549043705033482</span><span class="p">,</span> <span class="mf">4.89126920630982e-09</span><span class="p">,</span> <span class="mf">0.0019891584261715763</span><span class="p">,</span> <span class="mf">0.50000001297632</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">standard</span> <span class="n">errors</span> <span class="n">of</span> <span class="n">these</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">3.59456242e-01</span> <span class="mf">1.51703612e-06</span> <span class="mf">3.22904617e-04</span> <span class="mf">3.35752161e-02</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">carrying</span> <span class="n">capacity</span> <span class="ow">is</span> <span class="n">estimated</span> <span class="k">as</span>  <span class="mf">214388.4671765286</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>This parameter estimate does not match with the unconstrained estimate given at the beginning of this section, which is surprising since that estimate satisfies the constraints.
+Moreover the provided estimate does not seem to make much sense as the carrying capacity is estimated to be extremely high relative to the observed population sizes.
+In a later section we apply a global optimization algorithm to find the parameter estimates and see that this resolves the problem.</p>
+<p>Note: It is better to use the <a class="reference internal" href="#known-parameters"><span class="std std-ref">known parameter</span></a> functionality when constraining individual parameters to be equal to constants.</p>
+</section>
+<section id="confidence-regions">
+<h2>Confidence Regions<a class="headerlink" href="#confidence-regions" title="Permalink to this heading"></a></h2>
+<p>Attributes <cite>se</cite> and <cite>cov</cite> of the output can be used to quantify the uncertainty of parameter estimates.
+Confidence regions can be computed by assuming a normal distribution with mean given by attribute <cite>p</cite> and covariance given by attribute <cite>cov</cite>.
+Under this assumption standard errors are given by attribute <cite>se</cite>.
+In addition, when one or two parameters are being estimated kwarg <cite>ci_plot</cite> can be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to enable plotting of confidence regions.</p>
+<p>The method for computing a confidence region to quantify the uncertainty of parameter estimates depends on the framework being employed.
+Since computing a confidence region is closely related to computing standard errors, the argument of <cite>se_type</cite> determines which is applied.</p>
+<p>For frameworks ‘dnm’ and ‘em’ a covariance matrix is returned as the negative of the inverse of the Hessian matrix of the approximate log-likelihood function at the point of the parameter estimate.
+This is returned as the attribute <cite>cov</cite> and can be used to characterize the uncertainty of the estimate given by attribute <cite>p</cite>.</p>
+<p>The method <cite>simulated</cite> can be used for frameworks ‘dnm’, ‘em’ and ‘lse’.
+Given a parameter estimate <span class="math notranslate nohighlight">\(\boldsymbol\theta^\star\)</span>, this approach proceeds by repeating the steps:</p>
+<ol class="arabic simple">
+<li><p>Simulate data <span class="math notranslate nohighlight">\(\hat{\boldsymbol z}(\boldsymbol \theta)\)</span> consisting of points <span class="math notranslate nohighlight">\(\hat{z}_{i,j}(\boldsymbol \theta)\)</span> generated using <a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> with the arguments of <cite>param</cite>, <cite>z0</cite> and <cite>times</cite> set respectively to <span class="math notranslate nohighlight">\(\boldsymbol\theta^\star\)</span>, <span class="math notranslate nohighlight">\(z_{i-1,j}\)</span> and <span class="math notranslate nohighlight">\(\Delta_{i,j}\)</span>.</p></li>
+<li><p>Apply the same parameter estimation technique to find the estimate corresponding to <span class="math notranslate nohighlight">\(\hat{\boldsymbol z}(\boldsymbol \theta)\)</span></p></li>
+</ol>
+<p>These steps are repeated 100 times (or a different number of times as specified by kwarg <cite>num_bs_samples</cite>) and then a multivariate normal is fitted to the collection of estimates which is generated.
+From this a covariance matrix is returned as the attribute <cite>cov</cite>, which characterizes the uncertainty of the estimate given by attribute <cite>p</cite>.</p>
+<p>For framework <cite>abc</cite> the attribute <cite>samples</cite> is returned which is a recording of the accepted parameter proposals.
+Performing a density estimate on these samples is a standard method of characterizing uncertainty for ABC estimates.
+In addition attribute <cite>cov</cite> is returned as an estimate of the covariance of the final iteration accepted parameter proposals.</p>
+<p>For example, to generate an asymptotic confidence region (assuming the death rate is 0.25):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">p_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+                  <span class="mi">44</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span>
+        <span class="n">se_type</span><span class="o">=</span><span class="s1">&#39;asymptotic&#39;</span><span class="p">,</span> <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">ci_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which produces:</p>
+<img alt="_images/confidence_fig_1.png" src="_images/confidence_fig_1.png" />
+<p>Alternatively, to generate a simulated confidence region (assuming the death rate is 025):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">p_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">]</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]],</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span>
+        <span class="n">se_type</span><span class="o">=</span><span class="s1">&#39;simulated&#39;</span><span class="p">,</span> <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">ci_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/confidence_fig_2.png" src="_images/confidence_fig_2.png" />
+<p>Observe the strong agreement between the two approaches to generating confidence regions for this example.</p>
+</section>
+<section id="continuously-observed-data">
+<h2>Continuously Observed Data<a class="headerlink" href="#continuously-observed-data" title="Permalink to this heading"></a></h2>
+<p>Let <span class="math notranslate nohighlight">\(\boldsymbol y = (Z(t), [0,T])\)</span> denote the data if continuous observation of <span class="math notranslate nohighlight">\(Z\)</span> is possible over an observation period of length <span class="math notranslate nohighlight">\(T\)</span>.
+Call <span class="math notranslate nohighlight">\(\boldsymbol y\)</span> the ‘complete data’, in contrast to <span class="math notranslate nohighlight">\(\boldsymbol z\)</span> which is the ‘observed’ or ‘incomplete’ data.
+The log-likelihood of the complete data is</p>
+<div class="math notranslate nohighlight">
+\[\tilde\ell(\boldsymbol y ; \boldsymbol \theta) = \sum_{z=0}^\infty U_z(T)\log(\lambda_z(\boldsymbol\theta))+D_z(T)\log(\mu_z(\boldsymbol\theta)) - (\lambda_z(\boldsymbol\theta) + \mu_z(\boldsymbol\theta))H_z(T),\]</div>
+<p>where <span class="math notranslate nohighlight">\(U_z(T)\)</span> and <span class="math notranslate nohighlight">\(D_z(T)\)</span> are respectively the number of births and deaths whilst in state <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(H_z(T)\)</span> is the total time spent (holding) in state <span class="math notranslate nohighlight">\(z\)</span>.</p>
+<p>When continuously observed sample paths are available <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> can be used to estimate parameters by setting kwarg <cite>scheme</cite> to ‘continuous’.
+Under this scheme BirDePy numerically optimizes the above likelihood function to obtain maximum likelihood estimates of parameters.</p>
+<p>For example, generate continuously observed data using <a class="reference internal" href="api_simulate_continuous.html#birdepy-simulate-continuous"><span class="std std-ref">birdepy.simulate.continuous()</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">simulate</span><span class="o">.</span><span class="n">continuous</span><span class="p">([</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+                                        <span class="mi">100</span><span class="p">,</span> <span class="n">survival</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then estimate the parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]],</span>
+                  <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">idx_known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">known_p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;continuous&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Parameter estimates are&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The standard errors of these estimates are&#39;</span><span class="p">,</span>
+      <span class="n">est</span><span class="o">.</span><span class="n">se</span><span class="p">,</span><span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The carrying capacity is estimated as &#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">capacity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which displays:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.7603171062895576</span><span class="p">,</span> <span class="mf">0.2514810854871476</span><span class="p">,</span> <span class="mf">0.020294342655751033</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">standard</span> <span class="n">errors</span> <span class="n">of</span> <span class="n">these</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.11869234</span> <span class="mf">0.00695346</span> <span class="mf">0.00292079</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">carrying</span> <span class="n">capacity</span> <span class="ow">is</span> <span class="n">estimated</span> <span class="k">as</span>  <span class="mf">54.51607032766247</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="api_estimate.html#birdepy-estimate-scheme-continuous"><span class="std std-ref">birdepy.estimate(scheme=’continuous’)</span></a> for the implementation of this method in BirDePy.</p>
+</section>
+<section id="optimization-options">
+<h2>Optimization Options<a class="headerlink" href="#optimization-options" title="Permalink to this heading"></a></h2>
+<p>By default when an optimization routine is needed <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> uses ‘L-BFGS-B’ as implemented in <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code> unless constraints are specified in which case ‘SLSQP’ is used instead.
+The other choices of <cite>method</cite> in <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code> can be accessed in <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a> using the kwarg <cite>opt_method</cite>.
+It is also possible to use <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code> by setting <cite>opt_method</cite> to ‘differential-evolution’.</p>
+<p>In addition many of the optional arguments of the functions <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.differential_evolution()</span></code> can be used as kwargs in <a class="reference internal" href="api_estimate.html#birdepy.estimate" title="birdepy.estimate"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.estimate()</span></code></a>.</p>
+<p>For example, to use differential-evolution as an optimizer with <cite>maxiter</cite> set to 100 and <cite>seed</cite> set to 2021:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">birdepy</span> <span class="k">as</span> <span class="nn">bd</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">NonlinearConstraint</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">t_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">p_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span>
+          <span class="mi">44</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">]</span>
+
+<span class="n">est</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">p_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span>
+                  <span class="n">model</span><span class="o">=</span><span class="s1">&#39;Ricker&#39;</span><span class="p">,</span> <span class="n">se_type</span><span class="o">=</span><span class="s1">&#39;asymptotic&#39;</span><span class="p">,</span>
+                  <span class="n">con</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ineq&#39;</span><span class="p">,</span> <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span> <span class="n">opt_method</span><span class="o">=</span><span class="s1">&#39;differential-evolution&#39;</span><span class="p">,</span>
+                  <span class="n">maxiter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2021</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Parameter estimates are&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">p</span><span class="p">,</span>
+      <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The standard errors of these estimates are&#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">se</span><span class="p">,</span>
+      <span class="s1">&#39;. </span><span class="se">\n</span><span class="s1">The carrying capacity is estimated as &#39;</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">capacity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which displays:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameter</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.3879013278329143</span><span class="p">,</span> <span class="mf">0.12357278747247143</span><span class="p">,</span> <span class="mf">0.010995518495442384</span><span class="p">,</span> <span class="mf">1.712175721772404</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">standard</span> <span class="n">errors</span> <span class="n">of</span> <span class="n">these</span> <span class="n">estimates</span> <span class="n">are</span> <span class="p">[</span><span class="mf">0.09980256</span> <span class="mf">0.0568292</span>  <span class="mf">0.00267043</span> <span class="mf">1.26755574</span><span class="p">]</span> <span class="o">.</span>
+<span class="n">The</span> <span class="n">carrying</span> <span class="n">capacity</span> <span class="ow">is</span> <span class="n">estimated</span> <span class="k">as</span>  <span class="mf">98.37631234940528</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Contrast this with the erroneous results given when a non-global optimization algorithm is used (in the <a class="reference internal" href="#parameter-constraints"><span class="std std-ref">Parameter Constraints</span></a> section).</p>
+<div role="list" class="citation-list">
+<div class="citation" id="dempster1977" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Dempster1977</a><span class="fn-bracket">]</span></span>
+<p>Dempster, A. P., Laird, N. M., &amp; Rubin, D. B. (1977). Maximum likelihood from incomplete data via the EM algorithm. <em>Journal of the Royal Statistical Society: Series B (Methodological)</em>, 39(1), 1-22.</p>
+</div>
+<div class="citation" id="vanloan1978" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">vanLoan1978</a><span class="fn-bracket">]</span></span>
+<p>Van Loan, C., 1978. Computing integrals involving the matrix exponential. <em>IEEE Transactions on Automatic Control</em>, 23(3), pp.395-404.</p>
+</div>
+<div class="citation" id="crawfordetal2014" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">CrawfordEtAl2014</a><span class="fn-bracket">]</span></span>
+<p>Crawford, F.W., Minin, V.N. and Suchard, M.A., 2014. Estimation for general birth-death processes. <em>Journal of the American Statistical Association</em>, 109(506), pp.730-747.</p>
+</div>
+<div class="citation" id="jamshidianjennrich1997" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">JamshidianJennrich1997</a><span class="fn-bracket">]</span></span>
+<p>Jamshidian, M. and Jennrich, R.I., 1997. Acceleration of the EM algorithm by using quasi‐Newton methods. <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em>, 59(3), pp.569-587.</p>
+</div>
+<div class="citation" id="pritchardetal1999" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">PritchardEtAl1999</a><span class="fn-bracket">]</span></span>
+<p>Pritchard, J. K., Seielstad, M. T., Perez-Lezaun, A., &amp; Feldman, M. W. (1999). Population growth of human Y chromosomes: a study of Y chromosome microsatellites. Molecular biology and evolution, 16(12), 1791-1798.</p>
+</div>
+<div class="citation" id="simolaetal2021" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">SimolaEtAl2021</a><span class="fn-bracket">]</span></span>
+<p>Simola, U., Cisewski-Kehe, J., Gutmann, M. U., &amp; Corander, J. (2021). Adaptive approximate Bayesian computation tolerance selection. <em>Bayesian Analysis</em>, 16(2), 397-423.</p>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="probabilities.html" class="btn btn-neutral float-left" title="Transition Probabilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="forecasting.html" class="btn btn-neutral float-right" title="Forecasting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Sophie Hautphenne and Brendan Patch.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
