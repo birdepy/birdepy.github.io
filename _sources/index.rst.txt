@@ -86,6 +86,12 @@ It looks like this:
 
 The confidence intervals contain future mean behavior with high probability. 
 
+More Examples
+-------------
+For further examples see our examples GitHub repo `here <https://github.com/birdepy/birdepy_examples>`_.
+
+It contains Python scripts and Python notebooks. 
+
 
 Dependency List
 ---------------
