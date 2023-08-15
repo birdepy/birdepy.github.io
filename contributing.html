@@ -250,11 +250,19 @@
 <li><p>Make the desired changes.</p></li>
 <li><p>Push your changes to your fork with an appropriate comment:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
-<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;write a comment here&quot;</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;fix: write a comment here&quot;</span>
 <span class="n">git</span> <span class="n">push</span>
 </pre></div>
 </div>
 </li>
+</ol>
+<p>The pipeline for releasing new versions will only execute if commit
+messages adhere to the correct formatting, as outlined in the <a class="reference external" href="https://semantic-release.gitbook.io/semantic-release/">semantic-release documentation</a>.
+For instance, using a commit message like <cite>Fix stuff</cite> or <cite>New features</cite> will not trigger the release pipeline,
+whereas properly formatted message such as <cite>fix: description of fix</cite> or <cite>feat: description of feature</cite> necessary for successful execution.
+To ensure that changes are accepted for merging into the main branch, they must successfully
+pass a set of unit tests.</p>
+<ol class="arabic" start="5">
 <li><p>Open a pull request:</p>
 <blockquote>
 <div><img alt="_images/pulls.png" src="_images/pulls.png" />

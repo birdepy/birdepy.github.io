@@ -22,8 +22,15 @@ In order to contribute we recommend following these steps:
 4. Push your changes to your fork with an appropriate comment: ::
 
 	git add .
-	git commit -m "write a comment here"
+	git commit -m "fix: write a comment here"
 	git push
+
+The pipeline for releasing new versions will only execute if commit 
+messages adhere to the correct formatting, as outlined in the `semantic-release documentation <https://semantic-release.gitbook.io/semantic-release/>`_.
+For instance, using a commit message like `Fix stuff` or `New features` will not trigger the release pipeline,
+whereas properly formatted message such as `fix: description of fix` or `feat: description of feature` necessary for successful execution.
+To ensure that changes are accepted for merging into the main branch, they must successfully
+pass a set of unit tests. 
 
 5. Open a pull request: 
 
