@@ -139,6 +139,6 @@ Optional:
    release_notes
 
 
-.. [HautphennePatch2021a] Hautphenne, S., and Patch, B., (2021). Birth-and-death Processes in Python: The BirDePy Package. arXiv preprint arXiv:2110.05067.
+.. [HautphennePatch2021a] Hautphenne S, Patch B (2024). "Birth-and-Death Processes in Python: The BirDePy Package." *Journal of Statistical Software*, (111)5 1-54. `doi: 10.18637/jss.v111.i05 <https://doi.org/10.18637/jss.v111.i05>`_.
 
 .. [HautphennePatch2021b] Hautphenne, S. and Patch, B., 2021. Simulating population-size-dependent birth-and-death processes using CUDA and piecewise approximations. In *Proceedings of the International Congress on Modelling and Simulation 2021*. (to appear)

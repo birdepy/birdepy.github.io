@@ -16,9 +16,9 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=d019515e"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/documentation_options.js?v=a83ce22a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="_static/copybutton.js?v=f281be69"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -233,7 +233,7 @@
            <div itemprop="articleBody">
              
   <section id="birth-and-death-processes">
-<h1>Birth-and-death Processes<a class="headerlink" href="#birth-and-death-processes" title="Permalink to this heading"></a></h1>
+<h1>Birth-and-death Processes<a class="headerlink" href="#birth-and-death-processes" title="Link to this heading"></a></h1>
 <p>BirDePy is built for analyzing general <a class="reference external" href="https://en.wikipedia.org/wiki/Birth-and-death_process">birth-and-death processes</a>.
 These <a class="reference external" href="https://en.wikipedia.org/wiki/Continuous-time_Markov_chain">continuous-time Markov chains</a> (CTMCs) are widely used to study how the number of individuals in a population changes over time.
 Let <span class="math notranslate nohighlight">\(Z(t)\)</span> denote the size of a population at time <span class="math notranslate nohighlight">\(t\ge0\)</span>; the process <span class="math notranslate nohighlight">\(Z\equiv (Z(t),\,t\ge0)\)</span> evolves on the state space <span class="math notranslate nohighlight">\(\mathcal S = (0,1,\dots,N)\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> may be infinite.
@@ -243,7 +243,7 @@ When <span class="math notranslate nohighlight">\(Z(t)=z\)</span>, the time unti
 At a transition time from state <span class="math notranslate nohighlight">\(z\)</span>, the process jumps to state <span class="math notranslate nohighlight">\(z+1\)</span> with probability <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))\)</span>, or to state <span class="math notranslate nohighlight">\(z-1\)</span> with probability <span class="math notranslate nohighlight">\(\mu_z(\boldsymbol\theta)/(\lambda_z(\boldsymbol\theta)+\mu_z(\boldsymbol\theta))\)</span>.</p>
 <p>As summarized below, we consider selected birth-and-death models of three types: (i) some variants of the linear BDP, (ii) some PSDBDPs, and (iii) some queueing models.</p>
 <table class="docutils align-default" id="id2">
-<caption><span class="caption-text">Transition rates and parameters for <span class="math notranslate nohighlight">\(z \geq 0\)</span>. Any rates which take on a negative value are modified to be equal to 0, and <span class="math notranslate nohighlight">\(1_{\{A\}}\)</span> is the indicator of the event <span class="math notranslate nohighlight">\(A\)</span>. When parameters are used in BirDePy they should be listed in the order they are given in the last column.</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<caption><span class="caption-text">Transition rates and parameters for <span class="math notranslate nohighlight">\(z \geq 0\)</span>. Any rates which take on a negative value are modified to be equal to 0, and <span class="math notranslate nohighlight">\(1_{\{A\}}\)</span> is the indicator of the event <span class="math notranslate nohighlight">\(A\)</span>. When parameters are used in BirDePy they should be listed in the order they are given in the last column.</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
 <colgroup>
 <col style="width: 22%" />
 <col style="width: 24%" />
@@ -342,7 +342,7 @@ The particular case where <span class="math notranslate nohighlight">\(c=1\)</sp
 The ‘M/M/1’ and ‘M/M/<span class="math notranslate nohighlight">\(\infty\)</span>’ queues have arrivals occurring according to a Poisson process and, respectively, a single server and an infinite number of servers (acting in parallel and independently).
 In a <em>loss system</em>, arrivals can only occur when the population is below a certain threshold value <span class="math notranslate nohighlight">\(c\)</span>.</p>
 <section id="custom-models">
-<h2>Custom Models<a class="headerlink" href="#custom-models" title="Permalink to this heading"></a></h2>
+<h2>Custom Models<a class="headerlink" href="#custom-models" title="Link to this heading"></a></h2>
 <p>It is possible to specify custom birth and death rates for the five core BirDePy functions. This is achieved by specifying the argument of <cite>model</cite> as ‘custom’ and passing as kwargs the callables <cite>b_rate</cite> and <cite>d_rate</cite>.  Each of these callables must take as input a population size ‘z’ and a list of parameters ‘p’, and respectively return scalars <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\mu\)</span> corresponding to the birth and death rates: <code class="docutils literal notranslate"><span class="pre">b_rate(z,</span> <span class="pre">p)</span> <span class="pre">-&gt;</span> <span class="pre">\lambda</span></code>, <code class="docutils literal notranslate"><span class="pre">d_rate(z,</span> <span class="pre">p)</span> <span class="pre">-&gt;</span> <span class="pre">\mu</span></code>.</p>
 <p>As an example we will consider a process with <span class="math notranslate nohighlight">\(\lambda_z(\boldsymbol\theta) = \gamma z\)</span> and <span class="math notranslate nohighlight">\(\mu_z(\boldsymbol\theta) = \nu z^2\)</span>.</p>
 <p>If not already done, first install BirDePy (as described <a class="reference internal" href="index.html#birdepy-birth-and-death-processes-in-python"><span class="std std-ref">here</span></a>).

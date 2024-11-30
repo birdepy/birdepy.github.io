@@ -16,9 +16,9 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=d019515e"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/documentation_options.js?v=a83ce22a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="_static/copybutton.js?v=f281be69"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -233,7 +233,7 @@
            <div itemprop="articleBody">
              
   <section id="transition-probabilities">
-<h1>Transition Probabilities<a class="headerlink" href="#transition-probabilities" title="Permalink to this heading"></a></h1>
+<h1>Transition Probabilities<a class="headerlink" href="#transition-probabilities" title="Link to this heading"></a></h1>
 <p>Many of the <a class="reference internal" href="processes.html#birth-and-death-processes"><span class="std std-ref">general models implemented in Birdepy</span></a> have
 no explicit expression for their transition probabilities
 <span class="math notranslate nohighlight">\(p_{i,j}(t) := \mathbb P(Z(t)=j\mid Z(0)=i)\)</span>, <span class="math notranslate nohighlight">\(i,j\in \mathcal S\)</span>, <span class="math notranslate nohighlight">\(t\geq 0\)</span>.
@@ -254,7 +254,7 @@ Three of these methods are matrix-based and rely on state space truncation, anot
 <p>The method ‘expm’ can be replaced by one of the nine choices described on this page.
 Note that output is an array since it is possible to input initial and final population sizes as lists.</p>
 <section id="matrix-exponential">
-<h2>Matrix exponential<a class="headerlink" href="#matrix-exponential" title="Permalink to this heading"></a></h2>
+<h2>Matrix exponential<a class="headerlink" href="#matrix-exponential" title="Link to this heading"></a></h2>
 <p>The Kolmogorov forward equation for CTMCs provides the foundational property that the collection of transition probability functions <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span> satisfy, for <span class="math notranslate nohighlight">\(t\ge0\)</span>, the system of first order ordinary differential equations</p>
 <blockquote>
 <div><div class="math notranslate nohighlight">
@@ -273,7 +273,7 @@ When <span class="math notranslate nohighlight">\(Q\)</span> is finite it immedi
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-expm"><span class="std std-ref">birdepy.probability(method=’expm’)</span></a> for the implementation of this method in BirDePy.</p>
 </section>
 <section id="uniformization">
-<h2>Uniformization<a class="headerlink" href="#uniformization" title="Permalink to this heading"></a></h2>
+<h2>Uniformization<a class="headerlink" href="#uniformization" title="Link to this heading"></a></h2>
 <p>Due to the special nature of the generator <span class="math notranslate nohighlight">\(Q\)</span> (specifically that it has non-negative off-diagonal entries and row-sums equal to 0), an alternative procedure known as <em>uniformization</em>, introduced by <a class="reference internal" href="#jensen1953" id="id1"><span>[Jensen1953]</span></a>, is available for computing <span class="math notranslate nohighlight">\(P(t)\)</span>.
 Consider a discrete-time Markov chain (DTMC) with probability transition matrix <span class="math notranslate nohighlight">\(A:=Q/a+I\)</span>, where <span class="math notranslate nohighlight">\(a:=\max_z |\lambda_z+\mu_z|\)</span> when this exists (for example when <span class="math notranslate nohighlight">\(|\mathcal S|&lt;\infty\)</span>), and where <span class="math notranslate nohighlight">\(I\)</span> denotes the identity matrix of appropriate size.
 Suppose that this DTMC transitions at the event times of a Poisson process <span class="math notranslate nohighlight">\((N(t),~t\ge0)\)</span> with rate <span class="math notranslate nohighlight">\(a\)</span>.
@@ -292,7 +292,7 @@ Using this construction, we can show that</p>
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-uniform"><span class="std std-ref">birdepy.probability(method=’uniform’)</span></a> for the implementation of this method in BirDePy.</p>
 </section>
 <section id="erlangization">
-<h2>Erlangization<a class="headerlink" href="#erlangization" title="Permalink to this heading"></a></h2>
+<h2>Erlangization<a class="headerlink" href="#erlangization" title="Link to this heading"></a></h2>
 <p>Using probabilistic arguments, <em>Erlangization</em> is yet another matrix-based method for computing <span class="math notranslate nohighlight">\(P(t)\)</span>.
 Let <span class="math notranslate nohighlight">\(T\)</span> be an exponentially distributed random variable with mean <span class="math notranslate nohighlight">\(\eta^{-1}&gt;0\)</span>.
 Define <span class="math notranslate nohighlight">\(r^{(\eta)}_{i,j} := \mathbb P(Z(T) = j\mid Z(0)= i)\)</span> and collect these quantities into  <span class="math notranslate nohighlight">\(R(\eta) = \big(r^{(\eta)}_{i,j},~i,j\in \mathcal S)\)</span>.
@@ -319,7 +319,7 @@ Similar to the uniformization method, error arises in the Erlangization method s
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-erlang"><span class="std std-ref">birdepy.probability(method=’Erlang’)</span></a> for the implementation of this method in BirDePy.</p>
 </section>
 <section id="inverse-laplace-transform">
-<h2>Inverse Laplace transform<a class="headerlink" href="#inverse-laplace-transform" title="Permalink to this heading"></a></h2>
+<h2>Inverse Laplace transform<a class="headerlink" href="#inverse-laplace-transform" title="Link to this heading"></a></h2>
 <p>The Laplace transform of the transition function <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span> is</p>
 <blockquote>
 <div><div class="math notranslate nohighlight">
@@ -352,7 +352,7 @@ The Laplace transform can then be numerically inverted to obtain <span class="ma
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-ilt"><span class="std std-ref">birdepy.probability(method=’ilt’)</span></a> for the implementation of this method in BirDePy.</p>
 </section>
 <section id="diffusion-approximation">
-<h2>Diffusion approximation<a class="headerlink" href="#diffusion-approximation" title="Permalink to this heading"></a></h2>
+<h2>Diffusion approximation<a class="headerlink" href="#diffusion-approximation" title="Link to this heading"></a></h2>
 <p>Define <span class="math notranslate nohighlight">\((Z_i^{(r)},~r \in\mathbb N)\)</span> to be a parametric family of CTMCs which evolve according to transition rates <span class="math notranslate nohighlight">\(\lambda_z^{(r)} = r\lambda_{z/r}\)</span> and <span class="math notranslate nohighlight">\(\mu_z^{(r)} = r\mu_{z/r}\)</span> with <span class="math notranslate nohighlight">\(Z_i^{(r)}(0)=i\)</span>.
 For <span class="math notranslate nohighlight">\(s \in[0, t]\)</span> define the diffusion-scaled process</p>
 <blockquote>
@@ -386,7 +386,7 @@ The diffusion approach to approximate transition probabilities is used in <a cla
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-da"><span class="std std-ref">birdepy.probability(method=’da’)</span></a> for the implementation of this method in BirDePy.</p>
 </section>
 <section id="ornstein-uhlenbeck-approximation">
-<h2>Ornstein–Uhlenbeck approximation<a class="headerlink" href="#ornstein-uhlenbeck-approximation" title="Permalink to this heading"></a></h2>
+<h2>Ornstein–Uhlenbeck approximation<a class="headerlink" href="#ornstein-uhlenbeck-approximation" title="Link to this heading"></a></h2>
 <p>The diffusion approximation discussed above can be substantially simplified if it is assumed that <span class="math notranslate nohighlight">\(Z\)</span> is fluctuating about a steady state point <span class="math notranslate nohighlight">\(z_{\text{eq}}\)</span> of <span class="math notranslate nohighlight">\(\hat z\)</span>.
 Such a point occurs when the birth rate is equal to the death rate, i.e., <span class="math notranslate nohighlight">\(z_{\text{eq}}\)</span> satisfies <span class="math notranslate nohighlight">\(\lambda_{z_{\text{eq}}} = \mu_{z_{\text{eq}}}\)</span>.
 In this case, as argued in <a class="reference internal" href="#rossetal2006" id="id12"><span>[RossEtAl2006]</span></a>, the limiting Gaussian diffusion is an Ornstein–Uhlenbeck process.
@@ -395,7 +395,7 @@ This method assumes that <span class="math notranslate nohighlight">\(z_{\text{e
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-oua"><span class="std std-ref">birdepy.probability(method=’oua’)</span></a> for the implementation of this method in BirDePy.</p>
 </section>
 <section id="galton-watson-approximation">
-<h2>Galton–Watson approximation<a class="headerlink" href="#galton-watson-approximation" title="Permalink to this heading"></a></h2>
+<h2>Galton–Watson approximation<a class="headerlink" href="#galton-watson-approximation" title="Link to this heading"></a></h2>
 <p>A PSDBDP can be approximated by a piecewise-linear birth-and-death process by decomposing time into sub-intervals of finite length, and letting the per-individual birth and death rates be constant over each time interval; more precisely, if <span class="math notranslate nohighlight">\(z\)</span> is the population size at the beginning of a time interval, then we let <span class="math notranslate nohighlight">\(\lambda := \frac{1}{z}\lambda_{z}\)</span> and <span class="math notranslate nohighlight">\(\mu := \frac{1}{z}\mu_{z}\)</span> over that interval.</p>
 <p>Suppose we want to approximate <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span> for some <span class="math notranslate nohighlight">\(i,j\in\mathcal{S}\)</span> and <span class="math notranslate nohighlight">\(t&gt; 0\)</span>. Consider a linear birth-and-death process <span class="math notranslate nohighlight">\(\mathring Z^{(b)}\)</span> with per-individual birth rate <span class="math notranslate nohighlight">\(\lambda = \frac{1}{b}\lambda_{b}\)</span> and per-individual death rate <span class="math notranslate nohighlight">\(\mu = \frac{1}{b}\mu_{b}\)</span>, where possible choices of <span class="math notranslate nohighlight">\(b\)</span> include <span class="math notranslate nohighlight">\(b=i\)</span>, <span class="math notranslate nohighlight">\(b=j\)</span>, <span class="math notranslate nohighlight">\(b=\max(i,j)\)</span>, <span class="math notranslate nohighlight">\(b=\min(i,j)\)</span>, and <span class="math notranslate nohighlight">\(b=(i+j)/2\)</span>.
 The transition probability <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span> can then be approximated by</p>
@@ -427,7 +427,7 @@ This approximation is particularly convenient since it is well known (see <a cla
 <p>When the binomial coefficients above cause numerical problems or take a long time to compute, an alternative expression developed by <a class="reference internal" href="#davisonetal2021" id="id14"><span>[DavisonEtAl2021]</span></a> using a saddlepoint approximation <a class="reference internal" href="#butler2007" id="id15"><span>[Butler2007]</span></a> may be used. See <a class="reference internal" href="api_probability.html#birdepy-probability-method-gwasa"><span class="std std-ref">birdepy.probability(method=’gwasa’)</span></a> for the implementation of this method in BirDePy.</p>
 </section>
 <section id="simulation">
-<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this heading"></a></h2>
+<h2>Simulation<a class="headerlink" href="#simulation" title="Link to this heading"></a></h2>
 <p>Using <a class="reference internal" href="api_simulate_discrete.html#birdepy.simulate.discrete" title="birdepy.simulate.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.simulate.discrete()</span></code></a> or <a class="reference internal" href="api_cuda_simulate.html#birdepy.gpu_functions.discrete" title="birdepy.gpu_functions.discrete"><code class="xref py py-func docutils literal notranslate"><span class="pre">birdepy.gpu_functions.discrete()</span></code></a> it is possible to obtain <span class="math notranslate nohighlight">\(k\)</span> realizations of <span class="math notranslate nohighlight">\(Z(t)\)</span> conditional on <span class="math notranslate nohighlight">\(Z(0)=i\)</span>.
 The proportion of these realisations which equal <span class="math notranslate nohighlight">\(j\)</span> can be used to approximate the transition probability <span class="math notranslate nohighlight">\(p_{i,j}(t)\)</span>. That is,</p>
 <div class="math notranslate nohighlight">
@@ -436,10 +436,10 @@ The proportion of these realisations which equal <span class="math notranslate n
 <p>See <a class="reference internal" href="api_probability.html#birdepy-probability-method-sim"><span class="std std-ref">birdepy.probability(method=’sim’)</span></a> and <a class="reference internal" href="api_cuda_probabilities.html#birdepy-gpu-functions-probability"><span class="std std-ref">birdepy.gpu_functions.probability()</span></a> for the implementations of this method in BirDePy.</p>
 </section>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
 <p>The table below summarizes methods described on this page, and gives the label used to call them in <a class="reference internal" href="api_estimate.html#birdepy-estimate"><span class="std std-ref">birdepy.estimate()</span></a>.</p>
 <table class="docutils align-default" id="id17">
-<caption><span class="caption-text">Methods for computing transition probabilities.</span><a class="headerlink" href="#id17" title="Permalink to this table"></a></caption>
+<caption><span class="caption-text">Methods for computing transition probabilities.</span><a class="headerlink" href="#id17" title="Link to this table"></a></caption>
 <colgroup>
 <col style="width: 31%" />
 <col style="width: 34%" />
