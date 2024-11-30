@@ -2,6 +2,17 @@
 Release Notes
 =============
 
+1.0.0
+^^^^^^
+Date:  November 30 2024
+
+Contributors: Brendan Patch 
+
+Notes:
+
+Released a new version to coincide with publication of the associated paper in Journal
+of Statistical Software.
+
 0.0.26
 ^^^^^^
 Date:  July 30 2023
